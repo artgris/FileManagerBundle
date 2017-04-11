@@ -1,0 +1,27 @@
+{
+  "name": "artgris/filemanager-bundle",
+  "type": "symfony-bundle",
+  "description": "File Manager bundle",
+  "keywords": [
+    "symfony",
+    "bundle",
+    "file manager"
+  ],
+  "homepage": "https://github.com/artgris/FileManagerBundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Arthur Gribet",
+      "email": "a.gribet@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^5.3.9 || ^7.0",
+    "symfony/framework-bundle": "^2.8 || ^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Artgris\\Bundle\\FileManagerBundle\\": ""
+    }
+  }
+}

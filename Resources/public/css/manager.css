@@ -1,0 +1,38 @@
+body{
+    padding-bottom: 20px;
+}
+.select {
+    cursor: pointer
+}
+
+.thead-default th {
+    color: #464a4c;
+    background-color: #eceeef;
+}
+
+.bar {
+    height: 18px;
+    background: green;
+}
+
+.alert-file-manager {
+    padding: 2px 32px 0 11px;
+    margin: 1px 5px;
+    display: inline-block;
+}
+
+#top-bar {
+    padding: 10px 0;
+    margin: 3px 0;
+}
+
+.select:hover {
+    background-color: #f5f5f5;
+}
+
+i.fa {
+    font-size: 1.4em;
+}
+.alert > [data-notify="message"] {
+    font-size: 80%;
+}

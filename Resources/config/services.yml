@@ -1,0 +1,12 @@
+services:
+    file_type_extension:
+        class: Artgris\Bundle\FileManagerBundle\Twig\FileTypeExtension
+        tags:
+            - { name: twig.extension }
+        arguments: ['@file_type_service']
+
+    file_type_service:
+        class: Artgris\Bundle\FileManagerBundle\Service\FileTypeService
+        arguments:
+            router: "@router"
+            packages: "@assets.packages"

@@ -1,0 +1,389 @@
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% form_theme formRename 'bootstrap_3_layout.html.twig' %}
+<!doctype html>
+<html lang="en" id="dropzone">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/libs/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/libs/components-font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/libs/bootstrap-treeview/dist/bootstrap-treeview.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/libs/blueimp-file-upload/css/jquery.fileupload.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/css/manager.css') }}">
+    <title>File Manager</title>
+</head>
+<body>
+<div class="container-fluid ">
+    <div class="well-sm" id="top-bar">
+        {% if fileManager.parent %}
+            <a class="btn btn-default btn-sm"
+               title="{{ 'button.parent'|trans }}"
+               href="{{ fileManager.parent }}">
+                <span class="fa fa-level-up"></span></a>
+        {% endif %}
+        <button type="button" title="{{ 'button.refresh'|trans }}" class="btn btn-default btn-sm" onClick="window.location.reload()">
+            <i class="glyphicon glyphicon-refresh"></i>
+        </button>
+        <span class="btn btn-success btn-sm fileinput-button">
+        <i class="glyphicon glyphicon-plus"></i>
+        <span>{{ 'button.add.files'|trans }}</span>
+        <input id="fileupload" type="file"
+               data-url="{{ path('file_manager_upload', fileManager.queryParameters) }}"
+               name="files[]" multiple=""
+               accept="{{ fileManager.configuration.accept is defined ? fileManager.configuration.accept : (fileManager.type ? accept(fileManager.type)) }}">
+        </span>
+
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addFolder">
+            <i class="glyphicon glyphicon-plus"></i>
+            <span>{{ 'button.add.folder'|trans }}</span>
+        </button>
+        {% if fileManager.parent %}
+            <button type="button"
+                    class="btn btn-sm btn-danger js-delete-modal"
+                    data-trigger="click"
+                    data-container="body"
+                    data-toggle="modal"
+                    data-target="#js-confirm-delete"
+                    data-placement="left"
+                    data-html="true"
+                    data-href='{{ path('file_manager_delete', fileManager.queryParameters) }}'>
+                <span class="glyphicon glyphicon-remove"></span>
+                <span>{{ 'button.delete.current'|trans }}</span>
+            </button>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-xs-4 col-md-4 col-lg-3" id="tree-block">
+            <div class="table-responsive">
+                <div id="tree"></div>
+            </div>
+        </div>
+        <div class="col-xs-8 col-md-8 col-lg-9">
+            <div class="table-responsive">
+                <form id="form-multiple-delete">
+                    <table class="table {% if module is defined %}table-hover{% endif %}">
+                        <thead class="thead-default">
+                        <tr>
+                            <th><input type="checkbox" id="select-all"></th>
+                            <th></th>
+                            <th>{{ 'table.name'|trans }}</th>
+                            <th>{{ 'table.date'|trans }}</th>
+                            <th>{{ 'table.size'|trans }}</th>
+                            <th>{{ 'table.dimension'|trans }}</th>
+                            <th>{{ 'table.actions'|trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% include '@ArtgrisFileManager/_list.html.twig' with {'fileManager' :fileManager,  'finderFiles' : finderFiles, 'formDelete' : formDelete, 'imageSize' : imageSize} only %}
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <a id="js-delete-multiple-modal"
+               class="btn btn-xs btn-danger disabled"
+               type="button"
+               data-trigger="click"
+               data-container="body"
+               data-toggle="modal"
+               data-target="#js-confirm-delete"
+               data-placement="left"
+               data-html="true">
+                <i class="fa fa-chevron-up"></i> {{ 'button.delete.selected'|trans }}
+            </a>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="js-confirm-delete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{ 'title.delete'|trans }}</h4>
+            </div>
+            <div class="modal-body">
+                {{ 'confirm.delete'|trans }}
+            </div>
+            <div class="modal-footer">
+                {{ form_start(formDelete, {"attr" : {'class':'pull-right'}}) }}
+                <input type="hidden" name="_method" value="DELETE"/>
+                {{ form_rest(formDelete) }}
+                <button type="submit" class="btn btn-danger pull-right" data-toggle="tooltip" title="DELETE">
+                    {{ 'button.delete.action'|trans }}
+                </button>
+                {{ form_end(formDelete) }}
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal"> {{ 'button.cancel'|trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="js-confirm-rename" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            {{ form_start(formRename) }}
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{ 'title.rename.file'|trans }}</h4>
+            </div>
+            <div class="modal-body">
+                {{ form_row(formRename.name) }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ 'button.cancel'|trans }}
+                </button>
+                {{ form_row(formRename.send) }}
+            </div>
+            {{ form_end(formRename) }}
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addFolder" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            {{ form_start(form) }}
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{ 'title.add.folder'|trans }}</h4>
+            </div>
+            <div class="modal-body">
+                {{ form_row(form.name) }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ 'button.cancel'|trans }}
+                </button>
+                {{ form_row(form.send) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+
+<script src="{{ asset('bundles/artgrisfilemanager/libs/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('bundles/artgrisfilemanager/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('bundles/artgrisfilemanager/libs/bootstrap-treeview/dist/bootstrap-treeview.min.js') }}"></script>
+
+<script src="{{ asset('bundles/artgrisfilemanager/libs/blueimp-file-upload/js/vendor/jquery.ui.widget.js') }}"></script>
+<script src="{{ asset('bundles/artgrisfilemanager/libs/blueimp-file-upload/js/jquery.iframe-transport.js') }}"></script>
+<script src="{{ asset('bundles/artgrisfilemanager/libs/blueimp-file-upload/js/jquery.fileupload.js') }}"></script>
+
+<script src="{{ asset('bundles/artgrisfilemanager/libs/sticky-kit/jquery.sticky-kit.min.js') }}"></script>
+<script src="{{ asset('bundles/artgrisfilemanager/js/betamax/jquery.getimagedata.js') }}"></script>
+
+<script src="{{ asset('bundles/artgrisfilemanager/libs/remarkable-bootstrap-notify/bootstrap-notify.min.js') }}"></script>
+<script>
+
+    $(function () {
+
+        // display session flash messages
+        {% if app.session.started and app.session.flashBag.peekAll is not empty %}
+        {% for type, messages in app.session.flashBag.all %}
+        {% for message in messages %}
+        displayAlert('{{ type }}', '{{ message|trans|e('js') }}')
+        {% endfor %}
+        {% endfor %}
+        {% endif %}
+
+        // sticky kit
+        $("#tree-block").stick_in_parent();
+
+        $(document)
+        // checkbox select all
+            .on('click', '#select-all', function () {
+                var checkboxes = $('#form-multiple-delete').find(':checkbox')
+                if ($(this).is(':checked')) {
+                    checkboxes.prop('checked', true);
+                } else {
+                    checkboxes.prop('checked', false);
+                }
+            })
+            // delete modal buttons
+            .on('click', '.js-delete-modal', function () {
+                    $('#js-confirm-delete').find('form').attr('action', $(this).data('href'));
+                }
+            )
+            // rename modal buttons
+            .on('click', '.js-rename-modal', function () {
+                    $('#form_name').val($(this).data('name'));
+                    $('#form_extension').val($(this).data('extension'));
+                    $('#js-confirm-rename').find('form').attr('action', $(this).data('href'));
+                }
+            )
+            // multiple delete modal button
+            .on('click', '#js-delete-multiple-modal', function () {
+                var $multipleDelete = $('#form-multiple-delete').serialize()
+                if ($multipleDelete) {
+                    var href = '{{ path('file_manager_delete', fileManager.queryParameters )|e('js') }}' + '&' + $multipleDelete;
+                    $('#js-confirm-delete').find('form').attr('action', href);
+                }
+            })
+            // checkbox
+            .on('click', '#form-multiple-delete :checkbox', function () {
+                var $jsDeleteMultipleModal = $('#js-delete-multiple-modal');
+                if ($(".checkbox").is(':checked')) {
+                    $jsDeleteMultipleModal.removeClass('disabled');
+                } else {
+                    $jsDeleteMultipleModal.addClass('disabled');
+                }
+            })
+
+        // preselected
+        $('#js-confirm-rename').on('shown.bs.modal', function () {
+            $('#form_name').select().mouseup(function () {
+                $('#form_name').unbind("mouseup");
+                return false;
+            });
+        });
+        $('#addFolder').on('shown.bs.modal', function () {
+            $('#rename_name').select().mouseup(function () {
+                $('#rename_name').unbind("mouseup");
+                return false;
+            });
+        });
+
+        // treeview
+        $('#tree').treeview({
+            data: {{ treeData|raw }},
+            enableLinks: true,
+            showTags: true
+        }).on('nodeSelected', function (event, data) {
+            document.location.href = data.href
+        });
+
+        // Module Tiny
+        {% if fileManager.module == 'tiny' %}
+
+        $('.table').on('click', '.select', function () {
+            var args = top.tinymce.activeEditor.windowManager.getParams();
+            var input = args.input;
+            var document = args.window.document;
+            var divInputSplit = document.getElementById(input).parentNode.id.split("_");
+
+            // set url
+            document.getElementById(input).value = $(this).attr("data-path");
+
+            // set width and height
+            var baseId = divInputSplit[0] + '_';
+            var baseInt = parseInt(divInputSplit[1], 10);
+
+            divWidth = baseId + (baseInt + 3);
+            divHeight = baseId + (baseInt + 5);
+
+            document.getElementById(divWidth).value = $(this).attr("data-width");
+            document.getElementById(divHeight).value = $(this).attr("data-height");
+
+            top.tinymce.activeEditor.windowManager.close();
+        });
+        {% endif %}
+
+        // Global functions
+
+        // display error alert
+        function displayError(msg) {
+            displayAlert('danger', msg)
+        }
+
+        // display success alert
+        function displaySuccess(msg) {
+            displayAlert('success', msg)
+        }
+
+        // display alert
+        function displayAlert(type, msg) {
+            $.notify({
+                message: msg
+            }, {
+                type: type,
+                placement: {
+                    from: "bottom",
+                    align: "left"
+                },
+                template: '<div data-notify="container" class="col-xs-5 col-md-4 col-lg-2 alert alert-{0}" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<span data-notify="icon"></span> ' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span data-notify="message">{2}</span>' +
+                '<div class="progress" data-notify="progressbar">' +
+                '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+                '</div>' +
+                '<a href="{3}" target="{4}" data-notify="url"></a>' +
+                '</div>'
+            });
+        }
+
+        // drop action
+        $(document)
+            .bind('drop dragover', function (e) {
+                e.preventDefault();
+            })
+            .bind('drop', function (e) {
+                var url = $(e.originalEvent.dataTransfer.getData('text/html')).filter('img').attr('src');
+                if (url) {
+                    $.getImageData({
+                        url: url,
+                        server: "{{ url('file_manager_imagetojson') }}",
+                        success: function (img) {
+                            var canvas = document.createElement('canvas');
+                            canvas.width = img.width;
+                            canvas.height = img.height;
+                            if (canvas.getContext && canvas.toBlob) {
+                                canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+                                canvas.toBlob(function (blob) {
+                                    $('#fileupload').fileupload('add', {files: [blob]});
+                                }, "image/jpeg");
+                            }
+                        }
+                    });
+                }
+            });
+
+        // file upload
+        $('#fileupload').fileupload({
+            dataType: 'json',
+            processQueue: false,
+            dropZone: $('#dropzone')
+        }).on('fileuploaddone', function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                if (file.url) {
+                    displaySuccess('<strong>' + file.name + '</strong> {{ 'file.add.success'|trans }}')
+                    // Ajax update view
+                    $.ajax({
+                        dataType: "json",
+                        url: '{{ path('file_manager', fileManager.queryParameters|merge({'json':true}))|e('js') }}',
+                        type: 'GET'
+                    }).done(function (data) {
+
+                        // update file list
+                        $('.table tbody').html(data.data);
+
+                        // update treeview
+                        $('#tree').treeview({
+                            data: data.treeData,
+                            enableLinks: true,
+                            showTags: true
+                        }).on('nodeSelected', function (event, data) {
+                            document.location.href = data.href
+                        });
+
+                        $('#select-all').prop('checked', false);
+                        $('#js-delete-multiple-modal').addClass('disabled');
+
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+                        displayError('<strong>Ajax call error :</strong> ' + jqXHR.status + ' ' + errorThrown)
+                    });
+
+                } else if (file.error) {
+                    displayError('<strong>' + file.name + '</strong> ' + file.error)
+                }
+            });
+        }).on('fileuploadfail', function (e, data) {
+            $.each(data.files, function (index) {
+                displayError('File upload failed.')
+            });
+        });
+    })
+    ;
+</script>
+</body>
+</html>
+
+

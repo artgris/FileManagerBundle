@@ -1,0 +1,47 @@
+file:
+  add:
+    success: a été téléchagé avec succès
+  renamed:
+    success: Le fichier a été renommé avec succès
+    danger: Le fichier existe déjà ou vous n'êtes pas autorisé à renommer ce fichier
+    unauthorized: Les fichiers n'existent plus ou vous n'êtes pas autorisé à accéder à cette page
+    nochanged: Aucun changement détecté
+  deleted:
+    success: Les fichiers ont été supprimés avec succès
+    danger: Les fichiers n'existent plus ou vous n'êtes pas autorisé à accéder à cette page
+    unauthorized: Les fichiers n'existent plus ou vous n'êtes pas autorisé à accéder à cette page
+folder:
+  add:
+    danger: Une erreur s'est produite lors de la création du dossier :%message%
+    success: Le dossier a été créé avec succès
+  deleted:
+    success: Le dossier a été supprimé avec succès
+    unauthorized: Le dossier n'existe plus ou vous n'êtes pas autorisé à accéder à cette page
+button:
+  cancel: ANNULER
+  refresh: Rafraîchir
+  parent: Parent
+  rename: RENOMMER
+  add:
+    files: Nouveau fichiers ...
+    folder: Nouveau dossier...
+  delete:
+    current: Supprimer le dossier courant
+    selected: Supprimer les fichiers sélectionnés
+    action: SUPPRIMER
+title:
+  add:
+    folder: Nouveau dossier
+  rename:
+    file: Renommer
+  delete: Supprimer
+input:
+    default: Dossier sans titre
+table:
+  name: Nom
+  date: Date
+  size: Taille
+  dimension: Dimension
+  actions: Actions
+confirm:
+  delete:  Êtes-vous sûr de vouloir supprimer ?

@@ -1,0 +1,47 @@
+file:
+  add:
+    success: was uploaded successfully
+  renamed:
+    success: File has been renamed successfully
+    danger: File already exists or you are not authorized to rename this file
+    unauthorized: The files no longer exist or you are not authorized to access this page
+    nochanged: No changed detected
+  deleted:
+    success: The files have been deleted successfully
+    danger: The files no longer exist or you are not authorized to access this page
+    unauthorized: The files no longer exist or you are not authorized to access this page
+folder:
+  add:
+    danger: An error occurred while creating your directory at %message%
+    success: Folder has been created successfully
+  deleted:
+    success: Folder has been deleted successfully
+    unauthorized: Folder no longer exist or you are not authorized to access this page
+button:
+  cancel: CANCEL
+  refresh: Refresh
+  parent: Parent
+  rename: RENAME
+  add:
+    files: Add files...
+    folder: New folder...
+  delete:
+    current: Delete current folder
+    selected: Delete selected files
+    action: DELETE
+title:
+  add:
+    folder: New folder
+  rename:
+    file: Rename
+  delete: Delete
+input:
+    default: Untitled folder
+table:
+  name: Name
+  date: Date
+  size: Size
+  dimension: Dimension
+  actions: Actions
+confirm:
+  delete:  Are you sure that you want to delete?

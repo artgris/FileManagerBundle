@@ -1,0 +1,14 @@
+blueimp*/*
+!blueimp*/js
+!blueimp*/img
+!blueimp*/css
+bootstrap*/*
+!bootstrap*/dist
+components-font-awesome/*
+!components-font-awesome/css
+jquery/*
+!jquery/dist
+remarkable-bootstrap-notify/*
+!remarkable-bootstrap-notify/dist
+sticky-kit/*
+!sticky-kit/jquery.sticky-kit.min.js
