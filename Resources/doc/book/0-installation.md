@@ -78,7 +78,7 @@ You can now access the file manager under the path:
     http://your-host/app_dev.php/manager/?conf=default
     
     
-<img src="https://raw.githubusercontent.com/artgris/FileManagerBundle/master/Resources/doc/images/filemanger-default.png" alt="Symfony Filemanager created with FileManagerBundle" />
+<img src="https://raw.githubusercontent.com/artgris/FileManagerBundle/master/Resources/doc/images/filemanager-default.png" alt="Symfony Filemanager created with FileManagerBundle" />
 
 
 -------------------------------------------------------------------------------
