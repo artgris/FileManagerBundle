@@ -154,4 +154,4 @@ class CustomService implements CustomConfService
 
 -------------------------------------------------------------------------------
 
-[Chapter 3 - Access to the File Manager](1-access-file-manager.md) &rarr;
+[Chapter 3 - Access to the File Manager](3-access-file-manager.md) &rarr;
