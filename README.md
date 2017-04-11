@@ -3,7 +3,7 @@ FileManagerBundle
 
 FileManager is a simple Multilingual File Manager Bundle for symfony
 
-<img src="https://raw.githubusercontent.com/artgris/FileManagerBundle/master/Resources/doc/images/filemanager-default.png" alt="Symfony Filemanager created with FileManagerBundle" align="right" />
+<img src="https://raw.githubusercontent.com/artgris/FileManagerBundle/master/Resources/doc/images/filemanager-promo.png" alt="Symfony Filemanager created with FileManagerBundle" align="center" />
 
 * [Documentation](#documentation)
 * [Installation](#installation)
