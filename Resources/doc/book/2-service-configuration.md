@@ -1,10 +1,10 @@
 Chapter 2 - Service Configuration
 =================================
 
-If basic configuration is not sufficient for you, and you need more control you can used the service conf
+If basic configuration is not sufficient for you and you need more control, used the service configuration below
 
 
-for this conf you just need on option :
+for this conf you just need one option :
 
 
 #### `service` The service that will return configuration 
