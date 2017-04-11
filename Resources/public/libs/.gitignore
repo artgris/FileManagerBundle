@@ -6,6 +6,7 @@ bootstrap*/*
 !bootstrap*/dist
 components-font-awesome/*
 !components-font-awesome/css
+!components-font-awesome/fonts
 jquery/*
 !jquery/dist
 remarkable-bootstrap-notify/*
