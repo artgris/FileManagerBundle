@@ -203,7 +203,7 @@ artgris_file_manager:
 ```
 
 
-#### Full exemple :
+#### Full example :
 
 ```yml 
 artgris_file_manager:
