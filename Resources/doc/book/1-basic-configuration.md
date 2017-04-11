@@ -231,4 +231,4 @@ artgris_file_manager:
 
 -------------------------------------------------------------------------------
 
-[Chapter 2 - Service Configuration](1-service-configuration.md) &rarr;
+[Chapter 2 - Service Configuration](2-service-configuration.md) &rarr;
