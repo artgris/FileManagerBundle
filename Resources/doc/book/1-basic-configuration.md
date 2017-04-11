@@ -76,7 +76,7 @@ artgris_file_manager:
 
 >If `type` option is not sufficient for you, You can defined your own `regex` rules and `accept` [(HTML input accept attribute)](https://www.w3schools.com/tags/att_input_accept.asp): 
 
-####`regex` and `accept` Advanced file restriction options
+#### `regex` and `accept` Advanced file restriction options
 
 
 | Option | Type     | Required  | Default value |
