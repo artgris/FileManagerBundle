@@ -33,26 +33,38 @@ class FileTypeService
 
     public function preview(FileManager $fileManager, SplFileInfo $file)
     {
+        dump($file);
         if ($fileManager->getImagePath()) {
             $filePath = htmlentities($fileManager->getImagePath() . rawurlencode($file->getFilename()));
         } else {
             $filePath = $this->router->generate('file_manager_file', array_merge($fileManager->getQueryParameters(), ['fileName' => rawurlencode($file->getFilename())]));
         }
         $extension = $file->getExtension();
-        switch (true) {
-            case preg_match('/(gif|png|jpe?g|svg)$/i', $extension):
-                return [
-                    "path" => $filePath,
-                    "html" => "<img class=\"img-rounded\" src=\"{$filePath}\" height='22px' width='22px'>"
-                ];
-            case preg_match('/(mp4|ogg|webm)$/i', $extension):
-                $fa = 'fa-file-video-o';
-                break;
-            case preg_match('/(pdf)$/i', $extension):
-                $fa = 'fa-file-pdf-o';
-                break;
-            default :
-                $fa = 'fa-file';
+        $type = $file->getType();
+        if ($type === "file") {
+            switch (true) {
+                case preg_match('/(gif|png|jpe?g|svg)$/i', $extension):
+                    return [
+                        "path" => $filePath,
+                        "html" => "<img class=\"img-rounded\" src=\"{$filePath}\" height='22px' width='22px'>"
+                    ];
+                case preg_match('/(mp4|ogg|webm)$/i', $extension):
+                    $fa = 'fa-file-video-o';
+                    break;
+                case preg_match('/(pdf)$/i', $extension):
+                    $fa = 'fa-file-pdf-o';
+                    break;
+                default :
+                    $fa = 'fa-file-o';
+            }
+        } else if ($type === "dir") {
+
+            $href = $this->router->generate('file_manager', array_merge($fileManager->getQueryParameters(), ['route' => $fileManager->getRoute() . DIRECTORY_SEPARATOR . rawurlencode($file->getFilename())]));
+            return [
+                "path" => $filePath,
+                "html" => "<i class='fa fa-folder' aria-hidden='true'></i>",
+                "folder" => '<a  href="' . $href . '">' . $file->getFilename() . '</a>'
+            ];
         }
 
         return [

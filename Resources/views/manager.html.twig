@@ -22,9 +22,13 @@
                href="{{ fileManager.parent }}">
                 <span class="fa fa-level-up"></span></a>
         {% endif %}
-        <button type="button" title="{{ 'button.refresh'|trans }}" class="btn btn-default btn-sm" onClick="window.location.reload()">
+        <button type="button" title="{{ 'button.refresh'|trans }}" class="btn btn-default btn-sm " onClick="window.location.reload()">
             <i class="glyphicon glyphicon-refresh"></i>
         </button>
+        <a type="button" href="{{ path('file_manager', fileManager.queryParameters|merge({'theme':fileManager.theme == 1 ? 2 : 1})) }}"
+           class="btn btn-sm btn-default {{ fileManager.theme == 1 ? 'active' }}">
+            <span class="fa fa-navicon"></span>
+        </a>
         <span class="btn btn-success btn-sm fileinput-button">
         <i class="glyphicon glyphicon-plus"></i>
         <span>{{ 'button.add.files'|trans }}</span>
@@ -52,45 +56,45 @@
                 <span>{{ 'button.delete.current'|trans }}</span>
             </button>
         {% endif %}
+        <div class="btn-group pull-right">
+            <a type="button" href="{{ path('file_manager', fileManager.queryParameters|merge({'th':1})) }}"
+               class="btn btn-sm btn-default {{ fileManager.Th == 1 ? 'active' }}">
+                <span class="fa fa-th-list"></span>
+            </a>
+            <a type="button" href="{{ path('file_manager', fileManager.queryParameters|merge({'th':2})) }}"
+               class="btn btn-sm btn-default {{ fileManager.Th == 2 ? 'active' }}">
+                <span class="fa fa-th"></span>
+            </a>
+        </div>
+
     </div>
     <div class="row">
+        {% if fileManager.theme == 1 %}
         <div class="col-xs-4 col-md-4 col-lg-3" id="tree-block">
             <div class="table-responsive">
                 <div id="tree"></div>
             </div>
         </div>
         <div class="col-xs-8 col-md-8 col-lg-9">
-            <div class="table-responsive">
+            {% else %}
+            <div class="col-lg-12">
+                {% endif %}
                 <form id="form-multiple-delete">
-                    <table class="table {% if module is defined %}table-hover{% endif %}">
-                        <thead class="thead-default">
-                        <tr>
-                            <th><input type="checkbox" id="select-all"></th>
-                            <th></th>
-                            <th>{{ 'table.name'|trans }}</th>
-                            <th>{{ 'table.date'|trans }}</th>
-                            <th>{{ 'table.size'|trans }}</th>
-                            <th>{{ 'table.dimension'|trans }}</th>
-                            <th>{{ 'table.actions'|trans }}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% include '@ArtgrisFileManager/_list.html.twig' with {'fileManager' :fileManager,  'finderFiles' : finderFiles, 'formDelete' : formDelete, 'imageSize' : imageSize} only %}
-                        </tbody>
-                    </table>
+                    {% include '@ArtgrisFileManager/_list.html.twig' with {'fileManager' :fileManager,  'finderFiles' : finderFiles, 'formDelete' : formDelete, 'imageSize' : imageSize} only %}
                 </form>
+            <div class="col-lg-12 nopadding">
+                <a id="js-delete-multiple-modal"
+                   class="btn btn-xs btn-danger disabled"
+                   type="button"
+                   data-trigger="click"
+                   data-container="body"
+                   data-toggle="modal"
+                   data-target="#js-confirm-delete"
+                   data-placement="left"
+                   data-html="true">
+                    <i class="fa fa-chevron-up"></i> {{ 'button.delete.selected'|trans }}
+                </a>
             </div>
-            <a id="js-delete-multiple-modal"
-               class="btn btn-xs btn-danger disabled"
-               type="button"
-               data-trigger="click"
-               data-container="body"
-               data-toggle="modal"
-               data-target="#js-confirm-delete"
-               data-placement="left"
-               data-html="true">
-                <i class="fa fa-chevron-up"></i> {{ 'button.delete.selected'|trans }}
-            </a>
         </div>
     </div>
 </div>
@@ -183,9 +187,10 @@
         {% endfor %}
         {% endif %}
 
+        {% if fileManager.theme == 1 %}
         // sticky kit
         $("#tree-block").stick_in_parent();
-
+        {% endif %}
         $(document)
         // checkbox select all
             .on('click', '#select-all', function () {
@@ -353,7 +358,7 @@
                     }).done(function (data) {
 
                         // update file list
-                        $('.table tbody').html(data.data);
+                        $('#form-multiple-delete').html(data.data);
 
                         // update treeview
                         $('#tree').treeview({

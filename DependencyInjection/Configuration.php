@@ -25,6 +25,8 @@ class Configuration implements ConfigurationInterface
                     ->prototype('array')
                         ->children()
                             ->scalarNode('dir')->end()
+                            ->scalarNode('theme')->end()
+                            ->scalarNode('th')->end()
                             ->scalarNode('type')->end()
                             ->scalarNode('regex')->end()
                             ->scalarNode('service')->end()

@@ -13,6 +13,8 @@ class FileManager
 {
 
     private $module;
+    private $theme;
+    private $th;
     private $type;
     private $route;
     private $basePath;
@@ -36,6 +38,8 @@ class FileManager
         $this->configuration = $configuration;
         $this->route = isset($queryParameters['route']) ? $queryParameters['route'] : null;
         $this->module = isset($queryParameters['module']) ? $queryParameters['module'] : null;
+        $this->theme = isset($queryParameters['theme']) ? $queryParameters['theme'] : 1;
+        $this->th = isset($queryParameters['th']) ? $queryParameters['th'] : 1;
         $this->type = isset($configuration['type']) ? $configuration['type'] : (isset($queryParameters['type']) ? $queryParameters['type'] : null);
         $this->basePath = realpath($configuration['dir']);
         $this->kernelRoute = $kernelRoute;
@@ -259,6 +263,36 @@ class FileManager
         $this->configuration = $configuration;
     }
 
+    /**
+     * @return int
+     */
+    public function getTheme()
+    {
+        return $this->theme;
+    }
 
+    /**
+     * @param int $theme
+     */
+    public function setTheme($theme)
+    {
+        $this->theme = $theme;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTh()
+    {
+        return $this->th;
+    }
+
+    /**
+     * @param int $th
+     */
+    public function setTh($th)
+    {
+        $this->th = $th;
+    }
 
 }

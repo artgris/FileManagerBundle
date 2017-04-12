@@ -59,9 +59,24 @@ class ManagerController extends Controller
 
         // File search
         $finderFiles = new Finder();
-        $finderFiles->in($fileManager->getCurrentPath())->depth(0)->files()->sortByType()->name($fileManager->getRegex())->filter(function (SplFileInfo $file) {
-            return $file->isReadable();
-        });
+        $regex = $fileManager->getRegex();
+
+        if ($fileManager->getTheme() == 1) {
+            $finderFiles->in($fileManager->getCurrentPath())->depth(0)->files()->sortByType()->name($regex)->filter(function (SplFileInfo $file) {
+                return $file->isReadable();
+            });
+        } else {
+            $finderFiles->in($fileManager->getCurrentPath())->depth(0)->sortByType()->filter(function (SplFileInfo $file) use ($regex) {
+                if ($file->getType() == 'file') {
+                    if (preg_match($regex, $file->getFilename())) {
+                        return $file->isReadable();
+                    } else {
+                        return false;
+                    }
+                }
+                return $file->isReadable();
+            });
+        }
 
         $formDelete = $this->createDeleteForm()->createView();
         $imageSize = [];
@@ -440,7 +455,6 @@ class ManagerController extends Controller
      */
     private function retrieveFilesNumber($path, $regex)
     {
-
         $files = new Finder();
         $files->in($path)->files()->depth(0)->name($regex);
         return iterator_count($files);
