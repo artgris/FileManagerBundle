@@ -36,7 +36,7 @@ class ManagerController extends Controller
         if (!isset($queryParameters['conf'])) {
             throw new \Exception('Please defined a conf parameter in your route');
         }
-        return new FileManager($queryParameters, $this->getBasePath($queryParameters['conf']), $this->getKernelRoute(), $this->get('router'));
+        return new FileManager($queryParameters, $this->getBasePath($queryParameters), $this->getKernelRoute(), $this->get('router'));
     }
 
     /**
@@ -222,7 +222,7 @@ class ManagerController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             // remove file
-            $fileManager = new FileManager($queryParameters, $this->getBasePath($queryParameters['conf']), $this->getKernelRoute(), $this->get('router'));
+            $fileManager = new FileManager($queryParameters, $this->getBasePath($queryParameters), $this->getKernelRoute(), $this->get('router'));
             $fs = new Filesystem();
 
             if (isset($queryParameters['delete'])) {
@@ -449,17 +449,18 @@ class ManagerController extends Controller
     /*
      * Base Path
      */
-    private function getBasePath($conf)
+    private function getBasePath($queryParameters)
     {
+        $conf = $queryParameters['conf'];
         $managerConf = $this->getParameter("artgris_file_manager")['conf'];
-
         if (isset($managerConf[$conf]['dir'])) {
 
             return $managerConf[$conf];
 
         } else if (isset($managerConf[$conf]['service'])) {
 
-            $conf = $this->get($managerConf[$conf]['service'])->getConf();
+            $extra = isset($queryParameters['extra']) ? $queryParameters['extra'] : [];
+            $conf = $this->get($managerConf[$conf]['service'])->getConf($extra);
             return $conf;
         }
     }

@@ -12,6 +12,7 @@ Here is a list of URL parameters :
 | `conf`   | `String` |  **True** |                          |               | name of the conf
 | `type`   | `String` |  False    | `file`, `image`, `media` | `file`        | type (used by tinymce)
 | `module` | `String` |  False    | `tiny`                   |  `null`       | module (used by tinymce)
+| `extra` | `Array` |  False    |                    |  `null`       | extra parameters (used by service configuration)
 
 
 Exemple:

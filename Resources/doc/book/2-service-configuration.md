@@ -33,7 +33,7 @@ use Artgris\Bundle\FileManagerBundle\Service\CustomConfService;
 
 class CustomService implements CustomConfService
 {
-   public function getConf() {
+   public function getConf($extra = []) {
    
     ... 
    
@@ -41,7 +41,7 @@ class CustomService implements CustomConfService
 }
 ```
 
-`getconf()` must return an Array of the configuration :
+`getconf($extra)` must return an Array of the configuration :
 
 ```php 
    public function getConf() {
@@ -64,6 +64,25 @@ services:
    
 >Browse the `/manager/?conf=perso` URL to get access to this File Manager
 
+#### Extra URL parameters injections
+
+You can inject `extra` parameters in your service via URL:
+
+Example :
+
+    path('file_manager', {module:'tiny', type:'image', conf:'perso', extra: {'user':'miamolex', 'allow': true}})
+
+
+Here i add 2 extra parameters, that i retrieve in my Service :
+
+```php
+public function getConf($extra = []) {     
+
+ $user = $extra['user'] # miamolex
+ $allow = $extra['allow'] # true
+ 
+ ...
+```    
 With service configuration, you can for example defined a folder for each user login
 
 ```php 
