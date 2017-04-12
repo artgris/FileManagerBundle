@@ -44,7 +44,7 @@ class CustomService implements CustomConfService
 `getconf($extra)` must return an Array of the configuration :
 
 ```php 
-   public function getConf() {
+   public function getConf($extra = []) {
    
      return [
      'dir' => '../web/public'
@@ -114,7 +114,7 @@ class CustomService implements CustomConfService
     }
 
 
-    public function getConf()
+    public function getConf($extra = [])
     {
         $folder = 'user/' . $this->tokenStorage->getToken()->getUser();
         $fs = new Filesystem();
