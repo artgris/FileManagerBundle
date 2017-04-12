@@ -154,7 +154,7 @@ use Artgris\Bundle\FileManagerBundle\Service\CustomConfService;
 
 class CustomService implements CustomConfService
 {
-      public function getConf()
+      public function getConf($extra = [])
       {
           return [
               'dir' => '../web/perso',
