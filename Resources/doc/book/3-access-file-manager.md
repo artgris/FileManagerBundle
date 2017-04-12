@@ -17,6 +17,6 @@ Here is a list of URL parameters :
 
 Exemple:
 
-    {{ path('file_manager', {conf:'tiny', module:'tiny'}) }} 
+    path('file_manager', {module:'tiny', type:'image', conf:'perso', extra: {'user':'miamolex', 'allow': true}})
     
-    # /manager/?conf=tiny&module=tiny
+    # /manager/?module=tiny&type=image&conf=perso&extra[user]=miamolex&extra[allow]=1
