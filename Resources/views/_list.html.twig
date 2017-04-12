@@ -15,7 +15,7 @@
         </td>
         {% set size = file.size / 1000 %}
         <td>
-            <small>{{ size > 1000 ? (size / 1000)|number_format(1, '.', '')~' Mo'  : size|number_format(1, '.', '')~' Ko' }}</small>
+            <small>{{ size > 1000 ? (size / 1000)|number_format(1, '.', '')~' '~ 'size.mb'|trans  : size|number_format(1, '.', '')~' '~'size.kb'|trans }}</small>
         </td>
         <td>
             <small>

@@ -45,3 +45,6 @@ table:
   actions: Actions
 confirm:
   delete:  Are you sure that you want to delete?
+size:
+  mb: MB
+  kb: kB
