@@ -1,0 +1,76 @@
+<div class="table-responsive">
+    <table class="table">
+        <colgroup>
+            <col>
+            <col>
+            <col class="col-lg-8">
+            <col class="col-lg-1">
+            <col class="col-lg-1">
+            <col class="col-lg-1">
+            <col class="col-lg-1">
+        </colgroup>
+        <thead class="thead-default">
+        <tr>
+            <th><input type="checkbox" id="select-all" title="{{ 'select-all'|trans }}"></th>
+            <th></th>
+            <th>{{ 'table.name'|trans }}</th>
+            <th>{{ 'table.date'|trans }}</th>
+            <th>{{ 'table.size'|trans }}</th>
+            <th>{{ 'table.dimension'|trans }}</th>
+            <th class="text-right">{{ 'table.actions'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for fileEntity in fileArray %}
+            {% set file = fileEntity.file %}
+            <tr>
+                <td><input type="checkbox" class="checkbox" name="delete[]" value="{{ file.fileName }}" title="{{ file.fileName }}"></td>
+                <td>{{ fileEntity.preview.html|raw }}</td>
+                <td {{ fileEntity.attribut(fileManager.module)|raw }}>
+                    {{ (preview.folder is defined ? preview.folder : file.fileName)|raw }}
+                </td>
+                <td>
+                    <small>{{ file.mTime|date('d/m/Y') }}</small>
+                </td>
+                <td>
+                    <small>{{ fileEntity.HTMLSize|trans|raw }}</small>
+                </td>
+                <td>
+                    <small>{{ fileEntity.HTMLDimension }}</small>
+                </td>
+                <td class="text-right">
+            <span data-toggle="tooltip" title="{{ 'title.delete'|trans }}">
+                <button type="button"
+                        class="btn btn-xs btn-danger js-delete-modal"
+                        data-trigger="click"
+                        data-container="body"
+                        data-toggle="modal"
+                        data-target="#js-confirm-delete"
+                        data-placement="left"
+                        data-html="true"
+                        data-href='{{ path('file_manager_delete', fileManager.queryParameters|merge({'delete[]':file.fileName})) }}'>
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </span>
+                    <span data-toggle="tooltip" title="{{ 'title.rename.file'|trans }}">
+                <button type="button"
+                        class="btn btn-xs btn-default js-rename-modal"
+                        data-trigger="click"
+                        data-container="body"
+                        data-toggle="modal"
+                        data-target="#js-confirm-rename"
+                        data-placement="left"
+                        data-html="true"
+                        data-name='{{ file.basename('.'~file.extension) }}'
+                        data-extension='{{ file.extension }}'
+                        data-href='{{ path('file_manager_rename', fileManager.queryParameters|merge({'fileName':file.fileName})) }}'>
+                <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+            </span>
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>

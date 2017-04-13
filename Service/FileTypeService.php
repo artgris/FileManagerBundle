@@ -10,6 +10,13 @@ use Symfony\Component\Asset\Packages;
 
 class FileTypeService
 {
+
+    const IMAGE_SIZE = [
+        FileManager::VIEW_LIST => '22',
+        FileManager::VIEW_THUMBNAIL => '100'
+    ];
+
+
     /**
      * @var Router
      */
@@ -33,7 +40,6 @@ class FileTypeService
 
     public function preview(FileManager $fileManager, SplFileInfo $file)
     {
-        dump($file);
         if ($fileManager->getImagePath()) {
             $filePath = htmlentities($fileManager->getImagePath() . rawurlencode($file->getFilename()));
         } else {
@@ -44,9 +50,10 @@ class FileTypeService
         if ($type === "file") {
             switch (true) {
                 case preg_match('/(gif|png|jpe?g|svg)$/i', $extension):
+                    $size = $this::IMAGE_SIZE[$fileManager->getView()];
                     return [
                         "path" => $filePath,
-                        "html" => "<img class=\"img-rounded\" src=\"{$filePath}\" height='22px' width='22px'>"
+                        "html" => "<img src=\"{$filePath}\" height='{$size}'>"
                     ];
                 case preg_match('/(mp4|ogg|webm)$/i', $extension):
                     $fa = 'fa-file-video-o';
@@ -62,7 +69,7 @@ class FileTypeService
             $href = $this->router->generate('file_manager', array_merge($fileManager->getQueryParameters(), ['route' => $fileManager->getRoute() . DIRECTORY_SEPARATOR . rawurlencode($file->getFilename())]));
             return [
                 "path" => $filePath,
-                "html" => "<i class='fa fa-folder' aria-hidden='true'></i>",
+                "html" => "<i class='fa fa-folder-o' aria-hidden='true'></i>",
                 "folder" => '<a  href="' . $href . '">' . $file->getFilename() . '</a>'
             ];
         }
@@ -90,5 +97,6 @@ class FileTypeService
 
         return $accept;
     }
+
 
 }

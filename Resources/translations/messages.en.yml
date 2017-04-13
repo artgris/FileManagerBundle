@@ -29,6 +29,7 @@ button:
     current: Delete current folder
     selected: Delete selected files
     action: DELETE
+  tree: 'messages'
 title:
   add:
     folder: New folder
@@ -48,3 +49,4 @@ confirm:
 size:
   mb: MB
   kb: kB
+select-all: Select all

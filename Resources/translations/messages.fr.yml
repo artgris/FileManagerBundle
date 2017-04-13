@@ -29,6 +29,7 @@ button:
     current: Supprimer le dossier courant
     selected: Supprimer les fichiers sélectionnés
     action: SUPPRIMER
+  tree: 'messages'
 title:
   add:
     folder: Nouveau dossier
@@ -48,3 +49,4 @@ confirm:
 size:
   mb: Mo
   kb: ko
+select-all: Tout selectionner

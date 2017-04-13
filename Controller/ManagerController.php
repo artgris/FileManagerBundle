@@ -2,6 +2,7 @@
 
 namespace Artgris\Bundle\FileManagerBundle\Controller;
 
+use Artgris\Bundle\FileManagerBundle\Helpers\File;
 use Artgris\Bundle\FileManagerBundle\Helpers\FileManager;
 use Artgris\Bundle\FileManagerBundle\Helpers\UploadHandler;
 use Exception;
@@ -60,13 +61,13 @@ class ManagerController extends Controller
         // File search
         $finderFiles = new Finder();
         $regex = $fileManager->getRegex();
-
-        if ($fileManager->getTheme() == 1) {
-            $finderFiles->in($fileManager->getCurrentPath())->depth(0)->files()->sortByType()->name($regex)->filter(function (SplFileInfo $file) {
+        $finderFiles->in($fileManager->getCurrentPath())->depth(0)->sortByType();
+        if ($fileManager->getTree()) {
+            $finderFiles->files()->name($regex)->filter(function (SplFileInfo $file) {
                 return $file->isReadable();
             });
         } else {
-            $finderFiles->in($fileManager->getCurrentPath())->depth(0)->sortByType()->filter(function (SplFileInfo $file) use ($regex) {
+            $finderFiles->filter(function (SplFileInfo $file) use ($regex) {
                 if ($file->getType() == 'file') {
                     if (preg_match($regex, $file->getFilename())) {
                         return $file->isReadable();
@@ -79,22 +80,19 @@ class ManagerController extends Controller
         }
 
         $formDelete = $this->createDeleteForm()->createView();
-        $imageSize = [];
+        $fileArray = [];
         foreach ($finderFiles as $file) {
-            if (preg_match('/(gif|png|jpe?g|svg)$/i', $file->getExtension())) {
-                $imageSize[$file->getFilename()] = getimagesize($file->getPathname());
-            }
+            $fileArray[] = new File($file, $this->get('translator'), $this->get('file_type_service'), $fileManager);
         }
 
         $parameters = [
             'fileManager' => $fileManager,
-            'finderFiles' => $finderFiles,
+            'fileArray' => $fileArray,
             'formDelete' => $formDelete,
-            'imageSize' => $imageSize
         ];
 
         if ($isJson) {
-            $fileList = $this->renderView('ArtgrisFileManagerBundle::_list.html.twig', $parameters);
+            $fileList = $this->renderView('ArtgrisFileManagerBundle:views:_list.html.twig', $parameters);
             return new JsonResponse(['data' => $fileList, 'badge' => $finderFiles->count(), 'treeData' => $directoriesArbo]);
         } else {
             $parameters['treeData'] = json_encode($directoriesArbo);
@@ -429,17 +427,21 @@ class ManagerController extends Controller
             $queryParametersRoute = $queryParameters;
             unset($queryParametersRoute['route']);
 
+            $filesNumber = $this->retrieveFilesNumber($directory->getPathname(), $fileManager->getRegex());
+            $fileSpan = $filesNumber > 0 ? " <span class='label label-default'>{$filesNumber}</span>" : '';
+
             $directoriesList[] = [
-                'text' => $directory->getFilename(),
-                'icon' => "fa fa-folder",
-                'nodes' => $this->retrieveSubDirectories($fileManager, $directory->getPathname(), $fileName . DIRECTORY_SEPARATOR),
-                'href' => $fileName ? $this->generateUrl('file_manager', $queryParameters) : $this->generateUrl('file_manager', $queryParametersRoute),
-                'state' => [
+                'text' => $directory->getFilename() . $fileSpan,
+                'icon' => "fa fa-folder-o",
+                'children' => $this->retrieveSubDirectories($fileManager, $directory->getPathname(), $fileName . DIRECTORY_SEPARATOR),
+                'a_attr' => [
+                    'href' => $fileName ? $this->generateUrl('file_manager', $queryParameters) : $this->generateUrl('file_manager', $queryParametersRoute),
+                ], 'state' => [
                     'selected' => $fileManager->getCurrentRoute() === $fileName,
 //				    'expanded' => $fileName ? substr($fileManager->getCurrentRoute(), 0, strlen($fileName)) === $fileName : true,
-                    'expanded' => true
+                    'opened' => true
                 ],
-                'tags' => [$this->retrieveFilesNumber($directory->getPathname(), $fileManager->getRegex())]
+//                'tags' => [$this->retrieveFilesNumber($directory->getPathname(), $fileManager->getRegex())]
             ];
         }
         return $directoriesList;

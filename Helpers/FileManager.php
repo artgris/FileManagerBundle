@@ -12,12 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 class FileManager
 {
 
-    private $module;
-    private $theme;
-    private $th;
-    private $type;
-    private $route;
-    private $basePath;
+    const VIEW_THUMBNAIL = 'thumbnail';
+    const VIEW_LIST = 'list';
+
     private $queryParameters;
     private $kernelRoute;
     private $router;
@@ -36,12 +33,6 @@ class FileManager
     {
         $this->queryParameters = $queryParameters;
         $this->configuration = $configuration;
-        $this->route = isset($queryParameters['route']) ? $queryParameters['route'] : null;
-        $this->module = isset($queryParameters['module']) ? $queryParameters['module'] : null;
-        $this->theme = isset($queryParameters['theme']) ? $queryParameters['theme'] : 1;
-        $this->th = isset($queryParameters['th']) ? $queryParameters['th'] : 1;
-        $this->type = isset($configuration['type']) ? $configuration['type'] : (isset($queryParameters['type']) ? $queryParameters['type'] : null);
-        $this->basePath = realpath($configuration['dir']);
         $this->kernelRoute = $kernelRoute;
         $this->router = $router;
         // Check Security
@@ -50,12 +41,12 @@ class FileManager
 
     public function getDirName()
     {
-        return dirname($this->basePath);
+        return dirname($this->getBasePath());
     }
 
     public function getBaseName()
     {
-        return basename($this->basePath);
+        return basename($this->getBasePath());
     }
 
     public function getRegex()
@@ -64,7 +55,7 @@ class FileManager
             return '/' . $this->configuration['regex'] . '/i';
         }
 
-        switch ($this->type) {
+        switch ($this->getType()) {
             case 'media':
                 return '/\.(mp4|ogg|webm)$/i';
                 break;
@@ -78,12 +69,12 @@ class FileManager
 
     public function getCurrentRoute()
     {
-        return urldecode($this->route);
+        return urldecode($this->getRoute());
     }
 
     public function getCurrentPath()
     {
-        return realpath($this->basePath . $this->getCurrentRoute());
+        return realpath($this->getBasePath() . $this->getCurrentRoute());
     }
 
 
@@ -101,7 +92,7 @@ class FileManager
 
         $parentRoute = $this->router->generate("file_manager", $queryParentParameters);
 
-        return $this->route ? $parentRoute : null;
+        return $this->getRoute() ? $parentRoute : null;
     }
 
 
@@ -119,8 +110,8 @@ class FileManager
 
         $webPath = realpath($this->kernelRoute . '/../web');
 
-        if (0 === strpos($this->basePath, $webPath)) {
-            return substr($this->basePath, strlen($webPath));
+        if (0 === strpos($this->getBasePath(), $webPath)) {
+            return substr($this->getBasePath(), strlen($webPath));
         }
         return false;
 
@@ -130,7 +121,7 @@ class FileManager
     {
         $currentPath = $this->getCurrentPath();
         // check Path security
-        if ($currentPath === false || strpos($currentPath, $this->basePath) !== 0 || !isset($this->configuration['dir'])) {
+        if ($currentPath === false || strpos($currentPath, $this->getBasePath()) !== 0 || !isset($this->configuration['dir'])) {
             throw new \Exception();
         }
     }
@@ -140,15 +131,7 @@ class FileManager
      */
     public function getModule()
     {
-        return $this->module;
-    }
-
-    /**
-     * @param null $module
-     */
-    public function setModule($module)
-    {
-        $this->module = $module;
+        return isset($this->getQueryParameters()['module']) ? $this->getQueryParameters()['module'] : null;
     }
 
     /**
@@ -156,7 +139,7 @@ class FileManager
      */
     public function getType()
     {
-        return $this->type;
+        return isset($this->getConfiguration()['type']) ? $this->getConfiguration()['type'] : (isset($this->getQueryParameters()['type']) ? $this->getQueryParameters()['type'] : null);
     }
 
     /**
@@ -172,15 +155,7 @@ class FileManager
      */
     public function getRoute()
     {
-        return $this->route;
-    }
-
-    /**
-     * @param null $route
-     */
-    public function setRoute($route)
-    {
-        $this->route = $route;
+        return isset($this->getQueryParameters()['route']) ? $this->getQueryParameters()['route'] : null;
     }
 
     /**
@@ -188,15 +163,7 @@ class FileManager
      */
     public function getBasePath()
     {
-        return $this->basePath;
-    }
-
-    /**
-     * @param bool|string $basePath
-     */
-    public function setBasePath($basePath)
-    {
-        $this->basePath = $basePath;
+        return realpath($this->getConfiguration()['dir']);
     }
 
     /**
@@ -266,33 +233,19 @@ class FileManager
     /**
      * @return int
      */
-    public function getTheme()
+    public function getTree()
     {
-        return $this->theme;
+        return isset($this->getQueryParameters()['tree']) ? $this->getQueryParameters()['tree'] : true;
     }
 
-    /**
-     * @param int $theme
-     */
-    public function setTheme($theme)
-    {
-        $this->theme = $theme;
-    }
 
     /**
      * @return int
      */
-    public function getTh()
+    public function getView()
     {
-        return $this->th;
+        return isset($this->getQueryParameters()['view']) ? $this->getQueryParameters()['view'] : 'list';
     }
 
-    /**
-     * @param int $th
-     */
-    public function setTh($th)
-    {
-        $this->th = $th;
-    }
 
 }

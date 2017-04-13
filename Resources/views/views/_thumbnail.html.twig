@@ -1,0 +1,52 @@
+<div class="row margin-bottom" id="thumbnail-blk">
+    <div class="col-md-12">
+        <input type="checkbox" id="select-all" title="{{ 'select-all'|trans }}"> <label for="select-all">{{ 'select-all'|trans }}</label>
+    </div>
+    {% for fileEntity in fileArray %}
+        {% set file = fileEntity.file %}
+        <div class="col-xs-6 col-sm-4 col-md-4 col-lg-2 text-center thumbnail ">
+            <div class="thumbnail-img">
+                {{ fileEntity.preview.html|raw }}
+            </div>
+            <p {{ fileEntity.attribut(fileManager.module)|raw }}>{{ (preview.folder is defined ? preview.folder : file.fileName)|raw }} <br>
+                <small>{{ fileEntity.file.mTime|date('d/m/Y') }} - {{ fileEntity.HTMLSize|trans|raw }}</small>
+                <br>
+                <small>{{ fileEntity.HTMLDimension }}</small>
+                <br>
+            </p>
+            <div class="text-center">
+
+                <span class="form-inline"> <input type="checkbox" class="checkbox" name="delete[]" value="{{ file.fileName }}"
+                                                  title="{{ file.fileName }}"></span>
+                <span data-toggle="tooltip" title="{{ 'title.delete'|trans }}">
+                <button type="button"
+                        class="btn btn-xs btn-danger js-delete-modal"
+                        data-trigger="click"
+                        data-container="body"
+                        data-toggle="modal"
+                        data-target="#js-confirm-delete"
+                        data-placement="left"
+                        data-html="true"
+                        data-href='{{ path('file_manager_delete', fileManager.queryParameters|merge({'delete[]':file.fileName})) }}'>
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </span>
+                <span data-toggle="tooltip" title="{{ 'title.rename.file'|trans }}">
+                <button type="button"
+                        class="btn btn-xs btn-default js-rename-modal"
+                        data-trigger="click"
+                        data-container="body"
+                        data-toggle="modal"
+                        data-target="#js-confirm-rename"
+                        data-placement="left"
+                        data-html="true"
+                        data-name='{{ file.basename('.'~file.extension) }}'
+                        data-extension='{{ file.extension }}'
+                        data-href='{{ path('file_manager_rename', fileManager.queryParameters|merge({'fileName':file.fileName})) }}'>
+                <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+            </span>
+            </div>
+        </div>
+    {% endfor %}
+</div>

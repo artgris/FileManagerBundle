@@ -13,3 +13,5 @@ remarkable-bootstrap-notify/*
 !remarkable-bootstrap-notify/dist
 sticky-kit/*
 !sticky-kit/jquery.sticky-kit.min.js
+jstree/*
+!jstree/dist
