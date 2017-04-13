@@ -235,7 +235,8 @@ class FileManager
      */
     public function getTree()
     {
-        return isset($this->getQueryParameters()['tree']) ? $this->getQueryParameters()['tree'] : true;
+        return isset($this->getQueryParameters()['tree']) ? $this->getQueryParameters()['tree'] : (isset($this->getConfiguration()['tree']) ? $this->getConfiguration()['tree'] : true);
+
     }
 
 
@@ -244,7 +245,8 @@ class FileManager
      */
     public function getView()
     {
-        return isset($this->getQueryParameters()['view']) ? $this->getQueryParameters()['view'] : 'list';
+        return isset($this->getQueryParameters()['view']) ? $this->getQueryParameters()['view'] : (isset($this->getConfiguration()['view']) ? $this->getConfiguration()['view'] : 'list');
+
     }
 
 

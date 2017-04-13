@@ -22,7 +22,7 @@ body {
     display: inline-block;
 }
 
-#top-bar {
+.top-bar {
     padding: 10px 0;
     margin: 3px 0;
 }
@@ -40,7 +40,6 @@ i.fa {
 }
 
 .nopadding {
-    padding: 0 !important;
     margin: 0 !important;
 }
 
@@ -60,8 +59,8 @@ i.fa {
 }
 
 .thumbnail {
-    padding: 20px 0;
-    margin-bottom: 0px;
+    padding: 20px 14px;
+    margin-bottom: 0;
     border-left: none;
     border-radius: inherit;
     border-top: none;
@@ -69,25 +68,24 @@ i.fa {
     border-right: 1px #dcdcdc solid;
 }
 
-/*.thumbnail-card {*/
-/*display: inline-block;*/
-/*height: 200px;*/
-/*padding: 20px;*/
-
-/*}*/
-
-/*.thumbnail-card p {*/
-/*overflow: hidden;*/
-/*}*/
-
-.thumbnail-img {
-    min-height: 100px;
+.thumbnail p {
+    height: 85px;
 }
 
-#thumbnail-blk .fa {
+.thumbnail-img {
+    height: 115px;
+    padding: 5px;
+}
+
+.thumbnail .fa {
     font-size: 6em;
 }
 
-#thumbnail-blk .select {
+.thumbnail-blk .select {
     padding: 5px 0;
+}
+
+
+.no-tree-blk .thumbnail-blk .select-all {
+    padding-left: 5px;
 }

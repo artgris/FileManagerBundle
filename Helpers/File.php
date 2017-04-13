@@ -6,7 +6,7 @@ namespace Artgris\Bundle\FileManagerBundle\Helpers;
 
 use Artgris\Bundle\FileManagerBundle\Service\FileTypeService;
 use Symfony\Component\Finder\SplFileInfo;
-use Symfony\Component\Translation\DataCollectorTranslator;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class File
 {
@@ -15,7 +15,7 @@ class File
      */
     private $file;
     /**
-     * @var DataCollectorTranslator
+     * @var TranslatorInterface
      */
     private $translator;
     /**
@@ -32,12 +32,12 @@ class File
     /**
      * File constructor.
      * @param SplFileInfo $file
-     * @param DataCollectorTranslator $translator
+     * @param TranslatorInterface $translator
      * @param FileTypeService $fileTypeService
      * @param FileManager $fileManager
      * @internal param $module
      */
-    public function __construct(SplFileInfo $file, DataCollectorTranslator $translator, FileTypeService $fileTypeService, FileManager $fileManager)
+    public function __construct(SplFileInfo $file, TranslatorInterface $translator, FileTypeService $fileTypeService, FileManager $fileManager)
     {
         $this->file = $file;
         $this->translator = $translator;
@@ -64,17 +64,17 @@ class File
 
     public function getHTMLSize()
     {
-
-        $size = $this->file->getSize() / 1000;
-        $kb = $this->translator->trans("size.kb");
-        $mb = $this->translator->trans("size.mb");
-        return $size > 1000 ? number_format(($size / 1000), 1, '.', '') . " " . $mb : number_format($size, 1, '.', '') . " " . $kb;
+        if ($this->getFile()->getType() == 'file') {
+            $size = $this->file->getSize() / 1000;
+            $kb = $this->translator->trans("size.kb");
+            $mb = $this->translator->trans("size.mb");
+            return $size > 1000 ? number_format(($size / 1000), 1, '.', '') . " " . $mb : number_format($size, 1, '.', '') . " " . $kb;
+        }
     }
 
     public function getAttribut($module)
     {
         if ($module) {
-
             $attr = '';
             if ($this->getDimension()) {
 
@@ -87,19 +87,9 @@ class File
                 $attr .= "data-path=\"{$this->getPreview()['path']}\"";
             }
 
-            switch ($this->fileManager->getView()) {
-                case FileManager::VIEW_THUMBNAIL:
-                    $attr .= ' class="select"';
-                    break;
-                case FileManager::VIEW_LIST:
-                    $attr .= ' class="select"';
-                    break;
-            }
-
-
+            $attr .= ' class="select"';
             return $attr;
         }
-
     }
 
 
@@ -134,6 +124,5 @@ class File
     {
         $this->preview = $preview;
     }
-
 
 }

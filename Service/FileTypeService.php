@@ -61,6 +61,18 @@ class FileTypeService
                 case preg_match('/(pdf)$/i', $extension):
                     $fa = 'fa-file-pdf-o';
                     break;
+                case preg_match('/(docx?)$/i', $extension):
+                    $fa = 'fa-file-word-o';
+                    break;
+                case preg_match('/(xlsx?|csv)$/i', $extension):
+                    $fa = 'fa-file-excel-o';
+                    break;
+                case preg_match('/(pptx?)$/i', $extension):
+                    $fa = 'fa-file-powerpoint-o';
+                    break;
+                case preg_match('/(zip|rar|gz)$/i', $extension):
+                    $fa = 'fa-file-archive-o';
+                    break;
                 default :
                     $fa = 'fa-file-o';
             }

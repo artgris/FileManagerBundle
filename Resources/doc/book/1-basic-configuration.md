@@ -51,11 +51,36 @@ artgris_file_manager:
 
 >Browse the `/manager/?conf=private` URL to get access to this File Manager
 
+#### `tree` Display Folder Tree 
+| Option | Type     | Required | Default value |
+| :---  |:--------:|:--------:|:--------:|
+| `tree`  | `Booleen` |  False   | True |
+
+Exemple with `tree` = False
+
+<img src="https://raw.githubusercontent.com/artgris/FileManagerBundle/master/Resources/doc/images/filemanager-promo-no-tree.png" alt="Symfony Filemanager created with FileManagerBundle" align="center" />
+
+
+
+#### `view` Display Mode Type
+
+| Option | Type     | Required | Possible values          | Default value |
+| :---  |:--------:|:--------:|:------------------------:|:-------------:|
+| `view`  | `String` |  False   | `thumbnail`, `list` | `list`        |
+
+
+Exemple with `thumbnail`
+
+<img src="https://raw.githubusercontent.com/artgris/FileManagerBundle/master/Resources/doc/images/filemanager-promo-thumbnail.png" alt="Symfony Filemanager created with FileManagerBundle" align="center" />
+
+
+
 #### `type` Basic file restriction
 
 | Option | Type     | Required | Possible values          | Default value |
 | :---  |:--------:|:--------:|:------------------------:|:-------------:|
 | `type`  | `String` |  False   | `file`, `image`, `media` | `file`        |
+
 
 
 Example:

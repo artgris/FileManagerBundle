@@ -19,12 +19,6 @@ class FileTypeExtension extends \Twig_Extension
         $this->fileTypeService = $fileTypeService;
     }
 
-
-    public function preview(FileManager $fileManager, SplFileInfo $file)
-    {
-        return $this->fileTypeService->preview($fileManager, $file);
-    }
-
     public function accept($type)
     {
         return $this->fileTypeService->accept($type);
@@ -36,7 +30,6 @@ class FileTypeExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'preview' => new \Twig_SimpleFunction('preview', [$this, 'preview'], ['needs_environment' => false, 'is_safe' => ['html']]),
             'accept' => new \Twig_SimpleFunction('accept', [$this, 'accept'], ['needs_environment' => false, 'is_safe' => ['html']]),
         ];
     }

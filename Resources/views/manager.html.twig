@@ -16,7 +16,7 @@
 </head>
 <body>
 <div class="container-fluid ">
-    <div class="well-sm" id="top-bar">
+    <div class="well-sm top-bar" id="top-bar">
         <a type="button" title="{{ 'button.tree'|trans }}"
            href="{{ path('file_manager', fileManager.queryParameters|merge({'tree': fileManager.tree == true ? 0 : 1 })) }}"
            class="btn btn-sm btn-default {{ fileManager.tree ? 'active' }}">
@@ -77,28 +77,13 @@
                 <div id="tree"></div>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-8 col-md-9 col-lg-10">
+        <div class="col-xs-12 col-sm-8 col-md-9 col-lg-10 no-tree-blk">
             {% else %}
             <div class="col-lg-12">
                 {% endif %}
                 <form id="form-multiple-delete">
                     {% include '@ArtgrisFileManager/views/_'~fileManager.view~'.html.twig' with {'fileManager' :fileManager,  'fileArray' : fileArray, 'formDelete' : formDelete} only %}
                 </form>
-                <div class="row">
-                    <div class="col-lg-12 nopadding">
-                        <a id="js-delete-multiple-modal"
-                           class="btn btn-xs btn-danger disabled"
-                           type="button"
-                           data-trigger="click"
-                           data-container="body"
-                           data-toggle="modal"
-                           data-target="#js-confirm-delete"
-                           data-placement="left"
-                           data-html="true">
-                            <i class="fa fa-chevron-up"></i> {{ 'button.delete.selected'|trans }}
-                        </a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

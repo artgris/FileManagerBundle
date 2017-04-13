@@ -1,51 +1,67 @@
-<div class="row margin-bottom" id="thumbnail-blk">
-    <div class="col-md-12">
+<div class="row margin-bottom thumbnail-blk">
+    <div class="col-md-12 select-all">
         <input type="checkbox" id="select-all" title="{{ 'select-all'|trans }}"> <label for="select-all">{{ 'select-all'|trans }}</label>
+        <a id="js-delete-multiple-modal"
+           class="btn btn-xs btn-danger disabled pull-right"
+           type="button"
+           data-trigger="click"
+           data-container="body"
+           data-toggle="modal"
+           data-target="#js-confirm-delete"
+           data-placement="left"
+           data-html="true">
+            <i class="fa fa-check-square-o"></i> {{ 'button.delete.selected'|trans }}
+        </a>
     </div>
     {% for fileEntity in fileArray %}
         {% set file = fileEntity.file %}
-        <div class="col-xs-6 col-sm-4 col-md-4 col-lg-2 text-center thumbnail ">
+        <div class="col-xs-6 col-sm-4 col-md-{{ fileManager.tree == 0 ? 3 : 4 }} col-lg-2 text-center thumbnail">
+            <input type="checkbox" class="checkbox" name="delete[]"
+                   value="{{ file.fileName }}"
+                   title="{{ file.fileName }}">
             <div class="thumbnail-img">
                 {{ fileEntity.preview.html|raw }}
             </div>
-            <p {{ fileEntity.attribut(fileManager.module)|raw }}>{{ (preview.folder is defined ? preview.folder : file.fileName)|raw }} <br>
-                <small>{{ fileEntity.file.mTime|date('d/m/Y') }} - {{ fileEntity.HTMLSize|trans|raw }}</small>
+            <p {{ fileEntity.attribut(fileManager.module)|raw }}>
+                {{ (fileEntity.preview.folder is defined ? fileEntity.preview.folder : file.fileName)|raw }}<br>
+                <small>{{ fileEntity.file.mTime|date('d/m/Y') }}  {{ fileEntity.HTMLSize ? ' - '~fileEntity.HTMLSize|trans|raw }}</small>
                 <br>
                 <small>{{ fileEntity.HTMLDimension }}</small>
                 <br>
             </p>
-            <div class="text-center">
-
-                <span class="form-inline"> <input type="checkbox" class="checkbox" name="delete[]" value="{{ file.fileName }}"
-                                                  title="{{ file.fileName }}"></span>
-                <span data-toggle="tooltip" title="{{ 'title.delete'|trans }}">
-                <button type="button"
-                        class="btn btn-xs btn-danger js-delete-modal"
-                        data-trigger="click"
-                        data-container="body"
-                        data-toggle="modal"
-                        data-target="#js-confirm-delete"
-                        data-placement="left"
-                        data-html="true"
-                        data-href='{{ path('file_manager_delete', fileManager.queryParameters|merge({'delete[]':file.fileName})) }}'>
-                    <span class="glyphicon glyphicon-remove"></span>
-                </button>
-            </span>
+            <div class="row">
+                <div class="col-xs-6 col-md-6">
+                    <span data-toggle="tooltip" title="{{ 'title.delete'|trans }}">
+                        <button type="button"
+                                class="btn btn-sm btn-danger js-delete-modal"
+                                data-trigger="click"
+                                data-container="body"
+                                data-toggle="modal"
+                                data-target="#js-confirm-delete"
+                                data-placement="left"
+                                data-html="true"
+                                data-href='{{ path('file_manager_delete', fileManager.queryParameters|merge({'delete[]':file.fileName})) }}'>
+                            <span class="glyphicon glyphicon-remove"></span> {{ 'title.delete'|trans }}
+                        </button>
+                    </span>
+                </div>
+                <div class="col-xs-6  col-md-6">
                 <span data-toggle="tooltip" title="{{ 'title.rename.file'|trans }}">
-                <button type="button"
-                        class="btn btn-xs btn-default js-rename-modal"
-                        data-trigger="click"
-                        data-container="body"
-                        data-toggle="modal"
-                        data-target="#js-confirm-rename"
-                        data-placement="left"
-                        data-html="true"
-                        data-name='{{ file.basename('.'~file.extension) }}'
-                        data-extension='{{ file.extension }}'
-                        data-href='{{ path('file_manager_rename', fileManager.queryParameters|merge({'fileName':file.fileName})) }}'>
-                <span class="glyphicon glyphicon-pencil"></span>
-                </button>
-            </span>
+                    <button type="button"
+                            class="btn btn-sm btn-default js-rename-modal"
+                            data-trigger="click"
+                            data-container="body"
+                            data-toggle="modal"
+                            data-target="#js-confirm-rename"
+                            data-placement="left"
+                            data-html="true"
+                            data-name='{{ file.basename('.'~file.extension) }}'
+                            data-extension='{{ file.extension }}'
+                            data-href='{{ path('file_manager_rename', fileManager.queryParameters|merge({'fileName':file.fileName})) }}'>
+                    <span class="glyphicon glyphicon-pencil"></span> {{ 'title.rename.file'|trans }}
+                    </button>
+                </span>
+                </div>
             </div>
         </div>
     {% endfor %}

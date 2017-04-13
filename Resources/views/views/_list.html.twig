@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<div class="table-responsive list-blk">
     <table class="table">
         <colgroup>
             <col>
@@ -14,9 +14,9 @@
             <th><input type="checkbox" id="select-all" title="{{ 'select-all'|trans }}"></th>
             <th></th>
             <th>{{ 'table.name'|trans }}</th>
-            <th>{{ 'table.date'|trans }}</th>
-            <th>{{ 'table.size'|trans }}</th>
-            <th>{{ 'table.dimension'|trans }}</th>
+            <th class="hidden-xs">{{ 'table.date'|trans }}</th>
+            <th class="hidden-xs">{{ 'table.size'|trans }}</th>
+            <th class="hidden-xs">{{ 'table.dimension'|trans }}</th>
             <th class="text-right">{{ 'table.actions'|trans }}</th>
         </tr>
         </thead>
@@ -27,15 +27,15 @@
                 <td><input type="checkbox" class="checkbox" name="delete[]" value="{{ file.fileName }}" title="{{ file.fileName }}"></td>
                 <td>{{ fileEntity.preview.html|raw }}</td>
                 <td {{ fileEntity.attribut(fileManager.module)|raw }}>
-                    {{ (preview.folder is defined ? preview.folder : file.fileName)|raw }}
+                    {{ (fileEntity.preview.folder is defined ? fileEntity.preview.folder : file.fileName)|raw }}
                 </td>
-                <td>
+                <td class="hidden-xs">
                     <small>{{ file.mTime|date('d/m/Y') }}</small>
                 </td>
-                <td>
+                <td class="hidden-xs">
                     <small>{{ fileEntity.HTMLSize|trans|raw }}</small>
                 </td>
-                <td>
+                <td class="hidden-xs">
                     <small>{{ fileEntity.HTMLDimension }}</small>
                 </td>
                 <td class="text-right">
@@ -73,4 +73,19 @@
 
         </tbody>
     </table>
+</div>
+<div class="row">
+    <div class="col-lg-12 nopadding">
+        <a id="js-delete-multiple-modal"
+           class="btn btn-xs btn-danger disabled"
+           type="button"
+           data-trigger="click"
+           data-container="body"
+           data-toggle="modal"
+           data-target="#js-confirm-delete"
+           data-placement="left"
+           data-html="true">
+            <i class="fa fa-check-square-o"></i> {{ 'button.delete.selected'|trans }}
+        </a>
+    </div>
 </div>
