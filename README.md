@@ -16,6 +16,7 @@ FileManager is a simple Multilingual File Manager Bundle for Symfony
 *  Manage **Public** and **Private** folders
 *  **Multilingual** (English, French)
 *  **Fully responsive design** (bootstrap)
+*  Multilple view modes (list, thumbnail, with tree or not)
 *  Easy integration with [**Tinymce**](https://www.tinymce.com/)
 *  **Preview images** (even with a Private folder)
 *  Create **multilple configurations**
