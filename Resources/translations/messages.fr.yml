@@ -29,7 +29,7 @@ button:
     current: Supprimer le dossier courant
     selected: Supprimer les fichiers sélectionnés
     action: SUPPRIMER
-  tree: 'messages'
+  tree: Arborescence
 title:
   add:
     folder: Nouveau dossier

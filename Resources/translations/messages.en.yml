@@ -29,7 +29,7 @@ button:
     current: Delete current folder
     selected: Delete selected files
     action: DELETE
-  tree: 'messages'
+  tree: tree
 title:
   add:
     folder: New folder
