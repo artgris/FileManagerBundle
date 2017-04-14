@@ -30,7 +30,6 @@
                 <br>
             </p>
             <div class="row">
-                <div class="col-xs-6 col-md-6">
                     <span data-toggle="tooltip" title="{{ 'title.delete'|trans }}">
                         <button type="button"
                                 class="btn btn-sm btn-danger js-delete-modal"
@@ -41,11 +40,9 @@
                                 data-placement="left"
                                 data-html="true"
                                 data-href='{{ path('file_manager_delete', fileManager.queryParameters|merge({'delete[]':file.fileName})) }}'>
-                            <span class="glyphicon glyphicon-remove"></span> {{ 'title.delete'|trans }}
+                            <span class="glyphicon glyphicon-remove"></span>
                         </button>
                     </span>
-                </div>
-                <div class="col-xs-6  col-md-6">
                 <span data-toggle="tooltip" title="{{ 'title.rename.file'|trans }}">
                     <button type="button"
                             class="btn btn-sm btn-default js-rename-modal"
@@ -58,10 +55,15 @@
                             data-name='{{ file.basename('.'~file.extension) }}'
                             data-extension='{{ file.extension }}'
                             data-href='{{ path('file_manager_rename', fileManager.queryParameters|merge({'fileName':file.fileName})) }}'>
-                    <span class="glyphicon glyphicon-pencil"></span> {{ 'title.rename.file'|trans }}
+                    <span class="glyphicon glyphicon-pencil"></span>
                     </button>
                 </span>
-                </div>
+                {% if file.type == "file" %}
+                    <a data-placement="left" title="{{ 'download'|trans }}" class="btn btn-sm btn-default"
+                       href="{{ path('file_manager_file', fileManager.queryParameters|merge({'fileName':file.fileName})) }}" download>
+                        <span class="glyphicon glyphicon-download"></span>
+                    </a>
+                {% endif %}
             </div>
         </div>
     {% endfor %}
