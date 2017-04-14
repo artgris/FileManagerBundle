@@ -15,3 +15,5 @@ sticky-kit/*
 !sticky-kit/jquery.sticky-kit.min.js
 jstree/*
 !jstree/dist
+jQuery-contextMenu/*
+!jQuery-contextMenu/dist
