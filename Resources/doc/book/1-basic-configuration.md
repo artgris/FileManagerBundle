@@ -56,7 +56,7 @@ artgris_file_manager:
 | :---  |:--------:|:--------:|:--------:|
 | `tree`  | `Booleen` |  False   | True |
 
-Exemple with `tree` = False
+Example with `tree` = False
 
 <img src="https://raw.githubusercontent.com/artgris/FileManagerBundle/master/Resources/doc/images/filemanager-promo-no-tree.png" alt="Symfony Filemanager created with FileManagerBundle" align="center" />
 
@@ -69,7 +69,7 @@ Exemple with `tree` = False
 | `view`  | `String` |  False   | `thumbnail`, `list` | `list`        |
 
 
-Exemple with `thumbnail`
+Example with `thumbnail`
 
 <img src="https://raw.githubusercontent.com/artgris/FileManagerBundle/master/Resources/doc/images/filemanager-promo-thumbnail.png" alt="Symfony Filemanager created with FileManagerBundle" align="center" />
 

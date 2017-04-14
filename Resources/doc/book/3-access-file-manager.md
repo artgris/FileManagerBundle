@@ -21,7 +21,7 @@ Here is a list of URL parameters :
 
 
 
-Exemple:
+Example:
 
     path('file_manager', {module:'tiny', type:'image', conf:'perso', extra: {'user':'miamolex', 'allow': true}})
     
