@@ -62,7 +62,7 @@
                         data-placement="left"
                         data-html="true"
                         data-name='{{ file.basename('.'~file.extension) }}'
-                        data-extension='{{ file.extension }}'
+                        data-extension='{{ file.extension  }}'
                         data-href='{{ path('file_manager_rename', fileManager.queryParameters|merge({'fileName':file.fileName})) }}'>
                 <span class="glyphicon glyphicon-pencil"></span>
                 </button>

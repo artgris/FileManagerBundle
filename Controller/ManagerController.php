@@ -158,10 +158,10 @@ class ManagerController extends Controller
         $formRename = $this->createRenameForm($queryParameters);
         /** @var Form $formRename */
         $formRename->handleRequest($request);
-
         if ($formRename->isSubmitted() && $formRename->isValid()) {
             $data = $formRename->getData();
-            $NewfileName = $data['name'] . '.' . $data['extension'];
+            $extension = $data['extension'] ? '.' . $data['extension'] : '';
+            $NewfileName = $data['name'] . $extension;
             if (isset($data['name']) && $NewfileName !== $fileName) {
                 $fileManager = $this->newFileManager($queryParameters);
                 $NewfilePath = $fileManager->getCurrentPath() . DIRECTORY_SEPARATOR . $NewfileName;
@@ -383,11 +383,7 @@ class ManagerController extends Controller
                     new NotBlank()
                 ],
                 'label' => false,
-            ])->add('extension', HiddenType::class, [
-                'constraints' => [
-                    new NotBlank()
-                ],
-            ])
+            ])->add('extension', HiddenType::class)
             ->add('send', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary'
