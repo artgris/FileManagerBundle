@@ -28,7 +28,11 @@ body {
 }
 
 .select:hover {
-    background-color: #f5f5f5;
+    background-color: #d8d8d8;
+}
+
+.context-menu-active, .select:focus, .select:active {
+    background-color: #beebff;
 }
 
 i.fa {
@@ -77,14 +81,13 @@ i.fa {
     padding: 5px;
 }
 
-.thumbnail .fa {
+.thumbnail-img .fa {
     font-size: 6em;
 }
 
 .thumbnail-blk .select {
     padding: 5px 0;
 }
-
 
 .no-tree-blk .thumbnail-blk .select-all {
     padding-left: 5px;

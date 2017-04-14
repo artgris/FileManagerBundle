@@ -29,13 +29,14 @@ button:
     current: Delete current folder
     selected: Delete selected files
     action: DELETE
-  tree: tree
+  tree: Tree
 title:
   add:
     folder: New folder
   rename:
     file: Rename
   delete: Delete
+  download: Download
 input:
     default: Untitled folder
 table:
@@ -50,4 +51,3 @@ size:
   mb: MB
   kb: kB
 select-all: Select all
-download: Download

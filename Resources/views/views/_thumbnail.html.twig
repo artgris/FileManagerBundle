@@ -40,7 +40,7 @@
                                 data-placement="left"
                                 data-html="true"
                                 data-href='{{ path('file_manager_delete', fileManager.queryParameters|merge({'delete[]':file.fileName})) }}'>
-                            <span class="glyphicon glyphicon-remove"></span>
+                            <span class="fa fa-trash"></span>
                         </button>
                     </span>
                 <span data-toggle="tooltip" title="{{ 'title.rename.file'|trans }}">
@@ -55,13 +55,13 @@
                             data-name='{{ file.basename('.'~file.extension) }}'
                             data-extension='{{ file.extension }}'
                             data-href='{{ path('file_manager_rename', fileManager.queryParameters|merge({'fileName':file.fileName})) }}'>
-                    <span class="glyphicon glyphicon-pencil"></span>
+                    <span class="fa fa-edit"></span>
                     </button>
                 </span>
                 {% if file.type == "file" %}
-                    <a data-placement="left" title="{{ 'download'|trans }}" class="btn btn-sm btn-default"
+                    <a data-placement="left" title="{{ 'download'|trans }}" class="btn btn-sm btn-default js-download"
                        href="{{ path('file_manager_file', fileManager.queryParameters|merge({'fileName':file.fileName})) }}" download>
-                        <span class="glyphicon glyphicon-download"></span>
+                        <span class="fa fa-download"></span>
                     </a>
                 {% endif %}
             </div>

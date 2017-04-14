@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/libs/bootstrap/dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/libs/components-font-awesome/css/font-awesome.min.css') }}">
-    {#<link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/libs/bootstrap-treeview/dist/bootstrap-treeview.min.css') }}">#}
     <link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/libs/jstree/dist/themes/default/style.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/libs/blueimp-file-upload/css/jquery.fileupload.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/css/manager.css') }}">
@@ -181,8 +180,6 @@
         $.contextMenu({
             selector: '.file',
             callback: function (key, opt) {
-                var m = "clicked: " + key;
-
                 switch (key) {
                     case 'edit':
                         var $renameModalButton = opt.$trigger.find(".js-rename-modal")
@@ -194,11 +191,16 @@
                         deleteFile($deleteModalButton)
                         $deleteModal.modal("show");
                         break;
+                    case 'download':
+                        var $downloadButton = opt.$trigger.find(".js-download")
+                        downloadFile($downloadButton)
+                        break;
                 }
             },
             items: {
-                "edit": {name: "{{ 'title.rename.file'|trans }}", icon: "edit"},
-                "delete": {name: "{{ 'title.delete'|trans }}", icon: "delete"},
+                "delete": {name: "{{ 'title.delete'|trans }}", icon: "fa-trash"},
+                "edit": {name: "{{ 'title.rename.file'|trans }}", icon: "fa-edit"},
+                "download": {name: "{{ 'title.download'|trans }}", icon: "fa-download"},
             }
         });
 
@@ -210,6 +212,10 @@
 
         function deleteFile($deleteModalButton) {
             $('#js-confirm-delete').find('form').attr('action', $deleteModalButton.data('href'));
+        }
+
+        function downloadFile($downloadButton) {
+            $downloadButton[0].click();
         }
 
         {% if fileManager.tree %}
@@ -280,7 +286,7 @@
             });
 
         // preselected
-        $('#js-confirm-rename').on('shown.bs.modal', function () {
+        $renameModal.on('shown.bs.modal', function () {
             $('#form_name').select().mouseup(function () {
                 $('#form_name').unbind("mouseup");
                 return false;
