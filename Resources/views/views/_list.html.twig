@@ -13,7 +13,11 @@
         <tr>
             <th><input type="checkbox" id="select-all" title="{{ 'select-all'|trans }}"></th>
             <th></th>
-            <th>{{ 'table.name'|trans }}</th>
+            <th>{{ 'table.name'|trans }}
+                {#<a href="{{ path('file_manager', fileManager.queryParameters|merge({'orderby':'[name]asc'})) }}">#}
+                    {#<span class="glyphicon glyphicon-sort-by-attributes-alt pull-right"></span>#}
+                {#</a>#}
+            </th>
             <th class="hidden-xs">{{ 'table.date'|trans }}</th>
             <th class="hidden-xs">{{ 'table.size'|trans }}</th>
             <th class="hidden-xs">{{ 'table.dimension'|trans }}</th>
@@ -23,7 +27,7 @@
         <tbody>
         {% for fileEntity in fileArray %}
             {% set file = fileEntity.file %}
-            <tr>
+            <tr class="file">
                 <td><input type="checkbox" class="checkbox" name="delete[]" value="{{ file.fileName }}" title="{{ file.fileName }}"></td>
                 <td>{{ fileEntity.preview.html|raw }}</td>
                 <td {{ fileEntity.attribut(fileManager.module)|raw }}>
@@ -62,7 +66,7 @@
                         data-placement="left"
                         data-html="true"
                         data-name='{{ file.basename('.'~file.extension) }}'
-                        data-extension='{{ file.extension  }}'
+                        data-extension='{{ file.extension }}'
                         data-href='{{ path('file_manager_rename', fileManager.queryParameters|merge({'fileName':file.fileName})) }}'>
                 <span class="glyphicon glyphicon-pencil"></span>
                 </button>

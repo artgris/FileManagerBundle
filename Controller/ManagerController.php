@@ -61,7 +61,28 @@ class ManagerController extends Controller
         // File search
         $finderFiles = new Finder();
         $regex = $fileManager->getRegex();
+
+
         $finderFiles->in($fileManager->getCurrentPath())->depth(0)->sortByType();
+
+//
+//        $orderBys = isset($fileManager->getQueryParameters()['orderby']) ? $fileManager->getQueryParameters()['orderby'] : [];
+//
+//        foreach ($orderBys as $attr => $order) {
+//
+//            switch ($attr) {
+//                case 'name':
+//                    if ($order == "desc") {
+//                        $finderFiles->sort(function (SplFileInfo $a, SplFileInfo $b) {
+//                            return strcmp($b->getRealpath(), $a->getRealpath());
+//                        });
+//                    } elseif ($order == "asc") {
+//                        $finderFiles->sortByName();
+//                    };
+//            }
+//        }
+
+
         if ($fileManager->getTree()) {
             $finderFiles->files()->name($regex)->filter(function (SplFileInfo $file) {
                 return $file->isReadable();
@@ -155,7 +176,7 @@ class ManagerController extends Controller
     {
         $translator = $this->get('translator');
         $queryParameters = $request->query->all();
-        $formRename = $this->createRenameForm($queryParameters);
+        $formRename = $this->createRenameForm();
         /** @var Form $formRename */
         $formRename->handleRequest($request);
         if ($formRename->isSubmitted() && $formRename->isValid()) {

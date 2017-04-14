@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/libs/jstree/dist/themes/default/style.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/libs/blueimp-file-upload/css/jquery.fileupload.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/css/manager.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/libs/jQuery-contextMenu/dist/jquery.contextMenu.min.css') }}">
     <title>File Manager</title>
 </head>
 <body>
@@ -160,6 +161,7 @@
 <script src="{{ asset('bundles/artgrisfilemanager/libs/sticky-kit/jquery.sticky-kit.min.js') }}"></script>
 <script src="{{ asset('bundles/artgrisfilemanager/js/betamax/jquery.getimagedata.js') }}"></script>
 <script src="{{ asset('bundles/artgrisfilemanager/libs/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js') }}"></script>
+<script src="{{ asset('bundles/artgrisfilemanager/libs/jQuery-contextMenu/dist/jquery.contextMenu.min.js') }}"></script>
 <script>
 
     $(function () {
@@ -172,6 +174,43 @@
         {% endfor %}
         {% endfor %}
         {% endif %}
+
+        var $renameModal = $('#js-confirm-rename');
+        var $deleteModal = $('#js-confirm-delete');
+
+        $.contextMenu({
+            selector: '.file',
+            callback: function (key, opt) {
+                var m = "clicked: " + key;
+
+                switch (key) {
+                    case 'edit':
+                        var $renameModalButton = opt.$trigger.find(".js-rename-modal")
+                        renameFile($renameModalButton)
+                        $renameModal.modal("show");
+                        break;
+                    case 'delete':
+                        var $deleteModalButton = opt.$trigger.find(".js-delete-modal")
+                        deleteFile($deleteModalButton)
+                        $deleteModal.modal("show");
+                        break;
+                }
+            },
+            items: {
+                "edit": {name: "{{ 'title.rename.file'|trans }}", icon: "edit"},
+                "delete": {name: "{{ 'title.delete'|trans }}", icon: "delete"},
+            }
+        });
+
+        function renameFile($renameModalButton) {
+            $('#form_name').val($renameModalButton.data('name'));
+            $('#form_extension').val($renameModalButton.data('extension'));
+            $renameModal.find('form').attr('action', $renameModalButton.data('href'))
+        }
+
+        function deleteFile($deleteModalButton) {
+            $('#js-confirm-delete').find('form').attr('action', $deleteModalButton.data('href'));
+        }
 
         {% if fileManager.tree %}
         // sticky kit
@@ -214,14 +253,12 @@
             })
             // delete modal buttons
             .on('click', '.js-delete-modal', function () {
-                    $('#js-confirm-delete').find('form').attr('action', $(this).data('href'));
+                    deleteFile($(this));
                 }
             )
             // rename modal buttons
             .on('click', '.js-rename-modal', function () {
-                    $('#form_name').val($(this).data('name'));
-                    $('#form_extension').val($(this).data('extension'));
-                    $('#js-confirm-rename').find('form').attr('action', $(this).data('href'));
+                    renameFile($(this));
                 }
             )
             // multiple delete modal button
