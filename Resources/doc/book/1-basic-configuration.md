@@ -58,7 +58,7 @@ artgris_file_manager:
 
 Example with `tree` = False
 
-<img src="https://raw.githubusercontent.com/artgris/FileManagerBundle/master/Resources/doc/images/filemanager-promo-no-tree.png" alt="Symfony Filemanager created with FileManagerBundle" align="center" />
+<img src="https://raw.githubusercontent.com/artgris/FileManagerBundle/master/Resources/doc/images/filemanager-promo-no-tree.png?v1.0.4" alt="Symfony Filemanager created with FileManagerBundle" align="center" />
 
 
 
@@ -71,7 +71,7 @@ Example with `tree` = False
 
 Example with `thumbnail`
 
-<img src="https://raw.githubusercontent.com/artgris/FileManagerBundle/master/Resources/doc/images/filemanager-promo-thumbnail.png" alt="Symfony Filemanager created with FileManagerBundle" align="center" />
+<img src="https://raw.githubusercontent.com/artgris/FileManagerBundle/master/Resources/doc/images/filemanager-promo-thumbnail.png?v1.0.4" alt="Symfony Filemanager created with FileManagerBundle" align="center" />
 
 
 
