@@ -60,6 +60,12 @@
             </button>
         {% endif %}
         <div class="btn-group pull-right">
+            {% if fileManager.view != "list" %}
+                {{ order(fileManager, 'name') }}
+                {{ order(fileManager, 'date') }}
+                {{ order(fileManager, 'size') }}
+                {{ order(fileManager, 'dimension') }}
+            {% endif %}
             <a type="button" href="{{ path('file_manager', fileManager.queryParameters|merge({'view':"list"})) }}"
                class="btn btn-sm btn-default {{ fileManager.view == 'list' ? 'active' }}">
                 <span class="fa fa-th-list"></span>
@@ -68,6 +74,7 @@
                class="btn btn-sm btn-default {{ fileManager.view == 'thumbnail' ? 'active' }}">
                 <span class="fa fa-th"></span>
             </a>
+
         </div>
     </div>
     <div class="row">
@@ -177,9 +184,7 @@
         var $renameModal = $('#js-confirm-rename');
         var $deleteModal = $('#js-confirm-delete');
 
-        $.contextMenu({
-            selector: '.file',
-            callback: function (key, opt) {
+        var callback = function (key, opt) {
                 switch (key) {
                     case 'edit':
                         var $renameModalButton = opt.$trigger.find(".js-rename-modal")
@@ -196,11 +201,25 @@
                         downloadFile($downloadButton)
                         break;
                 }
-            },
+            }
+        ;
+
+
+        $.contextMenu({
+            selector: '.file',
+            callback: callback,
             items: {
                 "delete": {name: "{{ 'title.delete'|trans }}", icon: "fa-trash"},
                 "edit": {name: "{{ 'title.rename.file'|trans }}", icon: "fa-edit"},
                 "download": {name: "{{ 'title.download'|trans }}", icon: "fa-download"},
+            }
+        });
+        $.contextMenu({
+            selector: '.dir',
+            callback: callback,
+            items: {
+                "delete": {name: "{{ 'title.delete'|trans }}", icon: "fa-trash"},
+                "edit": {name: "{{ 'title.rename.file'|trans }}", icon: "fa-edit"},
             }
         });
 

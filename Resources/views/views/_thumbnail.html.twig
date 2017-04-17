@@ -15,7 +15,7 @@
     </div>
     {% for fileEntity in fileArray %}
         {% set file = fileEntity.file %}
-        <div class="file col-xs-6 col-sm-4 col-md-{{ fileManager.tree == 0 ? 3 : 4 }} col-lg-2 text-center thumbnail">
+        <div class="{{ file.type }} col-xs-6 col-sm-4 col-md-{{ fileManager.tree == 0 ? 3 : 4 }} col-lg-2 text-center thumbnail">
             <input type="checkbox" class="checkbox" name="delete[]"
                    value="{{ file.fileName }}"
                    title="{{ file.fileName }}">

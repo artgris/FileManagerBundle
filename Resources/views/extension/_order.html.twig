@@ -1,0 +1,4 @@
+<a class="{{ not islist ? ('btn btn-sm btn-default'~(active ? ' active'))  }}" href="{{ href }}">
+    {{ ('table.'~type)|trans }}
+    <span class="{{ active }} {{ islist ? 'pull-right'}} fa fa-sort{{ glyphicon }}"></span>
+</a>

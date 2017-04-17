@@ -10,3 +10,9 @@ services:
         arguments:
             router: "@router"
             packages: "@assets.packages"
+
+    order_extension:
+        class: Artgris\Bundle\FileManagerBundle\Twig\OrderExtension
+        tags:
+            - { name: twig.extension }
+        arguments: ['@router']

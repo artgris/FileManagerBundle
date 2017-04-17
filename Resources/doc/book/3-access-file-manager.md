@@ -14,6 +14,8 @@ Here is a list of URL parameters :
 | `module` | `String` |  False    | `tiny`                   |  `null`       | module (used by tinymce) | 
 | `tree`   | `Interger` |  False    | `0`, `1` | `1`       | Display Folder Tree (1:Yes, 2:No) | url > yml
 | `view` | `String` |  False    | `thumbnail`, `list`     |  `list`       | Display Mode Type | url > yml
+| `orderby` | `String` |  False    | `name`, `date`, `size`, `dimension`     |         | Sort files |
+| `order` | `String` |  False    | `asc`, `desc`     |         | Order by asc or desc | 
 | `extra` | `Array` |  False    |                    |  `null`       | extra parameters (used by service configuration)
 
 

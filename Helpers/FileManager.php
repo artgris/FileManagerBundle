@@ -139,7 +139,7 @@ class FileManager
      */
     public function getType()
     {
-        return isset($this->getConfiguration()['type']) ? $this->getConfiguration()['type'] : (isset($this->getQueryParameters()['type']) ? $this->getQueryParameters()['type'] : null);
+        return $this->mergeConfAndQuery('type');
     }
 
     /**
@@ -231,22 +231,40 @@ class FileManager
     }
 
     /**
-     * @return int
+     * @return null
      */
     public function getTree()
     {
-        return isset($this->getQueryParameters()['tree']) ? $this->getQueryParameters()['tree'] : (isset($this->getConfiguration()['tree']) ? $this->getConfiguration()['tree'] : true);
-
+        return $this->mergeQueryAndConf('tree', true);
     }
 
-
     /**
-     * @return int
+     * @return null
      */
     public function getView()
     {
-        return isset($this->getQueryParameters()['view']) ? $this->getQueryParameters()['view'] : (isset($this->getConfiguration()['view']) ? $this->getConfiguration()['view'] : 'list');
+        return $this->mergeQueryAndConf('view', 'list');
+    }
 
+    public function getQueryParameter($parameter)
+    {
+        return isset($this->getQueryParameters()[$parameter]) ? $this->getQueryParameters()[$parameter] : null;
+    }
+
+    public function getConfigurationParameter($parameter)
+    {
+        return isset($this->getConfiguration()[$parameter]) ? $this->getConfiguration()[$parameter] : null;
+    }
+
+    private function mergeQueryAndConf($parameter, $default = null)
+    {
+
+        return $this->getQueryParameter($parameter) !== null ? $this->getQueryParameter($parameter) : ($this->getConfigurationParameter($parameter) ? $this->getConfigurationParameter($parameter) : $default);
+    }
+
+    private function mergeConfAndQuery($parameter, $default = null)
+    {
+        return $this->getConfigurationParameter($parameter) !== null ? $this->getConfigurationParameter($parameter) : ($this->getQueryParameter($parameter) ? $this->getQueryParameter($parameter) : $default);
     }
 
 

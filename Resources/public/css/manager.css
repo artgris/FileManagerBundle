@@ -80,6 +80,9 @@ i.fa {
     height: 115px;
     padding: 5px;
 }
+.thumbnail-img img{
+    max-width:100%;
+}
 
 .thumbnail-img .fa {
     font-size: 6em;
@@ -89,6 +92,20 @@ i.fa {
     padding: 5px 0;
 }
 
+.thumbnail-blk div.thumbnail {
+    overflow: hidden;
+}
+
 .no-tree-blk .thumbnail-blk .select-all {
     padding-left: 5px;
+}
+.thead-default a {
+    color: #464a4c;
+}
+.thead-default span {
+    color: #adadad;
+}
+
+.thead-default span.actived {
+    color: #337ab7;
 }
