@@ -36,6 +36,7 @@ title:
   rename:
     file: Renommer
   delete: Supprimer
+  download: Télécharger
 input:
     default: Dossier sans titre
 table:
@@ -50,4 +51,3 @@ size:
   mb: Mo
   kb: ko
 select-all: Tout selectionner
-download: Télécharger
