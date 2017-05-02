@@ -201,8 +201,7 @@ class ManagerController extends Controller
      * @param $fileName
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public
-    function renameFile(Request $request, $fileName)
+    public function renameFile(Request $request, $fileName)
     {
         $translator = $this->get('translator');
         $queryParameters = $request->query->all();
@@ -241,8 +240,7 @@ class ManagerController extends Controller
      * @param Request $request
      * @return Response
      */
-    public
-    function uploadFile(Request $request)
+    public function uploadFile(Request $request)
     {
         $fileManager = $this->newFileManager($request->query->all());
 
@@ -266,8 +264,7 @@ class ManagerController extends Controller
      * @param $fileName
      * @return BinaryFileResponse
      */
-    public
-    function binaryFileResponseAction(Request $request, $fileName)
+    public function binaryFileResponseAction(Request $request, $fileName)
     {
         $fileManager = $this->newFileManager($request->query->all());
         return new BinaryFileResponse($fileManager->getCurrentPath() . DIRECTORY_SEPARATOR . urldecode($fileName));
@@ -279,8 +276,7 @@ class ManagerController extends Controller
      * @Method("DELETE")
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public
-    function deleteAction(Request $request)
+    public function deleteAction(Request $request)
     {
         $translator = $this->get('translator');
         $form = $this->createDeleteForm();
@@ -331,8 +327,7 @@ class ManagerController extends Controller
      * @Route("/imagetojson/", name="file_manager_imagetojson")
      * @author https://github.com/betamax/getImageData
      */
-    public
-    function imageToJsonAction()
+    public function imageToJsonAction()
     {
 
         try {
@@ -419,8 +414,7 @@ class ManagerController extends Controller
     /**
      * @return Form|\Symfony\Component\Form\FormInterface
      */
-    private
-    function createDeleteForm()
+    private function createDeleteForm()
     {
         return $this->createFormBuilder()
             ->setMethod('DELETE')
@@ -430,8 +424,7 @@ class ManagerController extends Controller
     /**
      * @return mixed
      */
-    private
-    function createRenameForm()
+    private function createRenameForm()
     {
         $translator = $this->get('translator');
         return $this->createFormBuilder()
@@ -458,8 +451,7 @@ class ManagerController extends Controller
      * @param bool $baseFolderName
      * @return array|null
      */
-    private
-    function retrieveSubDirectories(FileManager $fileManager, $path, $parent = DIRECTORY_SEPARATOR, $baseFolderName = false)
+    private function retrieveSubDirectories(FileManager $fileManager, $path, $parent = DIRECTORY_SEPARATOR, $baseFolderName = false)
     {
         $directories = new Finder();
         $directories->ignoreUnreadableDirs()->in($path)->directories()->depth(0)->sortByType()->filter(function (SplFileInfo $file) {
@@ -509,8 +501,7 @@ class ManagerController extends Controller
      * @param $regex
      * @return int
      */
-    private
-    function retrieveFilesNumber($path, $regex)
+    private function retrieveFilesNumber($path, $regex)
     {
         $files = new Finder();
         $files->in($path)->files()->depth(0)->name($regex);
@@ -520,8 +511,7 @@ class ManagerController extends Controller
     /*
      * Base Path
      */
-    private
-    function getBasePath($queryParameters)
+    private function getBasePath($queryParameters)
     {
         $conf = $queryParameters['conf'];
         $managerConf = $this->getParameter("artgris_file_manager")['conf'];
@@ -540,8 +530,7 @@ class ManagerController extends Controller
     /**
      * @return mixed
      */
-    private
-    function getKernelRoute()
+    private function getKernelRoute()
     {
         return $this->getParameter('kernel.root_dir');
     }
