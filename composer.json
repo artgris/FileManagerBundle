@@ -23,5 +23,6 @@
     "psr-4": {
       "Artgris\\Bundle\\FileManagerBundle\\": ""
     }
-  }
+  },
+   "target-dir": "Artgris/Bundle/FileManagerBundle"
 }
