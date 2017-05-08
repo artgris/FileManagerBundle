@@ -21,8 +21,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Artgris\\Bundle\\FileManagerBundle\\": ""
+      "Artgris\\Bundle\\FileManagerBundle\\": "Artgris/Bundle/FileManagerBundle"
     }
   },
-   "target-dir": "Artgris/Bundle/FileManagerBundle"
 }
