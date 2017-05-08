@@ -24,6 +24,11 @@ class FileTypeExtension extends \Twig_Extension
         return $this->fileTypeService->accept($type);
     }
 
+    public function fileIcon($filePath, $extension = null, $size = 75)
+    {
+        return $this->fileTypeService->fileIcon($filePath, $extension, $size);
+    }
+
     /**
      * @return array
      */
@@ -31,6 +36,7 @@ class FileTypeExtension extends \Twig_Extension
     {
         return [
             'accept' => new \Twig_SimpleFunction('accept', [$this, 'accept'], ['needs_environment' => false, 'is_safe' => ['html']]),
+            'fileIcon' => new \Twig_SimpleFunction('fileIcon', [$this, 'fileIcon'], ['needs_environment' => false, 'is_safe' => ['html']]),
         ];
     }
 
