@@ -1,4 +1,6 @@
 language: php
-
+php:
+  - 7.1
+script: phpunit
 install:
   -  composer update --prefer-dist --no-interaction --no-suggest --no-progress --ansi
