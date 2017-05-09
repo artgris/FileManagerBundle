@@ -1,1 +1,4 @@
 language: php
+
+install:
+  - composer install
