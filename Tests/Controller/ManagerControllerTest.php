@@ -18,8 +18,6 @@ class ManagerControllerTest extends AbstractTestCase
     }
 
 
-
-
     public function testManager() {
 
 

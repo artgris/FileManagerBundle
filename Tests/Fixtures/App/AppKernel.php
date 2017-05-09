@@ -14,13 +14,13 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         return array(
+            new Artgris\Bundle\FileManagerBundle\ArtgrisFileManagerBundle(),
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
 //            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
-//            new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 //            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-            new Artgris\Bundle\FileManagerBundle\ArtgrisFileManagerBundle(),
 //            new JavierEguiluz\Bundle\EasyAdminBundle\Tests\Fixtures\AppTestBundle\AppTestBundle(),
         );
     }
