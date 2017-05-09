@@ -1,4 +1,4 @@
 language: php
 
 install:
-  - composer install
+  -  composer update --prefer-dist --no-interaction --no-suggest --no-progress --ansi
