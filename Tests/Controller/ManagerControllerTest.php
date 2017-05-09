@@ -20,7 +20,6 @@ class ManagerControllerTest extends AbstractTestCase
 
     public function testManager() {
 
-
         $this->client->request('GET', '/manager/');
 
         $this->assertContains(
