@@ -5,6 +5,7 @@ namespace Artgris\Bundle\FileManagerBundle\Helpers;
 
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * @author Arthur Gribet <a.gribet@gmail.com>
@@ -121,8 +122,12 @@ class FileManager
     {
         $currentPath = $this->getCurrentPath();
         // check Path security
-        if ($currentPath === false || strpos($currentPath, $this->getBasePath()) !== 0 || !isset($this->configuration['dir'])) {
-            throw new \Exception();
+        if ($currentPath === false || strpos($currentPath, $this->getBasePath()) !== 0) {
+            throw new HttpException(401, "You are not allowed to access this folder.");
+        }
+
+        if (!isset($this->configuration['dir'])) {
+            throw new HttpException(500, 'Please defined a "dir" parameter in your config.yml');
         }
     }
 

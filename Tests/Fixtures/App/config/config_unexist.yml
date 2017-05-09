@@ -1,0 +1,8 @@
+imports:
+    - { resource: config.yml }
+
+artgris_file_manager:
+    conf:
+        default:
+            dir: "%kernel.root_dir%/../web/unexist"
+
