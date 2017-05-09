@@ -32,15 +32,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ManagerController extends Controller
 {
 
-
-    private function newFileManager($queryParameters)
-    {
-        if (!isset($queryParameters['conf'])) {
-            throw new \Exception('Please defined a conf parameter in your route');
-        }
-        return new FileManager($queryParameters, $this->getBasePath($queryParameters), $this->getKernelRoute(), $this->get('router'));
-    }
-
     /**
      * @Route("/", name="file_manager")
      * @param Request $request
@@ -533,6 +524,15 @@ class ManagerController extends Controller
     private function getKernelRoute()
     {
         return $this->getParameter('kernel.root_dir');
+    }
+
+
+    private function newFileManager($queryParameters)
+    {
+        if (!isset($queryParameters['conf'])) {
+            throw new \Exception('Please defined a conf parameter in your route');
+        }
+        return new FileManager($queryParameters, $this->getBasePath($queryParameters), $this->getKernelRoute(), $this->get('router'));
     }
 
 }

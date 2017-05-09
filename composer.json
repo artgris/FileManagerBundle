@@ -16,12 +16,19 @@
     }
   ],
   "require": {
-    "php": "^5.3.9 || ^7.0",
-    "symfony/framework-bundle": "^2.8 || ^3.0"
+    "php": ">=5.3.0",
+    "symfony/symfony": "^2.8 || ^3.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.4",
+    "doctrine/doctrine-fixtures-bundle" : "~2.2"
   },
   "autoload": {
     "psr-4": {
       "Artgris\\Bundle\\FileManagerBundle\\": ""
-    }
+    },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
   }
 }
