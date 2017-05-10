@@ -193,7 +193,7 @@ class ManagerController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function renameFile(Request $request, $fileName)
+    public function renameFileAction(Request $request, $fileName)
     {
         $translator = $this->get('translator');
         $queryParameters = $request->query->all();
@@ -235,7 +235,7 @@ class ManagerController extends Controller
      *
      * @return Response
      */
-    public function uploadFile(Request $request)
+    public function uploadFileAction(Request $request)
     {
         $fileManager = $this->newFileManager($request->query->all());
 
@@ -400,7 +400,7 @@ class ManagerController extends Controller
             echo 'Internal Server Error';
         }
 
-        exit(0);
+        return new Response();
     }
 
     /**
