@@ -1,7 +1,7 @@
 Chapter 2 - Service Configuration
 =================================
 
-If basic configuration is not sufficient for you and you need more control, used the service configuration below
+If basic configuration is not sufficient for you and you need more control, using the service configuration below
 
 
 for this conf you just need one option :
