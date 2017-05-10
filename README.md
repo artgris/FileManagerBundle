@@ -1,6 +1,9 @@
 FileManagerBundle
 =================
 
+[![Build Status](https://travis-ci.org/artgris/FileManagerBundle.svg?branch=master)](https://travis-ci.org/artgris/FileManagerBundle)
+[![Coverage Status](https://coveralls.io/repos/github/artgris/FileManagerBundle/badge.svg?branch=master)](https://coveralls.io/github/artgris/FileManagerBundle?branch=master)
+
 FileManager is a simple Multilingual File Manager Bundle for Symfony
 
 <img src="https://raw.githubusercontent.com/artgris/FileManagerBundle/master/Resources/doc/images/filemanager-promo.png" alt="Symfony Filemanager created with FileManagerBundle" align="center" />
