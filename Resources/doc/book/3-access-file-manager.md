@@ -5,7 +5,7 @@ Chapter 3 - Access to the File Manager
 After you have defined the configuration, browse the `/manager/?conf=public` URL and you'll get access to the 
 file manager defined 
 
-Here is a list of URL parameters :
+Here is a list of URL parameters:
 
 | Param    | Type     | Required  | Possible values          | Default value | Description       | Priority (yml / url) |
 | :------- |:--------:|:---------:|:------------------------:|:-------------:|:------------------|:------------------:|

@@ -42,7 +42,7 @@ Documentation
   * [Chapter 1 - Basic Configuration](Resources/doc/book/1-basic-configuration.md)
   * [Chapter 2 - Service Configuration](Resources/doc/book/2-service-configuration.md)
   * [Chapter 3 - Access to the File Manager](Resources/doc/book/3-access-file-manager.md)
-  * [Chapter 4 - Security](Resources/doc/book/4-secphpunit.xml.disturity.md)
+  * [Chapter 4 - Security](Resources/doc/book/4-security.md)
   
 #### Tutorials
 
@@ -131,4 +131,3 @@ file manager
 [6]: https://coveralls.io/r/artgris/FileManagerBundle?branch=master
 [7]: https://img.shields.io/badge/Symfony-%202.x%20and%203.x-green.svg
 [8]: https://symfony.com/
-[9]: http://symfony.com/doc/current/bundles/EasyAdminBundle

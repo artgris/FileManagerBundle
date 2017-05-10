@@ -1,9 +1,9 @@
 Chapter 4 - Security
 ======================================
 
-To prevent attackers from uploading and executing PHP scripts, you should add a **.htaccess**  to enforce security restrictions
+To prevent attackers from uploading and executing PHP scripts, you should add a **.htaccess**  to enforce security restrictions.
  
-Example :
+Example:
      
      // .htaccess
      
@@ -15,4 +15,4 @@ Example :
      </FilesMatch>
      Header set X-Content-Type-Options nosniff
      
-*Source :*  https://github.com/blueimp/jQuery-File-Upload/wiki/Security
+*Source:*  https://github.com/blueimp/jQuery-File-Upload/wiki/Security
