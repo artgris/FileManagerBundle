@@ -1,0 +1,3 @@
+exclude_patterns:
+    - Helpers/UploadHandler.php
+    - Resources/public/lib
