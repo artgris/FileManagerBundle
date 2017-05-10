@@ -1,8 +1,7 @@
 FileManagerBundle
 =================
 
-[![Build Status](https://travis-ci.org/artgris/FileManagerBundle.svg?branch=master)](https://travis-ci.org/artgris/FileManagerBundle)
-[![Coverage Status](https://coveralls.io/repos/github/artgris/FileManagerBundle/badge.svg?branch=master)](https://coveralls.io/github/artgris/FileManagerBundle?branch=master)
+[![Tests][1]][2] [![Code Quality][3]][4] [![Code Coverage][5]][6] [![Symfony 2.x and 3.x][7]][8]
 
 FileManager is a simple Multilingual File Manager Bundle for Symfony
 
@@ -123,3 +122,14 @@ artgris_file_manager:
 
 Browse the `/manager/?conf=default` URL and you'll get access to your 
 file manager
+
+ 
+[1]: https://travis-ci.org/artgris/FileManagerBundle.svg?branch=master
+[2]: https://travis-ci.org/artgris/FileManagerBundle
+[3]: https://insight.sensiolabs.com/projects/701afcd5-edde-421a-ab6c-0188bfa7e7dc/mini.png
+[4]: https://insight.sensiolabs.com/projects/701afcd5-edde-421a-ab6c-0188bfa7e7dc/
+[5]: https://coveralls.io/repos/artgris/FileManagerBundle/badge.svg?branch=master
+[6]: https://coveralls.io/r/artgris/FileManagerBundle?branch=master
+[7]: https://img.shields.io/badge/Symfony-%202.x%20and%203.x-green.svg
+[8]: https://symfony.com/
+[9]: http://symfony.com/doc/current/bundles/EasyAdminBundle
