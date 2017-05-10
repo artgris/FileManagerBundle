@@ -4,7 +4,7 @@ Chapter 2 - Service Configuration
 If basic configuration is not sufficient for you and you need more control, using the service configuration below
 
 
-for this conf you just need one option :
+for this conf you just need one option:
 
 
 #### `service` The service that will return configuration 
@@ -41,7 +41,7 @@ class CustomService implements CustomConfServiceInterface
 }
 ```
 
-`getconf($extra)` must return an Array of the configuration :
+`getconf($extra)` must return an Array of the configuration:
 
 ```php 
    public function getConf($extra = []) {
@@ -68,12 +68,12 @@ services:
 
 You can inject `extra` parameters in your service via URL:
 
-Example :
+Example:
 
     path('file_manager', {module:'tiny', type:'image', conf:'perso', extra: {'user':'miamolex', 'allow': true}})
 
 
-Here i add 2 extra parameters, that i retrieve in my Service :
+Here i add 2 extra parameters, that i retrieve in my Service:
 
 ```php
 public function getConf($extra = []) {     
@@ -139,7 +139,7 @@ custom_service:
  
 ## `upload` Exhaustive options (file upload widget)
 
-in the return Array you can include all option of the file upload widget :
+in the return Array you can include all option of the file upload widget:
 
 [Exhaustive options](https://github.com/blueimp/jQuery-File-Upload/blob/master/server/php/UploadHandler.php)
 

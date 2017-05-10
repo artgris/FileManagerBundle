@@ -91,11 +91,11 @@ artgris_file_manager:
             ...
             type: 'media'
  ```
- Regex rules used : 
+ Regex rules used: 
  
-`media` :  `/\.(mp4|ogg|webm)$/i` Accept basic HTML video media types (.mp4, .ogg and .webm)
+`media`:  `/\.(mp4|ogg|webm)$/i` Accept basic HTML video media types (.mp4, .ogg and .webm)
 
-`image:` : `/\.(gif|png|jpe?g|svg)$/i` Accept basic HTML image types (.gif, .png, .jpg, .jpeg and .svg)
+`image:`: `/\.(gif|png|jpe?g|svg)$/i` Accept basic HTML image types (.gif, .png, .jpg, .jpeg and .svg)
 
 `file`: `/.+$/i` Accept all files with an extension (.pdf, .html, ...)
 
@@ -124,7 +124,7 @@ artgris_file_manager:
             accept: '.jpeg,.jpg'
  ```
 
-`accept` default values used with `media` :
+`accept` default values used with `media`:
 
 | Media | Default accept value | 
 | :---  |:--------:|
@@ -149,9 +149,9 @@ artgris_file_manager:
         public:
             upload:
                 max_file_size: 1048576 # (1Mo) size in bytes
-                max_width : 1024
-                max_height : 768
-                image_library : 1
+                max_width: 1024
+                max_height: 768
+                image_library: 1
                 ...
 ```
 ### Under `upload` key you have following options:
@@ -192,8 +192,8 @@ artgris_file_manager:
     conf:
         public:
             upload:
-                image_library : 3
-                image_versions: {'thumbnail' : {max_width: 80, max_height: 80}}
+                image_library: 3
+                image_versions: {'thumbnail': {max_width: 80, max_height: 80}}
 ```
 
 > this configuration create a thumbnail folder under current path with thumbnails
@@ -205,30 +205,30 @@ artgris_file_manager:
     conf:
         public:
             upload:
-                image_library : 3
-                image_versions: {'' : {max_width: 100, max_height: 100}}
+                image_library: 3
+                image_versions: {'': {max_width: 100, max_height: 100}}
 ```
 
 Complexe example with multiple image size:
 
-This example saved 4 images : 
+This example saved 4 images: 
 
 * original
-* medium : crop image 200px x 600px
-* thumbnail : a thumbnail 80px x 80px
-* miniThumbnail : a mini thumbnail 10px x 10px
+* medium: crop image 200px x 600px
+* thumbnail: a thumbnail 80px x 80px
+* miniThumbnail: a mini thumbnail 10px x 10px
 
 ```yml 
 artgris_file_manager:
     conf:
         public:
             upload:
-                image_library : 3
-                image_versions: {'medium' : {crop: true, max_width: 200, max_height: 600}, 'thumbnail' : {max_width: 80, max_height: 80}, 'miniThumbnail' : {max_width: 10, max_height: 10}}
+                image_library: 3
+                image_versions: {'medium': {crop: true, max_width: 200, max_height: 600}, 'thumbnail': {max_width: 80, max_height: 80}, 'miniThumbnail': {max_width: 10, max_height: 10}}
 ```
 
 
-#### Full example :
+#### Full example:
 
 ```yml 
 artgris_file_manager:
@@ -238,19 +238,19 @@ artgris_file_manager:
             type: 'image'
             upload:
                 max_file_size: 1048576 # (1Mo) size in bytes
-                max_width : 1024
-                max_height : 768
+                max_width: 1024
+                max_height: 768
         private:
             dir: '../private'
             upload:
-                image_versions: {'medium' : {crop: true, max_width: 200, max_height: 600}, 'thumbnail' : {max_width: 80, max_height: 80}, 'miniThumbnail' : {max_width: 10, max_height: 10}}
+                image_versions: {'medium': {crop: true, max_width: 200, max_height: 600}, 'thumbnail': {max_width: 80, max_height: 80}, 'miniThumbnail': {max_width: 10, max_height: 10}}
         tiny:
             dir: '../web/uploads'
             min_width: 80
             min_height: 80
             upload:
                image_versions:
-                  {'' : {max_width: 800, max_height: 600}, 'thumbnail' : {max_width: 80, max_height: 80}}
+                  {'': {max_width: 800, max_height: 600}, 'thumbnail': {max_width: 80, max_height: 80}}
                   
 ```
 
