@@ -9,7 +9,6 @@ services:
         class: Artgris\Bundle\FileManagerBundle\Service\FileTypeService
         arguments:
             router: "@router"
-            packages: "@assets.packages"
 
     order_extension:
         class: Artgris\Bundle\FileManagerBundle\Twig\OrderExtension

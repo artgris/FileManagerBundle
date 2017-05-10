@@ -18,10 +18,6 @@ class FileTypeService
      * @var Router
      */
     private $router;
-    /**
-     * @var Packages
-     */
-    private $packages;
 
     /**
      * FileTypeService constructor.
@@ -29,10 +25,9 @@ class FileTypeService
      * @param Router   $router
      * @param Packages $packages
      */
-    public function __construct(Router $router, Packages $packages)
+    public function __construct(Router $router)
     {
         $this->router = $router;
-        $this->packages = $packages;
     }
 
     public function preview(FileManager $fileManager, SplFileInfo $file)

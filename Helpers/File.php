@@ -48,7 +48,7 @@ class File
     public function getDimension()
     {
         return preg_match('/(gif|png|jpe?g|svg)$/i', $this->file->getExtension()) ?
-            $imageSize[$this->file->getFilename()] = getimagesize($this->file->getPathname()) : '';
+            getimagesize($this->file->getPathname()) : '';
     }
 
     public function getHTMLDimension()
