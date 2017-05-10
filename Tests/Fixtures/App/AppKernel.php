@@ -12,7 +12,7 @@ class AppKernel extends Kernel
 {
     public function registerBundles()
     {
-        return array(
+        return [
             new Artgris\Bundle\FileManagerBundle\ArtgrisFileManagerBundle(),
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
@@ -21,7 +21,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 //            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
 //            new JavierEguiluz\Bundle\EasyAdminBundle\Tests\Fixtures\AppTestBundle\AppTestBundle(),
-        );
+        ];
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)
@@ -29,9 +29,9 @@ class AppKernel extends Kernel
         $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
         if ($this->isSymfony3()) {
             $loader->load(function (ContainerBuilder $container) {
-                $container->loadFromExtension('framework', array(
+                $container->loadFromExtension('framework', [
                     'assets' => null,
-                ));
+                ]);
             });
         }
     }

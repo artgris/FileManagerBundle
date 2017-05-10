@@ -29,7 +29,7 @@ class OrderExtension extends \Twig_Extension
     {
         $order = $fileManager->getQueryParameter('order') === self::ASC;
         $active = $fileManager->getQueryParameter('orderby') === $type ? 'actived' : null;
-        $orderBy = array();
+        $orderBy = [];
         $orderBy['orderby'] = $type;
         $orderBy['order'] = $active ? ($order ? self::DESC : self::ASC) : self::ASC;
         $parameters = array_merge($fileManager->getQueryParameters(), $orderBy);
@@ -38,13 +38,13 @@ class OrderExtension extends \Twig_Extension
 
         $href = $this->router->generate('file_manager', $parameters);
 
-        return $environment->render('@ArtgrisFileManager/extension/_order.html.twig', array(
+        return $environment->render('@ArtgrisFileManager/extension/_order.html.twig', [
             'active' => $active,
             'href' => $href,
             'glyphicon' => $glyphicon,
             'type' => $type,
             'islist' => $fileManager->getView() === 'list',
-        ));
+        ]);
     }
 
     /**
@@ -52,8 +52,8 @@ class OrderExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            'order' => new \Twig_SimpleFunction('order', array($this, 'order'), array('needs_environment' => true, 'is_safe' => array('html'))),
-        );
+        return [
+            'order' => new \Twig_SimpleFunction('order', [$this, 'order'], ['needs_environment' => true, 'is_safe' => ['html']]),
+        ];
     }
 }

@@ -9,10 +9,10 @@ use Symfony\Component\Asset\Packages;
 
 class FileTypeService
 {
-    const IMAGE_SIZE = array(
+    const IMAGE_SIZE = [
         FileManager::VIEW_LIST => '22',
         FileManager::VIEW_THUMBNAIL => '100',
-    );
+    ];
 
     /**
      * @var Router
@@ -35,7 +35,7 @@ class FileTypeService
         if ($fileManager->getImagePath()) {
             $filePath = htmlentities($fileManager->getImagePath().rawurlencode($file->getFilename()));
         } else {
-            $filePath = $this->router->generate('file_manager_file', array_merge($fileManager->getQueryParameters(), array('fileName' => rawurlencode($file->getFilename()))));
+            $filePath = $this->router->generate('file_manager_file', array_merge($fileManager->getQueryParameters(), ['fileName' => rawurlencode($file->getFilename())]));
         }
         $extension = $file->getExtension();
         $type = $file->getType();
@@ -45,13 +45,13 @@ class FileTypeService
 
             return $fileIcon;
         } elseif ($type === 'dir') {
-            $href = $this->router->generate('file_manager', array_merge($fileManager->getQueryParameters(), array('route' => $fileManager->getRoute().DIRECTORY_SEPARATOR.rawurlencode($file->getFilename()))));
+            $href = $this->router->generate('file_manager', array_merge($fileManager->getQueryParameters(), ['route' => $fileManager->getRoute().DIRECTORY_SEPARATOR.rawurlencode($file->getFilename())]));
 
-            return array(
+            return [
                 'path' => $filePath,
                 'html' => "<i class='fa fa-folder-o' aria-hidden='true'></i>",
                 'folder' => '<a  href="'.$href.'">'.$file->getFilename().'</a>',
-            );
+            ];
         }
     }
 
@@ -82,10 +82,10 @@ class FileTypeService
         switch (true) {
             case preg_match('/(gif|png|jpe?g|svg)$/i', $extension):
                 /* @var FileManager $fileManager */
-                return array(
+                return [
                     'path' => $filePath,
                     'html' => "<img src=\"{$filePath}\" height='{$size}'>",
-                );
+                ];
             case preg_match('/(mp4|ogg|webm)$/i', $extension):
                 $fa = 'fa-file-video-o';
                 break;
@@ -108,9 +108,9 @@ class FileTypeService
                 $fa = 'fa-file-o';
         }
 
-        return array(
+        return [
             'path' => $filePath,
             'html' => "<i class='fa {$fa}' aria-hidden='true'></i>",
-        );
+        ];
     }
 }

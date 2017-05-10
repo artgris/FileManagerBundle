@@ -31,9 +31,9 @@ class FileTypeExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            'accept' => new \Twig_SimpleFunction('accept', array($this, 'accept'), array('needs_environment' => false, 'is_safe' => array('html'))),
-            'fileIcon' => new \Twig_SimpleFunction('fileIcon', array($this, 'fileIcon'), array('needs_environment' => false, 'is_safe' => array('html'))),
-        );
+        return [
+            'accept' => new \Twig_SimpleFunction('accept', [$this, 'accept'], ['needs_environment' => false, 'is_safe' => ['html']]),
+            'fileIcon' => new \Twig_SimpleFunction('fileIcon', [$this, 'fileIcon'], ['needs_environment' => false, 'is_safe' => ['html']]),
+        ];
     }
 }
