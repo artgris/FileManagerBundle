@@ -122,12 +122,11 @@ artgris_file_manager:
 
 Browse the `/manager/?conf=default` URL and you'll get access to your 
 file manager
-
  
 [1]: https://travis-ci.org/artgris/FileManagerBundle.svg?branch=master
 [2]: https://travis-ci.org/artgris/FileManagerBundle
 [3]: https://insight.sensiolabs.com/projects/701afcd5-edde-421a-ab6c-0188bfa7e7dc/mini.png
-[4]: https://insight.sensiolabs.com/projects/701afcd5-edde-421a-ab6c-0188bfa7e7dc/
+[4]: https://insight.sensiolabs.com/projects/701afcd5-edde-421a-ab6c-0188bfa7e7dc
 [5]: https://coveralls.io/repos/artgris/FileManagerBundle/badge.svg?branch=master
 [6]: https://coveralls.io/r/artgris/FileManagerBundle?branch=master
 [7]: https://img.shields.io/badge/Symfony-%202.x%20and%203.x-green.svg
