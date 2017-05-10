@@ -9,7 +9,7 @@ class ManagerControllerTest extends AbstractTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->initClient(array('environment' => 'default'));
+        $this->initClient(['environment' => 'default']);
     }
 
     public function testDefaultConfManager()
@@ -26,14 +26,14 @@ class ManagerControllerTest extends AbstractTestCase
     {
         $crawler = $this->getManagerPage();
 
-        $cssList = array(
+        $cssList = [
             '/bundles/artgrisfilemanager/libs/bootstrap/dist/css/bootstrap.min.css',
             '/bundles/artgrisfilemanager/libs/components-font-awesome/css/font-awesome.min.css',
             '/bundles/artgrisfilemanager/libs/jstree/dist/themes/default/style.min.css',
             '/bundles/artgrisfilemanager/libs/blueimp-file-upload/css/jquery.fileupload.css',
             '/bundles/artgrisfilemanager/css/manager.css',
             '/bundles/artgrisfilemanager/libs/jQuery-contextMenu/dist/jquery.contextMenu.min.css',
-        );
+        ];
 
         foreach ($cssList as $i => $css) {
             $this->assertSame(
@@ -47,7 +47,7 @@ class ManagerControllerTest extends AbstractTestCase
     {
         $crawler = $this->getManagerPage();
 
-        $jsList = array(
+        $jsList = [
             '/bundles/artgrisfilemanager/libs/jquery/dist/jquery.min.js',
             '/bundles/artgrisfilemanager/libs/bootstrap/dist/js/bootstrap.min.js',
             '/bundles/artgrisfilemanager/libs/jstree/dist/jstree.min.js',
@@ -58,7 +58,7 @@ class ManagerControllerTest extends AbstractTestCase
             '/bundles/artgrisfilemanager/js/betamax/jquery.getimagedata.js',
             '/bundles/artgrisfilemanager/libs/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js',
             '/bundles/artgrisfilemanager/libs/jQuery-contextMenu/dist/jquery.contextMenu.min.js',
-        );
+        ];
 
         foreach ($jsList as $i => $js) {
             $this->assertSame(
@@ -89,11 +89,11 @@ class ManagerControllerTest extends AbstractTestCase
     public function testTopBarLinks()
     {
         $crawler = $this->getManagerPage();
-        $urls = array(
+        $urls = [
             '/manager/?conf=default&tree=0',
             '/manager/?conf=default&view=list',
             '/manager/?conf=default&view=thumbnail',
-        );
+        ];
         foreach ($urls as $i => $url) {
             $this->assertSame($url, $crawler->filter('.top-bar a')->eq($i)->attr('href'));
         }
@@ -103,9 +103,9 @@ class ManagerControllerTest extends AbstractTestCase
     {
         $crawler = $this->getManagerPage();
 
-        $files = array(
+        $files = [
             'file',
-        );
+        ];
 
         foreach ($files as $i => $file) {
             $this->assertSame($file, $crawler->filter('.list-blk tbody tr')->eq($i)->attr('class'));

@@ -96,7 +96,7 @@ class ManagerController extends Controller
         }
 
         $formDelete = $this->createDeleteForm()->createView();
-        $fileArray = array();
+        $fileArray = [];
         foreach ($finderFiles as $file) {
             $fileArray[] = new File($file, $this->get('translator'), $this->get('file_type_service'), $fileManager);
         }
@@ -121,33 +121,33 @@ class ManagerController extends Controller
             $fileArray = array_reverse($fileArray);
         }
 
-        $parameters = array(
+        $parameters = [
             'fileManager' => $fileManager,
             'fileArray' => $fileArray,
             'formDelete' => $formDelete,
-        );
+        ];
 
         if ($isJson) {
             $fileList = $this->renderView('ArtgrisFileManagerBundle:views:_list.html.twig', $parameters);
 
-            return new JsonResponse(array('data' => $fileList, 'badge' => $finderFiles->count(), 'treeData' => $directoriesArbo));
+            return new JsonResponse(['data' => $fileList, 'badge' => $finderFiles->count(), 'treeData' => $directoriesArbo]);
         }
         $parameters['treeData'] = json_encode($directoriesArbo);
 
         $form = $this->get('form.factory')->createNamedBuilder('rename', FormType::class)
-                ->add('name', TextType::class, array(
-                    'constraints' => array(
+                ->add('name', TextType::class, [
+                    'constraints' => [
                         new NotBlank(),
-                    ),
+                    ],
                     'label' => false,
                     'data' => $translator->trans('input.default'),
-                ))
-                ->add('send', SubmitType::class, array(
-                    'attr' => array(
+                ])
+                ->add('send', SubmitType::class, [
+                    'attr' => [
                         'class' => 'btn btn-primary',
-                    ),
+                    ],
                     'label' => $translator->trans('button.rename'),
-                ))
+                ])
                 ->getForm();
 
             /* @var Form $form */
@@ -171,7 +171,7 @@ class ManagerController extends Controller
                 $fs->mkdir($directory);
                 $this->addFlash('success', $translator->trans('folder.add.success'));
             } catch (IOExceptionInterface $e) {
-                $this->addFlash('danger', $translator->trans('folder.add.danger', array('%message%' => '$e->getPath()')));
+                $this->addFlash('danger', $translator->trans('folder.add.danger', ['%message%' => '$e->getPath()']));
             }
 
             return $this->redirectToRoute('file_manager', $fileManager->getQueryParameters());
@@ -236,11 +236,11 @@ class ManagerController extends Controller
     {
         $fileManager = $this->newFileManager($request->query->all());
 
-        $options = array(
+        $options = [
             'upload_dir' => $fileManager->getCurrentPath().DIRECTORY_SEPARATOR,
             'upload_url' => $fileManager->getImagePath(),
             'accept_file_types' => $fileManager->getRegex(),
-        );
+        ];
         if (isset($fileManager->getConfiguration()['upload'])) {
             $options = $options + $fileManager->getConfiguration()['upload'];
         }
@@ -337,18 +337,18 @@ class ManagerController extends Controller
         $translator = $this->get('translator');
 
         return $this->createFormBuilder()
-            ->add('name', TextType::class, array(
-                'constraints' => array(
+            ->add('name', TextType::class, [
+                'constraints' => [
                     new NotBlank(),
-                ),
+                ],
                 'label' => false,
-            ))->add('extension', HiddenType::class)
-            ->add('send', SubmitType::class, array(
-                'attr' => array(
+            ])->add('extension', HiddenType::class)
+            ->add('send', SubmitType::class, [
+                'attr' => [
                     'class' => 'btn btn-primary',
-                ),
+                ],
                 'label' => $translator->trans('title.rename.file'),
-            ))
+            ])
             ->getForm();
     }
 
@@ -384,19 +384,19 @@ class ManagerController extends Controller
             $filesNumber = $this->retrieveFilesNumber($directory->getPathname(), $fileManager->getRegex());
             $fileSpan = $filesNumber > 0 ? " <span class='label label-default'>{$filesNumber}</span>" : '';
 
-            $directoriesList[] = array(
+            $directoriesList[] = [
                 'text' => $directory->getFilename().$fileSpan,
                 'icon' => 'fa fa-folder-o',
                 'children' => $this->retrieveSubDirectories($fileManager, $directory->getPathname(), $fileName.DIRECTORY_SEPARATOR),
-                'a_attr' => array(
+                'a_attr' => [
                     'href' => $fileName ? $this->generateUrl('file_manager', $queryParameters) : $this->generateUrl('file_manager', $queryParametersRoute),
-                ), 'state' => array(
+                ], 'state' => [
                     'selected' => $fileManager->getCurrentRoute() === $fileName,
 //				    'expanded' => $fileName ? substr($fileManager->getCurrentRoute(), 0, strlen($fileName)) === $fileName : true,
                     'opened' => true,
-                ),
+                ],
 //                'tags' => [$this->retrieveFilesNumber($directory->getPathname(), $fileManager->getRegex())]
-            );
+            ];
         }
 
         return $directoriesList;
@@ -428,7 +428,7 @@ class ManagerController extends Controller
         if (isset($managerConf[$conf]['dir'])) {
             return $managerConf[$conf];
         } elseif (isset($managerConf[$conf]['service'])) {
-            $extra = isset($queryParameters['extra']) ? $queryParameters['extra'] : array();
+            $extra = isset($queryParameters['extra']) ? $queryParameters['extra'] : [];
             $conf = $this->get($managerConf[$conf]['service'])->getConf($extra);
 
             return $conf;

@@ -10,7 +10,7 @@ class UnExistDirConfTest extends AbstractTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->initClient(array('environment' => 'unexist'));
+        $this->initClient(['environment' => 'unexist']);
     }
 
     public function testUnExistDirConfManager()

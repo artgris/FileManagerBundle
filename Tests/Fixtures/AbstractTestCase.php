@@ -15,7 +15,7 @@ abstract class AbstractTestCase extends WebTestCase
         $this->initClient();
     }
 
-    protected function initClient(array $options = array())
+    protected function initClient(array $options = [])
     {
         $this->client = static::createClient($options);
     }
@@ -27,11 +27,11 @@ abstract class AbstractTestCase extends WebTestCase
 
     protected function getManagerPage()
     {
-        return $this->getBackendPage(array('conf' => 'default'));
+        return $this->getBackendPage(['conf' => 'default']);
     }
 
     protected function getManagerSubDir()
     {
-        return $this->getBackendPage(array('conf' => 'default', 'route' => '/SubDir'));
+        return $this->getBackendPage(['conf' => 'default', 'route' => '/SubDir']);
     }
 }

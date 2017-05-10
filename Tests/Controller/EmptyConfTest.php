@@ -10,7 +10,7 @@ class EmptyConfTest extends AbstractTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->initClient(array('environment' => 'empty'));
+        $this->initClient(['environment' => 'empty']);
     }
 
     public function testUndefinedConfManager()
