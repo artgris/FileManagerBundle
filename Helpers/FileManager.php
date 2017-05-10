@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Artgris\Bundle\FileManagerBundle\Helpers;
-
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -12,7 +10,6 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  */
 class FileManager
 {
-
     const VIEW_THUMBNAIL = 'thumbnail';
     const VIEW_LIST = 'list';
 
@@ -21,13 +18,14 @@ class FileManager
     private $router;
     private $configuration;
 
-
     /**
      * FileManager constructor.
+     *
      * @param $queryParameters
      * @param $configuration
      * @param $kernelRoute
      * @param Router $router
+     *
      * @internal param $basePath
      */
     public function __construct($queryParameters, $configuration, $kernelRoute, Router $router)
@@ -53,7 +51,7 @@ class FileManager
     public function getRegex()
     {
         if (isset($this->configuration['regex'])) {
-            return '/' . $this->configuration['regex'] . '/i';
+            return '/'.$this->configuration['regex'].'/i';
         }
 
         switch ($this->getType()) {
@@ -63,8 +61,8 @@ class FileManager
             case 'image':
                 return '/\.(gif|png|jpe?g|svg)$/i';
             case 'file':
-            default :
-                return "/.+$/i";
+            default:
+                return '/.+$/i';
         }
     }
 
@@ -75,9 +73,8 @@ class FileManager
 
     public function getCurrentPath()
     {
-        return realpath($this->getBasePath() . $this->getCurrentRoute());
+        return realpath($this->getBasePath().$this->getCurrentRoute());
     }
-
 
     // parent url
     public function getParent()
@@ -91,31 +88,30 @@ class FileManager
             unset($queryParentParameters['route']);
         }
 
-        $parentRoute = $this->router->generate("file_manager", $queryParentParameters);
+        $parentRoute = $this->router->generate('file_manager', $queryParentParameters);
 
         return $this->getRoute() ? $parentRoute : null;
     }
-
 
     public function getImagePath()
     {
         $baseUrl = $this->getBaseUrl();
         if ($baseUrl) {
-            return $baseUrl . $this->getCurrentRoute() . DIRECTORY_SEPARATOR;
+            return $baseUrl.$this->getCurrentRoute().DIRECTORY_SEPARATOR;
         }
+
         return false;
     }
 
     private function getBaseUrl()
     {
-
-        $webPath = realpath($this->kernelRoute . '/../web');
+        $webPath = realpath($this->kernelRoute.'/../web');
 
         if (0 === strpos($this->getBasePath(), $webPath)) {
             return substr($this->getBasePath(), strlen($webPath));
         }
-        return false;
 
+        return false;
     }
 
     private function checkSecurity()
@@ -123,7 +119,7 @@ class FileManager
         $currentPath = $this->getCurrentPath();
         // check Path security
         if ($currentPath === false || strpos($currentPath, $this->getBasePath()) !== 0) {
-            throw new HttpException(401, "You are not allowed to access this folder.");
+            throw new HttpException(401, 'You are not allowed to access this folder.');
         }
 
         if (!isset($this->configuration['dir'])) {
@@ -131,17 +127,11 @@ class FileManager
         }
     }
 
-    /**
-     * @return null
-     */
     public function getModule()
     {
         return isset($this->getQueryParameters()['module']) ? $this->getQueryParameters()['module'] : null;
     }
 
-    /**
-     * @return null
-     */
     public function getType()
     {
         return $this->mergeConfAndQuery('type');
@@ -155,9 +145,6 @@ class FileManager
         $this->type = $type;
     }
 
-    /**
-     * @return null
-     */
     public function getRoute()
     {
         return isset($this->getQueryParameters()['route']) ? $this->getQueryParameters()['route'] : null;
@@ -235,17 +222,11 @@ class FileManager
         $this->configuration = $configuration;
     }
 
-    /**
-     * @return null
-     */
     public function getTree()
     {
         return $this->mergeQueryAndConf('tree', true);
     }
 
-    /**
-     * @return null
-     */
     public function getView()
     {
         return $this->mergeQueryAndConf('view', 'list');
@@ -263,7 +244,6 @@ class FileManager
 
     private function mergeQueryAndConf($parameter, $default = null)
     {
-
         return $this->getQueryParameter($parameter) !== null ? $this->getQueryParameter($parameter) : ($this->getConfigurationParameter($parameter) ? $this->getConfigurationParameter($parameter) : $default);
     }
 
@@ -271,6 +251,4 @@ class FileManager
     {
         return $this->getConfigurationParameter($parameter) !== null ? $this->getConfigurationParameter($parameter) : ($this->getQueryParameter($parameter) ? $this->getQueryParameter($parameter) : $default);
     }
-
-
 }

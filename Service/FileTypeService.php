@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Artgris\Bundle\FileManagerBundle\Service;
 
 use Artgris\Bundle\FileManagerBundle\Helpers\FileManager;
@@ -10,12 +9,10 @@ use Symfony\Component\Asset\Packages;
 
 class FileTypeService
 {
-
-    const IMAGE_SIZE = [
+    const IMAGE_SIZE = array(
         FileManager::VIEW_LIST => '22',
-        FileManager::VIEW_THUMBNAIL => '100'
-    ];
-
+        FileManager::VIEW_THUMBNAIL => '100',
+    );
 
     /**
      * @var Router
@@ -26,10 +23,10 @@ class FileTypeService
      */
     private $packages;
 
-
     /**
      * FileTypeService constructor.
-     * @param Router $router
+     *
+     * @param Router   $router
      * @param Packages $packages
      */
     public function __construct(Router $router, Packages $packages)
@@ -41,47 +38,45 @@ class FileTypeService
     public function preview(FileManager $fileManager, SplFileInfo $file)
     {
         if ($fileManager->getImagePath()) {
-            $filePath = htmlentities($fileManager->getImagePath() . rawurlencode($file->getFilename()));
+            $filePath = htmlentities($fileManager->getImagePath().rawurlencode($file->getFilename()));
         } else {
-            $filePath = $this->router->generate('file_manager_file', array_merge($fileManager->getQueryParameters(), ['fileName' => rawurlencode($file->getFilename())]));
+            $filePath = $this->router->generate('file_manager_file', array_merge($fileManager->getQueryParameters(), array('fileName' => rawurlencode($file->getFilename()))));
         }
         $extension = $file->getExtension();
         $type = $file->getType();
-        if ($type === "file") {
+        if ($type === 'file') {
             $size = $this::IMAGE_SIZE[$fileManager->getView()];
             $fileIcon = $this->fileIcon($filePath, $extension, $size);
+
             return $fileIcon;
+        } elseif ($type === 'dir') {
+            $href = $this->router->generate('file_manager', array_merge($fileManager->getQueryParameters(), array('route' => $fileManager->getRoute().DIRECTORY_SEPARATOR.rawurlencode($file->getFilename()))));
 
-        } else if ($type === "dir") {
-
-            $href = $this->router->generate('file_manager', array_merge($fileManager->getQueryParameters(), ['route' => $fileManager->getRoute() . DIRECTORY_SEPARATOR . rawurlencode($file->getFilename())]));
-            return [
-                "path" => $filePath,
-                "html" => "<i class='fa fa-folder-o' aria-hidden='true'></i>",
-                "folder" => '<a  href="' . $href . '">' . $file->getFilename() . '</a>'
-            ];
+            return array(
+                'path' => $filePath,
+                'html' => "<i class='fa fa-folder-o' aria-hidden='true'></i>",
+                'folder' => '<a  href="'.$href.'">'.$file->getFilename().'</a>',
+            );
         }
-
     }
 
     public function accept($type)
     {
         switch ($type) {
-            case "image":
-                $accept = "image/*";
+            case 'image':
+                $accept = 'image/*';
                 break;
-            case "media":
-                $accept = "video/*";
+            case 'media':
+                $accept = 'video/*';
                 break;
-            case "file":
+            case 'file':
                 return false;
-            default :
+            default:
                 return false;
         }
 
         return $accept;
     }
-
 
     public function fileIcon($filePath, $extension = null, $size = 75)
     {
@@ -91,11 +86,11 @@ class FileTypeService
 
         switch (true) {
             case preg_match('/(gif|png|jpe?g|svg)$/i', $extension):
-                /** @var FileManager $fileManager */
-                return [
-                    "path" => $filePath,
-                    "html" => "<img src=\"{$filePath}\" height='{$size}'>"
-                ];
+                /* @var FileManager $fileManager */
+                return array(
+                    'path' => $filePath,
+                    'html' => "<img src=\"{$filePath}\" height='{$size}'>",
+                );
             case preg_match('/(mp4|ogg|webm)$/i', $extension):
                 $fa = 'fa-file-video-o';
                 break;
@@ -114,13 +109,13 @@ class FileTypeService
             case preg_match('/(zip|rar|gz)$/i', $extension):
                 $fa = 'fa-file-archive-o';
                 break;
-            default :
+            default:
                 $fa = 'fa-file-o';
         }
-        return [
-            "path" => $filePath,
-            "html" => "<i class='fa {$fa}' aria-hidden='true'></i>"
-        ];
-    }
 
+        return array(
+            'path' => $filePath,
+            'html' => "<i class='fa {$fa}' aria-hidden='true'></i>",
+        );
+    }
 }

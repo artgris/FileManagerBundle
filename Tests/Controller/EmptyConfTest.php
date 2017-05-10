@@ -1,15 +1,12 @@
 <?php
 
-
 namespace Artgris\Bundle\FileManagerBundle\Tests\Controller;
-
 
 use Artgris\Bundle\FileManagerBundle\Tests\Fixtures\AbstractTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class EmptyConfTest extends AbstractTestCase
 {
-
     public function setUp()
     {
         parent::setUp();
@@ -28,6 +25,4 @@ class EmptyConfTest extends AbstractTestCase
             $this->client->getResponse()->getStatusCode()
         );
     }
-
-
 }

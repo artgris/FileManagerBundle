@@ -1,14 +1,11 @@
 <?php
 
-
 namespace Artgris\Bundle\FileManagerBundle\Tests\Controller;
-
 
 use Artgris\Bundle\FileManagerBundle\Tests\Fixtures\AbstractTestCase;
 
 class ManagerControllerTest extends AbstractTestCase
 {
-
     public function setUp()
     {
         parent::setUp();
@@ -29,14 +26,14 @@ class ManagerControllerTest extends AbstractTestCase
     {
         $crawler = $this->getManagerPage();
 
-        $cssList = [
+        $cssList = array(
             '/bundles/artgrisfilemanager/libs/bootstrap/dist/css/bootstrap.min.css',
             '/bundles/artgrisfilemanager/libs/components-font-awesome/css/font-awesome.min.css',
             '/bundles/artgrisfilemanager/libs/jstree/dist/themes/default/style.min.css',
             '/bundles/artgrisfilemanager/libs/blueimp-file-upload/css/jquery.fileupload.css',
             '/bundles/artgrisfilemanager/css/manager.css',
             '/bundles/artgrisfilemanager/libs/jQuery-contextMenu/dist/jquery.contextMenu.min.css',
-        ];
+        );
 
         foreach ($cssList as $i => $css) {
             $this->assertSame(
@@ -46,12 +43,11 @@ class ManagerControllerTest extends AbstractTestCase
         }
     }
 
-
     public function testDefaultJsScriptsAreLinked()
     {
         $crawler = $this->getManagerPage();
 
-        $jsList = [
+        $jsList = array(
             '/bundles/artgrisfilemanager/libs/jquery/dist/jquery.min.js',
             '/bundles/artgrisfilemanager/libs/bootstrap/dist/js/bootstrap.min.js',
             '/bundles/artgrisfilemanager/libs/jstree/dist/jstree.min.js',
@@ -62,7 +58,7 @@ class ManagerControllerTest extends AbstractTestCase
             '/bundles/artgrisfilemanager/js/betamax/jquery.getimagedata.js',
             '/bundles/artgrisfilemanager/libs/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js',
             '/bundles/artgrisfilemanager/libs/jQuery-contextMenu/dist/jquery.contextMenu.min.js',
-        ];
+        );
 
         foreach ($jsList as $i => $js) {
             $this->assertSame(
@@ -77,7 +73,6 @@ class ManagerControllerTest extends AbstractTestCase
         $crawler = $this->getManagerPage();
         $this->assertSame('Add files...', trim($crawler->filter('.fileinput-button span')->text()));
     }
-
 
     public function testNoParent()
     {
@@ -104,10 +99,8 @@ class ManagerControllerTest extends AbstractTestCase
         }
     }
 
-
     public function testTableTr()
     {
-
         $crawler = $this->getManagerPage();
 
         $files = array(
@@ -118,6 +111,4 @@ class ManagerControllerTest extends AbstractTestCase
             $this->assertSame($file, $crawler->filter('.list-blk tbody tr')->eq($i)->attr('class'));
         }
     }
-
-
 }

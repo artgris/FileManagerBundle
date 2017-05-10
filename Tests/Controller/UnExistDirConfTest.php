@@ -1,15 +1,12 @@
 <?php
 
-
 namespace Artgris\Bundle\FileManagerBundle\Tests\Controller;
-
 
 use Artgris\Bundle\FileManagerBundle\Tests\Fixtures\AbstractTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class UnExistDirConfTest extends AbstractTestCase
 {
-
     public function setUp()
     {
         parent::setUp();
@@ -28,6 +25,4 @@ class UnExistDirConfTest extends AbstractTestCase
             $this->client->getResponse()->getStatusCode()
         );
     }
-
-
 }

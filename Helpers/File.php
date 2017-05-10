@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Artgris\Bundle\FileManagerBundle\Helpers;
-
 
 use Artgris\Bundle\FileManagerBundle\Service\FileTypeService;
 use Symfony\Component\Finder\SplFileInfo;
@@ -28,13 +26,14 @@ class File
     private $fileManager;
     private $preview;
 
-
     /**
      * File constructor.
-     * @param SplFileInfo $file
+     *
+     * @param SplFileInfo         $file
      * @param TranslatorInterface $translator
-     * @param FileTypeService $fileTypeService
-     * @param FileManager $fileManager
+     * @param FileTypeService     $fileTypeService
+     * @param FileManager         $fileManager
+     *
      * @internal param $module
      */
     public function __construct(SplFileInfo $file, TranslatorInterface $translator, FileTypeService $fileTypeService, FileManager $fileManager)
@@ -46,7 +45,6 @@ class File
         $this->preview = $this->fileTypeService->preview($this->fileManager, $this->file);
     }
 
-
     public function getDimension()
     {
         return preg_match('/(gif|png|jpe?g|svg)$/i', $this->file->getExtension()) ?
@@ -55,7 +53,6 @@ class File
 
     public function getHTMLDimension()
     {
-
         $dimension = $this->getDimension();
         if ($dimension) {
             return "{$dimension[0]} × {$dimension[1]}";
@@ -64,11 +61,12 @@ class File
 
     public function getHTMLSize()
     {
-        if ($this->getFile()->getType() == 'file') {
+        if ($this->getFile()->getType() === 'file') {
             $size = $this->file->getSize() / 1000;
-            $kb = $this->translator->trans("size.kb");
-            $mb = $this->translator->trans("size.mb");
-            return $size > 1000 ? number_format(($size / 1000), 1, '.', '') . " " . $mb : number_format($size, 1, '.', '') . " " . $kb;
+            $kb = $this->translator->trans('size.kb');
+            $mb = $this->translator->trans('size.mb');
+
+            return $size > 1000 ? number_format(($size / 1000), 1, '.', '').' '.$mb : number_format($size, 1, '.', '').' '.$kb;
         }
     }
 
@@ -77,7 +75,6 @@ class File
         if ($module) {
             $attr = '';
             if ($this->getDimension()) {
-
                 $width = $this->getDimension()[0];
                 $height = $this->getDimension()[0];
                 $attr .= "data-width=\"{$width}\" data-height=\"{$height}\" ";
@@ -88,10 +85,10 @@ class File
             }
 
             $attr .= ' class="select"';
+
             return $attr;
         }
     }
-
 
     /**
      * @return SplFileInfo
@@ -124,5 +121,4 @@ class File
     {
         $this->preview = $preview;
     }
-
 }

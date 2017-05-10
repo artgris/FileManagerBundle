@@ -9,9 +9,9 @@ if (!file_exists($file)) {
 }
 $autoload = require $file;
 
-
 AnnotationRegistry::registerLoader(function ($class) use ($autoload) {
     $autoload->loadClass($class);
+
     return class_exists($class, false);
 });
 

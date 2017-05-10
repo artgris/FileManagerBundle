@@ -10,7 +10,6 @@ use Symfony\Component\HttpKernel\Kernel;
  */
 class AppKernel extends Kernel
 {
-
     public function registerBundles()
     {
         return array(
@@ -25,7 +24,6 @@ class AppKernel extends Kernel
         );
     }
 
-
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
@@ -37,6 +35,7 @@ class AppKernel extends Kernel
             });
         }
     }
+
     /**
      * @return string
      */
@@ -44,6 +43,7 @@ class AppKernel extends Kernel
     {
         return __DIR__.'/../../../build/cache/'.$this->getEnvironment();
     }
+
     /**
      * @return string
      */
@@ -51,7 +51,6 @@ class AppKernel extends Kernel
     {
         return __DIR__.'/../../../build/kernel_logs/'.$this->getEnvironment();
     }
-
 
     protected function isSymfony3()
     {
