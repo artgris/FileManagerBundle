@@ -38,11 +38,6 @@ matrix:
       env:
         - SYMFONY_VERSION="2.8.*"
         - ENABLE_CODE_COVERAGE="true"
-    # legacy (oldest supported versions)
-    - php: 5.3
-      env:
-        - SYMFONY_VERSION="2.3.*"
-        - COMPOSER_FLAGS="--prefer-lowest"
   allow_failures:
     - php: nightly
     # code coverage is very slow; allow a failure to get the Travis result early
