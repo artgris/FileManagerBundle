@@ -1,10 +1,10 @@
 Chapter 1 - Basic Configuration
 ===============================
 
-There are two methods for configure the bundle:
+There are two methods to configure the bundle:
 
-* Used basic configuration explain here
-* [Used a service for a most advanced configuration](2-service-configuration.md)
+* Using basic configuration explain here
+* [Using a service for a most advanced configuration](2-service-configuration.md)
 
  
 ### Under `conf` key you have all your different file manager configurations.
