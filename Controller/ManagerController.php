@@ -56,8 +56,6 @@ class ManagerController extends Controller
         $finderFiles->in($fileManager->getCurrentPath())->depth(0);
         $regex = $fileManager->getRegex();
 
-//
-//        $orderBys = isset($fileManager->getQueryParameters()['orderby']) ? $fileManager->getQueryParameters()['orderby'] : [];
         $orderBy = $fileManager->getQueryParameter('orderby');
         $orderDESC = $fileManager->getQueryParameter('order') === OrderExtension::DESC;
         if (!$orderBy) {

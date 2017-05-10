@@ -2,7 +2,7 @@
 
 namespace Artgris\Bundle\FileManagerBundle\Service;
 
-interface CustomConfService
+interface CustomConfServiceInterface
 {
     public function getConf($extra);
 }

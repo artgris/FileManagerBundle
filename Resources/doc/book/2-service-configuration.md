@@ -22,16 +22,16 @@ artgris_file_manager:
 ```
 
 
-This service need to implement CustomConfService
+This service need to implement CustomConfServiceInterface
 
 ```php 
 <?php
 
 namespace AppBundle\Service;
 
-use Artgris\Bundle\FileManagerBundle\Service\CustomConfService;
+use Artgris\Bundle\FileManagerBundle\Service\CustomConfServiceInterface;
 
-class CustomService implements CustomConfService
+class CustomService implements CustomConfServiceInterface
 {
    public function getConf($extra = []) {
    
@@ -92,11 +92,11 @@ With service configuration, you can for example defined a folder for each user l
 namespace AppBundle\Service;
 
 
-use Artgris\Bundle\FileManagerBundle\Service\CustomConfService;
+use Artgris\Bundle\FileManagerBundle\Service\CustomConfServiceInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
-class CustomService implements CustomConfService
+class CustomService implements CustomConfServiceInterface
 {
     /**
      * @var TokenStorage
@@ -150,9 +150,9 @@ Example
 
 namespace AppBundle\Service;
 
-use Artgris\Bundle\FileManagerBundle\Service\CustomConfService;
+use Artgris\Bundle\FileManagerBundle\Service\CustomConfServiceInterface;
 
-class CustomService implements CustomConfService
+class CustomService implements CustomConfServiceInterface
 {
       public function getConf($extra = [])
       {
