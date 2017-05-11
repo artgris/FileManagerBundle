@@ -14,6 +14,7 @@ return PhpCsFixer\Config::create()
     ->setFinder($finder)
     ->setRules(array(
         '@Symfony' => true,
+        '@Symfony:risky' => true,
         'array_syntax' => array('syntax' => 'short'),
         'binary_operator_spaces' => array(
             'align_double_arrow' => false,
