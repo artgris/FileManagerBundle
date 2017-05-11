@@ -2,7 +2,6 @@
 # Can be easily overridden in each test config
 parameters:
     locale: en
-    database_path: '%kernel.root_dir%/../../../build/test.db'
 
 framework:
     secret:          secret
