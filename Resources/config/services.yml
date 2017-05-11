@@ -7,8 +7,7 @@ services:
 
     file_type_service:
         class: Artgris\Bundle\FileManagerBundle\Service\FileTypeService
-        arguments:
-            router: "@router"
+        arguments: ['@router']
 
     order_extension:
         class: Artgris\Bundle\FileManagerBundle\Twig\OrderExtension
