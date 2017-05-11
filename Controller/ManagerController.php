@@ -403,7 +403,7 @@ class ManagerController extends Controller
     }
 
     /**
-     * Tree Iterator
+     * Tree Iterator.
      *
      * @param $path
      * @param $regex
