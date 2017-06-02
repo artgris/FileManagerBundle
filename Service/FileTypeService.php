@@ -22,7 +22,7 @@ class FileTypeService
     /**
      * FileTypeService constructor.
      *
-     * @param Router $router
+     * @param Router   $router
      * @param Packages $packages
      */
     public function __construct(Router $router)
@@ -33,7 +33,7 @@ class FileTypeService
     public function preview(FileManager $fileManager, SplFileInfo $file)
     {
         if ($fileManager->getImagePath()) {
-            $filePath = htmlentities($fileManager->getImagePath() . rawurlencode($file->getFilename()));
+            $filePath = htmlentities($fileManager->getImagePath().rawurlencode($file->getFilename()));
         } else {
             $filePath = $this->router->generate('file_manager_file', array_merge($fileManager->getQueryParameters(), ['fileName' => rawurlencode($file->getFilename())]));
         }
@@ -45,12 +45,12 @@ class FileTypeService
 
             return $fileIcon;
         } elseif ($type === 'dir') {
-            $href = $this->router->generate('file_manager', array_merge($fileManager->getQueryParameters(), ['route' => $fileManager->getRoute() . DIRECTORY_SEPARATOR . rawurlencode($file->getFilename())]));
+            $href = $this->router->generate('file_manager', array_merge($fileManager->getQueryParameters(), ['route' => $fileManager->getRoute().DIRECTORY_SEPARATOR.rawurlencode($file->getFilename())]));
 
             return [
                 'path' => $filePath,
                 'html' => "<i class='fa fa-folder-o' aria-hidden='true'></i>",
-                'folder' => '<a  href="' . $href . '">' . $file->getFilename() . '</a>',
+                'folder' => '<a  href="'.$href.'">'.$file->getFilename().'</a>',
             ];
         }
     }
@@ -75,7 +75,6 @@ class FileTypeService
 
     public function fileIcon($filePath, $extension = null, $size = 75)
     {
-
         if ($extension === null) {
             $filePathTmp = strtok($filePath, '?');
             $extension = pathinfo($filePathTmp, PATHINFO_EXTENSION);
