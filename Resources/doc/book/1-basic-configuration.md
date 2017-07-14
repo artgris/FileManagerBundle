@@ -45,7 +45,7 @@ Example with a Private folder :
  ```yml  
 artgris_file_manager:
     conf:
-        public:
+        private:
             dir: '../private' # equivalent to '%kernel.root_dir%/../private'
 ```
 
