@@ -150,10 +150,10 @@ class ManagerController extends Controller
                 ])
                 ->getForm();
 
-            /* @var Form $form */
-            $form->handleRequest($request);
-            /** @var Form $formRename */
-            $formRename = $this->createRenameForm();
+        /* @var Form $form */
+        $form->handleRequest($request);
+        /** @var Form $formRename */
+        $formRename = $this->createRenameForm();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();

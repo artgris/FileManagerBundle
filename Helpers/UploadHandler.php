@@ -384,8 +384,10 @@ class UploadHandler
         switch ($last) {
             case 'g':
                 $val *= 1024;
+                // no break
             case 'm':
                 $val *= 1024;
+                // no break
             case 'k':
                 $val *= 1024;
         }
@@ -837,6 +839,7 @@ class UploadHandler
             case 'gif':
             case 'png':
                 imagecolortransparent($new_img, imagecolorallocate($new_img, 0, 0, 0));
+                // no break
             case 'png':
                 imagealphablending($new_img, false);
                 imagesavealpha($new_img, true);
