@@ -446,7 +446,7 @@ class ManagerController extends Controller
     private function newFileManager($queryParameters)
     {
         if (!isset($queryParameters['conf'])) {
-            throw new \Exception('Please defined a conf parameter in your route');
+            throw new \Exception('Please define a conf parameter in your route');
         }
 
         return new FileManager($queryParameters, $this->getBasePath($queryParameters), $this->getKernelRoute(), $this->get('router'));
