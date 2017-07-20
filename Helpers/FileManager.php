@@ -123,7 +123,7 @@ class FileManager
         }
 
         if (!isset($this->configuration['dir'])) {
-            throw new HttpException(500, 'Please defined a "dir" parameter in your config.yml');
+            throw new HttpException(500, 'Please define a "dir" parameter in your config.yml');
         }
     }
 
