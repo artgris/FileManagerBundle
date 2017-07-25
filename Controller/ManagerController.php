@@ -128,7 +128,7 @@ class ManagerController extends Controller
         ];
 
         if ($isJson) {
-            $fileList = $this->renderView('ArtgrisFileManagerBundle:views:_list.html.twig', $parameters);
+            $fileList = $this->renderView('ArtgrisFileManagerBundle:views:_manager_view.html.twig', $parameters);
 
             return new JsonResponse(['data' => $fileList, 'badge' => $finderFiles->count(), 'treeData' => $directoriesArbo]);
         }

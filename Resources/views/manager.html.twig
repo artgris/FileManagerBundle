@@ -93,7 +93,7 @@
             <div class="col-lg-12">
                 {% endif %}
                 <form id="form-multiple-delete">
-                    {% include '@ArtgrisFileManager/views/_'~fileManager.view~'.html.twig' with {'fileManager' :fileManager,  'fileArray' : fileArray, 'formDelete' : formDelete} only %}
+                    {% include '@ArtgrisFileManager/views/_manager_view.html.twig' with {'fileManager' :fileManager,  'fileArray' : fileArray, 'formDelete' : formDelete} only %}
                 </form>
             </div>
         </div>
