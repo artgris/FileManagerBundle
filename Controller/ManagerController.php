@@ -2,6 +2,7 @@
 
 namespace Artgris\Bundle\FileManagerBundle\Controller;
 
+use Artgris\Bundle\FileManagerBundle\Event\FileManagerEvents;
 use Artgris\Bundle\FileManagerBundle\Helpers\File;
 use Artgris\Bundle\FileManagerBundle\Helpers\FileManager;
 use Artgris\Bundle\FileManagerBundle\Helpers\UploadHandler;
@@ -9,6 +10,7 @@ use Artgris\Bundle\FileManagerBundle\Twig\OrderExtension;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -30,6 +32,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ManagerController extends Controller
 {
+    /**
+     * @var FileManager
+     */
+    protected $fileManager;
+
     /**
      * @Route("/", name="file_manager")
      *
@@ -135,20 +142,20 @@ class ManagerController extends Controller
         $parameters['treeData'] = json_encode($directoriesArbo);
 
         $form = $this->get('form.factory')->createNamedBuilder('rename', FormType::class)
-                ->add('name', TextType::class, [
-                    'constraints' => [
-                        new NotBlank(),
-                    ],
-                    'label' => false,
-                    'data' => $translator->trans('input.default'),
-                ])
-                ->add('send', SubmitType::class, [
-                    'attr' => [
-                        'class' => 'btn btn-primary',
-                    ],
-                    'label' => $translator->trans('button.rename'),
-                ])
-                ->getForm();
+            ->add('name', TextType::class, [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+                'label' => false,
+                'data' => $translator->trans('input.default'),
+            ])
+            ->add('send', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-primary',
+                ],
+                'label' => $translator->trans('button.rename'),
+            ])
+            ->getForm();
 
         /* @var Form $form */
         $form->handleRequest($request);
@@ -240,13 +247,20 @@ class ManagerController extends Controller
             'upload_dir' => $fileManager->getCurrentPath().DIRECTORY_SEPARATOR,
             'upload_url' => $fileManager->getImagePath(),
             'accept_file_types' => $fileManager->getRegex(),
+            'print_response' => false,
         ];
         if (isset($fileManager->getConfiguration()['upload'])) {
             $options = $options + $fileManager->getConfiguration()['upload'];
         }
-        new UploadHandler($options);
 
-        return new Response();
+        $this->dispatch(FileManagerEvents::PRE_UPDATE, ['options' => &$options]);
+
+        $uploadHandler = new UploadHandler($options);
+        $response = $uploadHandler->response;
+
+        $this->dispatch(FileManagerEvents::POST_UPDATE, ['response' => &$response]);
+
+        return new JsonResponse($response);
     }
 
     /**
@@ -292,7 +306,9 @@ class ManagerController extends Controller
                         $this->addFlash('danger', $translator->trans('file.deleted.danger'));
                     } else {
                         try {
+                            $this->dispatch(FileManagerEvents::PRE_DELETE_FILE);
                             $fs->remove($filePath);
+                            $this->dispatch(FileManagerEvents::POST_DELETE_FILE);
                             $is_delete = true;
                         } catch (IOException $exception) {
                             $this->addFlash('danger', $translator->trans('file.deleted.unauthorized'));
@@ -305,7 +321,10 @@ class ManagerController extends Controller
                 unset($queryParameters['delete']);
             } else {
                 try {
+                    $this->dispatch(FileManagerEvents::PRE_DELETE_FOLDER);
                     $fs->remove($fileManager->getCurrentPath());
+                    $this->dispatch(FileManagerEvents::POST_DELETE_FOLDER);
+
                     $this->addFlash('success', $translator->trans('folder.deleted.success'));
                 } catch (IOException $exception) {
                     $this->addFlash('danger', $translator->trans('folder.deleted.unauthorized'));
@@ -449,6 +468,19 @@ class ManagerController extends Controller
             throw new \Exception('Please define a conf parameter in your route');
         }
 
-        return new FileManager($queryParameters, $this->getBasePath($queryParameters), $this->getKernelRoute(), $this->get('router'));
+        $this->fileManager = new FileManager($queryParameters, $this->getBasePath($queryParameters), $this->getKernelRoute(), $this->get('router'));
+
+        return $this->fileManager;
+    }
+
+    protected function dispatch($eventName, array $arguments = [])
+    {
+        $arguments = array_replace([
+            'filemanager' => $this->fileManager,
+        ], $arguments);
+
+        $subject = $arguments['filemanager'];
+        $event = new GenericEvent($subject, $arguments);
+        $this->get('event_dispatcher')->dispatch($eventName, $event);
     }
 }
