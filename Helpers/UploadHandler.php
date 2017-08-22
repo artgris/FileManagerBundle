@@ -1186,7 +1186,8 @@ class UploadHandler
                     try {
                         move_uploaded_file($uploaded_file, $file_path);
                     } catch (\Exception $e) {
-                        $file->error = $this->get_error_message("upload.exception_move_uploaded_file");
+                        $file->error = $this->get_error_message('upload.exception_move_uploaded_file');
+
                         return $file;
                     }
                 }

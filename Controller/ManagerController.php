@@ -258,10 +258,9 @@ class ManagerController extends Controller
         $uploadHandler = new UploadHandler($options);
         $response = $uploadHandler->response;
 
-        foreach ($response["files"] as &$file) {
-                $file->error = $this->get('translator')->trans($file->error);
+        foreach ($response['files'] as &$file) {
+            $file->error = $this->get('translator')->trans($file->error);
         }
-
 
         $this->dispatch(FileManagerEvents::POST_UPDATE, ['response' => &$response]);
 
