@@ -165,7 +165,7 @@ class ManagerController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $fs = new Filesystem();
-            $directory = $directorytmp = $fileManager->getCurrentPath() . DIRECTORY_SEPARATOR . $data['name'];
+            $directory = $directorytmp = $fileManager->getCurrentPath().DIRECTORY_SEPARATOR.$data['name'];
             $i = 1;
 
             while ($fs->exists($directorytmp)) {
@@ -206,12 +206,12 @@ class ManagerController extends Controller
         $formRename->handleRequest($request);
         if ($formRename->isSubmitted() && $formRename->isValid()) {
             $data = $formRename->getData();
-            $extension = $data['extension'] ? '.' . $data['extension'] : '';
-            $NewfileName = $data['name'] . $extension;
+            $extension = $data['extension'] ? '.'.$data['extension'] : '';
+            $NewfileName = $data['name'].$extension;
             if (isset($data['name']) && $NewfileName !== $fileName) {
                 $fileManager = $this->newFileManager($queryParameters);
-                $NewfilePath = $fileManager->getCurrentPath() . DIRECTORY_SEPARATOR . $NewfileName;
-                $OldfilePath = realpath($fileManager->getCurrentPath() . DIRECTORY_SEPARATOR . $fileName);
+                $NewfilePath = $fileManager->getCurrentPath().DIRECTORY_SEPARATOR.$NewfileName;
+                $OldfilePath = realpath($fileManager->getCurrentPath().DIRECTORY_SEPARATOR.$fileName);
                 if (strpos($NewfilePath, $fileManager->getCurrentPath()) !== 0) {
                     $this->addFlash('danger', $translator->trans('file.renamed.unauthorized'));
                 } else {
@@ -244,7 +244,7 @@ class ManagerController extends Controller
         $fileManager = $this->newFileManager($request->query->all());
 
         $options = [
-            'upload_dir' => $fileManager->getCurrentPath() . DIRECTORY_SEPARATOR,
+            'upload_dir' => $fileManager->getCurrentPath().DIRECTORY_SEPARATOR,
             'upload_url' => $fileManager->getImagePath(),
             'accept_file_types' => $fileManager->getRegex(),
             'print_response' => false,
@@ -281,7 +281,7 @@ class ManagerController extends Controller
     {
         $fileManager = $this->newFileManager($request->query->all());
 
-        return new BinaryFileResponse($fileManager->getCurrentPath() . DIRECTORY_SEPARATOR . urldecode($fileName));
+        return new BinaryFileResponse($fileManager->getCurrentPath().DIRECTORY_SEPARATOR.urldecode($fileName));
     }
 
     /**
@@ -307,18 +307,18 @@ class ManagerController extends Controller
             if (isset($queryParameters['delete'])) {
                 $is_delete = false;
                 foreach ($queryParameters['delete'] as $fileName) {
-                    $filePath = realpath($fileManager->getCurrentPath() . DIRECTORY_SEPARATOR . $fileName);
+                    $filePath = realpath($fileManager->getCurrentPath().DIRECTORY_SEPARATOR.$fileName);
                     if (strpos($filePath, $fileManager->getCurrentPath()) !== 0) {
                         $this->addFlash('danger', $translator->trans('file.deleted.danger'));
                     } else {
+                        $this->dispatch(FileManagerEvents::PRE_DELETE_FILE);
                         try {
-                            $this->dispatch(FileManagerEvents::PRE_DELETE_FILE);
                             $fs->remove($filePath);
-                            $this->dispatch(FileManagerEvents::POST_DELETE_FILE);
                             $is_delete = true;
                         } catch (IOException $exception) {
                             $this->addFlash('danger', $translator->trans('file.deleted.unauthorized'));
                         }
+                        $this->dispatch(FileManagerEvents::POST_DELETE_FILE);
                     }
                 }
                 if ($is_delete) {
@@ -326,15 +326,15 @@ class ManagerController extends Controller
                 }
                 unset($queryParameters['delete']);
             } else {
+                $this->dispatch(FileManagerEvents::PRE_DELETE_FOLDER);
                 try {
-                    $this->dispatch(FileManagerEvents::PRE_DELETE_FOLDER);
                     $fs->remove($fileManager->getCurrentPath());
-                    $this->dispatch(FileManagerEvents::POST_DELETE_FOLDER);
-
                     $this->addFlash('success', $translator->trans('folder.deleted.success'));
                 } catch (IOException $exception) {
                     $this->addFlash('danger', $translator->trans('folder.deleted.unauthorized'));
                 }
+
+                $this->dispatch(FileManagerEvents::POST_DELETE_FOLDER);
                 $queryParameters['route'] = dirname($fileManager->getCurrentRoute());
 
                 return $this->redirectToRoute('file_manager', $queryParameters);
@@ -381,7 +381,7 @@ class ManagerController extends Controller
      * @param FileManager $fileManager
      * @param $path
      * @param string $parent
-     * @param bool $baseFolderName
+     * @param bool   $baseFolderName
      *
      * @return array|null
      */
@@ -399,7 +399,7 @@ class ManagerController extends Controller
 
         foreach ($directories as $directory) {
             /** @var SplFileInfo $directory */
-            $fileName = $baseFolderName ? '' : $parent . $directory->getFilename();
+            $fileName = $baseFolderName ? '' : $parent.$directory->getFilename();
 
             $queryParameters = $fileManager->getQueryParameters();
             $queryParameters['route'] = $fileName;
@@ -410,9 +410,9 @@ class ManagerController extends Controller
             $fileSpan = $filesNumber > 0 ? " <span class='label label-default'>{$filesNumber}</span>" : '';
 
             $directoriesList[] = [
-                'text' => $directory->getFilename() . $fileSpan,
+                'text' => $directory->getFilename().$fileSpan,
                 'icon' => 'fa fa-folder-o',
-                'children' => $this->retrieveSubDirectories($fileManager, $directory->getPathname(), $fileName . DIRECTORY_SEPARATOR),
+                'children' => $this->retrieveSubDirectories($fileManager, $directory->getPathname(), $fileName.DIRECTORY_SEPARATOR),
                 'a_attr' => [
                     'href' => $fileName ? $this->generateUrl('file_manager', $queryParameters) : $this->generateUrl('file_manager', $queryParametersRoute),
                 ], 'state' => [
