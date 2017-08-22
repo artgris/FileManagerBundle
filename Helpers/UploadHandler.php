@@ -1183,7 +1183,12 @@ class UploadHandler
                         FILE_APPEND
                     );
                 } else {
-                    move_uploaded_file($uploaded_file, $file_path);
+                    try {
+                        move_uploaded_file($uploaded_file, $file_path);
+                    } catch (\Exception $e) {
+                        $file->error = $this->get_error_message("upload.exception_move_uploaded_file");
+                        return $file;
+                    }
                 }
             } else {
                 // Non-multipart uploads (PUT method support)

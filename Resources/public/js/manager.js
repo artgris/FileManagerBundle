@@ -171,7 +171,6 @@ $(function () {
             if (file.url) {
                 displaySuccess('<strong>' + file.name + '</strong> ' + successMessage)
                 // Ajax update view
-                console.log(url);
                 $.ajax({
                     dataType: "json",
                     url: url,
@@ -196,7 +195,7 @@ $(function () {
             }
         });
     }).on('fileuploadfail', function (e, data) {
-        $.each(data.files, function (index) {
+        $.each(data.files, function (index, file) {
             displayError('File upload failed.')
         });
     });

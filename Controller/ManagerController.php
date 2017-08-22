@@ -178,7 +178,7 @@ class ManagerController extends Controller
                 $fs->mkdir($directory);
                 $this->addFlash('success', $translator->trans('folder.add.success'));
             } catch (IOExceptionInterface $e) {
-                $this->addFlash('danger', $translator->trans('folder.add.danger', ['%message%' => '$e->getPath()']));
+                $this->addFlash('danger', $translator->trans('folder.add.danger', ['%message%' => $data['name']]));
             }
 
             return $this->redirectToRoute('file_manager', $fileManager->getQueryParameters());
@@ -257,6 +257,11 @@ class ManagerController extends Controller
 
         $uploadHandler = new UploadHandler($options);
         $response = $uploadHandler->response;
+
+        foreach ($response["files"] as &$file) {
+                $file->error = $this->get('translator')->trans($file->error);
+        }
+
 
         $this->dispatch(FileManagerEvents::POST_UPDATE, ['response' => &$response]);
 

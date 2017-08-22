@@ -12,7 +12,7 @@ file:
     unauthorized: Les fichiers n'existent plus ou vous n'êtes pas autorisé à accéder à cette page
 folder:
   add:
-    danger: Une erreur s'est produite lors de la création du dossier :%message%
+    danger: "Une erreur s'est produite lors de la création du dossier : %message%"
     success: Le dossier a été créé avec succès
   deleted:
     success: Le dossier a été supprimé avec succès
@@ -51,3 +51,5 @@ size:
   mb: Mo
   kb: ko
 select-all: Tout selectionner
+upload:
+  exception_move_uploaded_file: Permission refusée
