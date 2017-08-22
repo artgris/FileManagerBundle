@@ -29,7 +29,6 @@ matrix:
       env:
         - SYMFONY_VERSION="3.2.*"
         - TWIG_VERSION="2.x-dev"
-        - CHECK_PHP_SYNTAX="yes"
     # common (some popular version combinations)
     - php: 7.0
       env: SYMFONY_VERSION="3.1.*"
