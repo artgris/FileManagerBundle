@@ -53,3 +53,22 @@ size:
 select-all: Tout selectionner
 upload:
   exception_move_uploaded_file: Permission refusée
+
+'The uploaded file exceeds the upload_max_filesize directive in php.ini': La taille maximum des fichiers (upload_max_filesize) a été atteinte
+'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form': La taille maximum de fichier (MAX_FILE_SIZE) a été atteinte
+'The uploaded file was only partially uploaded': Le fichier n'a été que partiellement uploadé
+'No file was uploaded': Aucun fichier n'a été uploadé
+'Missing a temporary folder': Il manque le dossier temporaire
+'Failed to write file to disk': Impossible d'enregistrer le ficher
+'A PHP extension stopped the file upload': une extension PHP bloque l'upload
+'The uploaded file exceeds the post_max_size directive in php.ini': L'upload de fichier dépasse la taille autorisée par le serveur
+'File is too big': Le fichier est trop gros
+'File is too small': Le fichier est trop petit
+'Filetype not allowed': Ce type de fichier n'est pas autorisé
+'Maximum number of files exceeded': Le nombre maximum de fichier a été atteint
+'Image exceeds maximum width': L'image a une largeur trop grande
+'Image requires a minimum width': L'image a une largeur trop petite
+'Image exceeds maximum height': L'image a une hauteur trop grande
+'Image requires a minimum height': L'image a une hauteur trop petite
+'File upload aborted': L'upload a été annuler
+'Failed to resize image': une erreur est survenue lors du redimensionnement de l'image
