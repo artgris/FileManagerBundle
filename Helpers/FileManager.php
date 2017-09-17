@@ -105,10 +105,20 @@ class FileManager
 
     private function getBaseUrl()
     {
-        $webPath = realpath($this->kernelRoute.'/../web');
+        $webPath = realpath($this->kernelRoute . '/../web');
+        $dir = $this->getConfiguration()['dir'];
+        $base = '';
+        if (is_link($dir)) {
+            $dirl = new \SplFileInfo($dir);
+            if (strpos(realpath($dirl->getPath()), $webPath) === 0) {
+                $base = realpath($dirl->getPath()). DIRECTORY_SEPARATOR . $dirl->getFilename();
+            }
+        } else {
+            $base = $this->getBasePath();
+        }
 
-        if (0 === strpos($this->getBasePath(), $webPath)) {
-            return substr($this->getBasePath(), strlen($webPath));
+        if (0 === strpos($base, $webPath)) {
+            return substr($base, strlen($webPath));
         }
 
         return false;
