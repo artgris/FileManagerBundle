@@ -262,6 +262,10 @@ class ManagerController extends Controller
             if (isset($file->error)) {
                 $file->error = $this->get('translator')->trans($file->error);
             }
+
+            if (!$fileManager->getImagePath()) {
+                $file->url = $this->generateUrl('file_manager_file', array_merge($fileManager->getQueryParameters(), ['fileName' => $file->url]));
+            }
         }
 
         $this->dispatch(FileManagerEvents::POST_UPDATE, ['response' => &$response]);
