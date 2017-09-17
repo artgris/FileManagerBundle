@@ -33,7 +33,7 @@
             {% set file = fileEntity.file %}
             <tr class="{{ file.type }}">
                 <td><input type="checkbox" class="checkbox" name="delete[]" value="{{ file.fileName }}" title="{{ file.fileName }}"></td>
-                <td>{{ fileEntity.preview.html|raw }}</td>
+                <td>{{ fileEntity.preview ? fileEntity.preview.html|raw }}</td>
                 <td {{ fileEntity.attribut(fileManager.module)|raw }}>
                     {{ (fileEntity.preview.folder is defined ? fileEntity.preview.folder : file.fileName)|raw }}
                 </td>
