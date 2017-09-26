@@ -109,3 +109,13 @@ i.fa {
 .thead-default span.actived {
     color: #337ab7;
 }
+
+@media only screen and (max-width: 900px) {
+
+ button.btn > span {
+     display: none;
+ }
+
+
+}
+

@@ -19,6 +19,7 @@ $(function () {
                 break;
         }
     };
+
     $.contextMenu({
         selector: '.file',
         callback: callback,

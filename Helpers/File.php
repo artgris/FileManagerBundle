@@ -29,10 +29,10 @@ class File
     /**
      * File constructor.
      *
-     * @param SplFileInfo         $file
+     * @param SplFileInfo $file
      * @param TranslatorInterface $translator
-     * @param FileTypeService     $fileTypeService
-     * @param FileManager         $fileManager
+     * @param FileTypeService $fileTypeService
+     * @param FileManager $fileManager
      *
      * @internal param $module
      */
@@ -66,13 +66,13 @@ class File
             $kb = $this->translator->trans('size.kb');
             $mb = $this->translator->trans('size.mb');
 
-            return $size > 1000 ? number_format(($size / 1000), 1, '.', '').' '.$mb : number_format($size, 1, '.', '').' '.$kb;
+            return $size > 1000 ? number_format(($size / 1000), 1, '.', '') . ' ' . $mb : number_format($size, 1, '.', '') . ' ' . $kb;
         }
     }
 
-    public function getAttribut($module)
+    public function getAttribut()
     {
-        if ($module) {
+        if ($this->fileManager->getModule()) {
             $attr = '';
             if ($this->getDimension()) {
                 $width = $this->getDimension()[0];
@@ -80,11 +80,10 @@ class File
                 $attr .= "data-width=\"{$width}\" data-height=\"{$height}\" ";
             }
 
-            if ($this->fileManager->getModule() && $this->file->getType() === 'file') {
+            if ($this->file->getType() === 'file') {
                 $attr .= "data-path=\"{$this->getPreview()['path']}\"";
+                $attr .= ' class="select"';
             }
-
-            $attr .= ' class="select"';
 
             return $attr;
         }
