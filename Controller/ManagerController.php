@@ -153,7 +153,7 @@ class ManagerController extends Controller
                 'attr' => [
                     'class' => 'btn btn-primary',
                 ],
-                'label' => $translator->trans('button.rename'),
+                'label' => $translator->trans('button.save'),
             ])
             ->getForm();
 

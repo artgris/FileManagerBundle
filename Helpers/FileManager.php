@@ -105,13 +105,13 @@ class FileManager
 
     private function getBaseUrl()
     {
-        $webPath = realpath($this->kernelRoute . '/../web');
+        $webPath = realpath($this->kernelRoute.'/../web');
         $dir = $this->getConfiguration()['dir'];
         $base = '';
         if (is_link($dir)) {
             $dirl = new \SplFileInfo($dir);
             if (strpos(realpath($dirl->getPath()), $webPath) === 0) {
-                $base = realpath($dirl->getPath()). DIRECTORY_SEPARATOR . $dirl->getFilename();
+                $base = realpath($dirl->getPath()).DIRECTORY_SEPARATOR.$dirl->getFilename();
             }
         } else {
             $base = $this->getBasePath();

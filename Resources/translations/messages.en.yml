@@ -21,7 +21,7 @@ button:
   cancel: CANCEL
   refresh: Refresh
   parent: Parent
-  rename: RENAME
+  save: Save
   add:
     files: Add files...
     folder: New folder...
