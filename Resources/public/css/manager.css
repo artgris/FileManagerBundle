@@ -112,10 +112,9 @@ i.fa {
 
 @media only screen and (max-width: 900px) {
 
- button.btn > span {
+ .top-bar button.btn > span {
      display: none;
  }
-
 
 }
 
