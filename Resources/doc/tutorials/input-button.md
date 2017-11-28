@@ -4,6 +4,15 @@ How to add a button that open the File manager to fill out an input field with t
 
 > This example uses bootstrap
 
+### Add following configuration
+
+```yaml
+# app/config/config.yml
+artgris_file_manager:
+    conf:
+        tiny:
+            dir: "../web/uploads"
+```
 
 ### Create input and button
 
