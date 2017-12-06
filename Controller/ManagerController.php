@@ -43,6 +43,7 @@ class ManagerController extends Controller
      * @param Request $request
      *
      * @return Response
+     * @throws \Exception
      */
     public function indexAction(Request $request)
     {
@@ -196,6 +197,7 @@ class ManagerController extends Controller
      * @param $fileName
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
      */
     public function renameFileAction(Request $request, $fileName)
     {
@@ -238,6 +240,7 @@ class ManagerController extends Controller
      * @param Request $request
      *
      * @return Response
+     * @throws \Exception
      */
     public function uploadFileAction(Request $request)
     {
@@ -280,6 +283,7 @@ class ManagerController extends Controller
      * @param $fileName
      *
      * @return BinaryFileResponse
+     * @throws \Exception
      */
     public function binaryFileResponseAction(Request $request, $fileName)
     {
@@ -295,6 +299,7 @@ class ManagerController extends Controller
      * @Method("DELETE")
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
      */
     public function deleteAction(Request $request)
     {
@@ -304,7 +309,7 @@ class ManagerController extends Controller
         $queryParameters = $request->query->all();
         if ($form->isSubmitted() && $form->isValid()) {
             // remove file
-            $fileManager = new FileManager($queryParameters, $this->getBasePath($queryParameters), $this->getKernelRoute(), $this->get('router'));
+            $fileManager = $this->newFileManager($queryParameters);
             $fs = new Filesystem();
             if (isset($queryParameters['delete'])) {
                 $is_delete = false;
@@ -478,13 +483,18 @@ class ManagerController extends Controller
         return $this->getParameter('kernel.root_dir');
     }
 
+    /**
+     * @param $queryParameters
+     * @return FileManager
+     * @throws \Exception
+     */
     private function newFileManager($queryParameters)
     {
         if (!isset($queryParameters['conf'])) {
             throw new \Exception('Please define a conf parameter in your route');
         }
-
-        $this->fileManager = new FileManager($queryParameters, $this->getBasePath($queryParameters), $this->getKernelRoute(), $this->get('router'));
+        $webDir = $this->getParameter('artgris_file_manager')['web_dir'];
+        $this->fileManager = new FileManager($queryParameters, $this->getBasePath($queryParameters), $this->getKernelRoute(), $this->get('router'), $webDir);
 
         return $this->fileManager;
     }

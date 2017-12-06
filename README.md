@@ -110,11 +110,12 @@ Creating Your First File Manager
 
 Create a folder **uploads** in **web**.
  
-#### Add following configuration :
+#### Add following configuration (symfony4) :
 
 ```yaml
 # app/config/config.yml
 artgris_file_manager:
+    web_dir: public                 # set your public Directory (not required, default value: web)
     conf:
         default:
             dir: "../web/uploads"
