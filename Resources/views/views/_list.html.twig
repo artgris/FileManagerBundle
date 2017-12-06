@@ -76,7 +76,7 @@
                 </button>
                     </span>
                     {% if file.type == "file" %}
-                        <a data-placement="left" title="{{ 'download'|trans }}" class="btn btn-xs btn-default js-download"
+                        <a data-placement="left" title="{{ 'title.download'|trans }}" class="btn btn-xs btn-default js-download"
                            href="{{ path('file_manager_file', fileManager.queryParameters|merge({'fileName':file.fileName})) }}" download>
                             <span class="fa fa-download"></span>
                         </a>

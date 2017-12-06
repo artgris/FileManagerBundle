@@ -143,14 +143,13 @@
             '</div>'
         });
     }
+
     // display session flash messages
-    {% if app.session.started and app.session.flashBag.peekAll is not empty %}
-    {% for type, messages in app.session.flashBag.all %}
+    {% for type, messages in app.flashes %}
     {% for message in messages %}
     displayAlert('{{ type }}', '{{ message|trans|e('js') }}')
     {% endfor %}
     {% endfor %}
-    {% endif %}
 </script>
 <script src="{{ asset('bundles/artgrisfilemanager/js/manager.js') }}"></script>
 </body>

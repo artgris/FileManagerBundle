@@ -11,13 +11,9 @@
             </div>
             <div class="modal-footer">
                 {{ form_start(formDelete, {"attr" : {'class':'pull-right'}}) }}
-                <input type="hidden" name="_method" value="DELETE"/>
-                {{ form_rest(formDelete) }}
-                <button type="submit" class="btn btn-danger pull-right" data-toggle="tooltip" title="DELETE">
-                    {{ 'button.delete.action'|trans }}
-                </button>
+                {{ form_widget(formDelete) }}
                 {{ form_end(formDelete) }}
-                <button type="button" class="btn btn-default pull-left"
+                <button type="button" class="btn btn-default pull-left" title="{{ 'button.cancel'|trans }}"
                         data-dismiss="modal"> {{ 'button.cancel'|trans }}</button>
             </div>
         </div>
