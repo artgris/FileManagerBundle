@@ -1,13 +1,13 @@
 Chapter 1 - Basic Configuration
 ===============================
 
-There are two methods to configure the bundle:
+Two methods are available for setting up this bundle:
 
-* Using basic configuration explain here
+* Using basic configuration explained here
 * [Using a service for a most advanced configuration](2-service-configuration.md)
 
  
-### Under `conf` key you have all your different file manager configurations.
+### Under the key `conf` you have all your different file manager configurations.
 
 | Option | Type     | Required |
 | :---  |:--------:|:--------:|
@@ -17,16 +17,17 @@ Example:
  ```yml  
 artgris_file_manager:
     conf:
-        public: ... # ex of conf for a public folder
-        private: ... 
-        onlypdf: ... 
+        public: ...
+        myprivatefolder: ...
+        onlypdf: ...
+        anystring: ...
         ...
  ```
  
 ### For each `conf` you have following options:
-    
 
-#### `dir` The directory path    
+## `dir` directory path
+
 | Option | Type     | Required |
 | :---  |:--------:|:--------:|
 | `dir`  | `String` |  True   |
@@ -36,7 +37,7 @@ Example with a Public folder :
 artgris_file_manager:
     conf:
         public:
-            dir: '../web/uploads' # equivalent to '%kernel.root_dir%/../web/uploads'
+            dir: '../web/uploads' # equivalent with '%kernel.root_dir%/../web/uploads'
 ```    
 >Browse the `/manager/?conf=public` URL to get access to this File Manager
 
@@ -51,7 +52,7 @@ artgris_file_manager:
 
 >Browse the `/manager/?conf=private` URL to get access to this File Manager
 
-#### `tree` Display Folder Tree 
+## `tree` Display Folder Tree
 | Option | Type     | Required | Default value |
 | :---  |:--------:|:--------:|:--------:|
 | `tree`  | `Booleen` |  False   | True |
@@ -62,7 +63,7 @@ Example with `tree` = False
 
 
 
-#### `view` Display Mode Type
+## `view` Display Mode Type
 
 | Option | Type     | Required | Possible values          | Default value |
 | :---  |:--------:|:--------:|:------------------------:|:-------------:|
@@ -75,7 +76,7 @@ Example with `thumbnail`
 
 
 
-#### `type` Basic file restriction
+## `type` Basic file restriction
 
 | Option | Type     | Required | Possible values          | Default value |
 | :---  |:--------:|:--------:|:------------------------:|:-------------:|
@@ -101,7 +102,7 @@ artgris_file_manager:
 
 >If `type` option is not sufficient for you, You can defined your own `regex` rules and `accept` [(HTML input accept attribute)](https://www.w3schools.com/tags/att_input_accept.asp): 
 
-#### `regex` and `accept` Advanced file restriction options
+## `regex` and `accept` Advanced file restriction options
 
 
 | Option | Type     | Required  | Default value |
@@ -134,7 +135,7 @@ artgris_file_manager:
 
 >It is recommended to combine `regex` option with `accept` option for a better user experience
 
-#### `upload` A non-exhaustive  configuration of the File Upload widget [blueimp/jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload)
+## `upload` A non-exhaustive  configuration of the File Upload widget [blueimp/jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload)
 > [Exhaustive options](https://github.com/blueimp/jQuery-File-Upload/blob/master/server/php/UploadHandler.php) can only be defined with [The service configuration](2-service-configuration.md)
 
 | Option | Type     | Required  | 
@@ -154,7 +155,7 @@ artgris_file_manager:
                 image_library: 1
                 ...
 ```
-### Under `upload` key you have following options:
+### Under the key `upload` you have following options:
 
 
 | Option           | Type       | Required  | Default value                  | Description                      | Possible values          |
@@ -185,7 +186,7 @@ if you need thumbmail, or another format for the original image you have followi
 | `max_height`     | `Interger` |  False    |     null                       | Max height after resize/crop (px)                   |
 
                                                 
-Example if you want original image + thumbmail 80px/80px
+Example with original image + thumbmail 80px x 80px
 
 ```yml 
 artgris_file_manager:
@@ -198,7 +199,7 @@ artgris_file_manager:
 
 > this configuration create a thumbnail folder under current path with thumbnails
 
-Example if you only an image with 100px/100px
+Example with 100px x 100px image
 
 ```yml 
 artgris_file_manager:
@@ -209,7 +210,7 @@ artgris_file_manager:
                 image_versions: {'': {max_width: 100, max_height: 100}}
 ```
 
-Complexe example with multiple image size:
+Complexe example with multiple image sizes:
 
 This example saved 4 images: 
 
@@ -228,7 +229,7 @@ artgris_file_manager:
 ```
 
 
-#### Full example:
+#### Complete example:
 
 ```yml 
 artgris_file_manager:
