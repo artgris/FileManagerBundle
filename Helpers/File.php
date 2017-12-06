@@ -76,7 +76,7 @@ class File
             $attr = '';
             if ($this->getDimension()) {
                 $width = $this->getDimension()[0];
-                $height = $this->getDimension()[0];
+                $height = $this->getDimension()[1];
                 $attr .= "data-width=\"{$width}\" data-height=\"{$height}\" ";
             }
 
