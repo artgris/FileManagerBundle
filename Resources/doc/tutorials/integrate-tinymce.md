@@ -1,5 +1,5 @@
-How to integrate FileManagerBundle into TinyMCE (4.5.6)
-=======================================================
+How to integrate FileManagerBundle into TinyMCE
+===============================================
 
 Tinymce has [`file_browser_callback`](https://www.tinymce.com/docs/configure/file-image-upload/) option who enables you to add your own file or image browser to TinyMCE.
 

@@ -74,9 +74,10 @@ class File
     {
         if ($this->fileManager->getModule()) {
             $attr = '';
-            if ($this->getDimension()) {
-                $width = $this->getDimension()[0];
-                $height = $this->getDimension()[1];
+            $dimension = $this->getDimension();
+            if ($dimension) {
+                $width = $dimension[0];
+                $height = $dimension[1];
                 $attr .= "data-width=\"{$width}\" data-height=\"{$height}\" ";
             }
 
