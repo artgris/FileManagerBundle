@@ -1,5 +1,5 @@
-How to integrate FileManagerBundle into Tinymce
-===============================================
+How to integrate FileManagerBundle into TinyMCE (4.5.6)
+=======================================================
 
 Tinymce has [`file_browser_callback`](https://www.tinymce.com/docs/configure/file-image-upload/) option who enables you to add your own file or image browser to TinyMCE.
 
@@ -13,8 +13,12 @@ artgris_file_manager:
             dir: "../web/uploads"
 ```
 
+### Step 3 - Add TinyMCE textarea
+```html
+<textarea name="" cols="30" rows="10" id="mytextarea"></textarea>
+```  
 
-### Step 2 - Init Tinymce with `file_browser_callback: myFileBrowser,` option :
+### Step 4 - Init TinyMCE with `file_browser_callback: myFileBrowser,` option :
 
 ```javascript  
     <script type="text/javascript">
@@ -33,7 +37,7 @@ artgris_file_manager:
         ...
 ```    
   
-### Step 3 - Add `myFileBrowser()` function with the right URL:
+### Step 5 - Add `myFileBrowser()` function with the right URL:
   
 ```javascript     
     function myFileBrowser(field_name, url, type, win) {
