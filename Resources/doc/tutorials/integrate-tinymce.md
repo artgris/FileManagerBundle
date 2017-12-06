@@ -40,26 +40,27 @@ artgris_file_manager:
 ### Step 5 - Add `myFileBrowser()` function with the right URL:
   
 ```javascript     
-    function myFileBrowser(field_name, url, type, win) {
-    
-        var cmsURL = "{{ path('file_manager', {module:'tiny', conf:'tiny'}) }}";
-        if (cmsURL.indexOf("?") < 0) {
-            cmsURL = cmsURL + "?type=" + type;
+        function myFileBrowser(field_name, url, type, win) {
+
+            var cmsURL = "{{ path('file_manager', {module:'tiny', conf:'tiny'}) }}";
+            if (cmsURL.indexOf("?") < 0) {
+                cmsURL = cmsURL + "?type=" + type;
+            }
+            else {
+                cmsURL = cmsURL + "&type=" + type;
+            }
+
+            tinyMCE.activeEditor.windowManager.open({
+                file: cmsURL,
+                title: 'File Manager',
+                width: 1024,
+                height: 500
+            }, {
+                window: win,
+                input: field_name
+            });
+
+            return false;
         }
-        else {
-            cmsURL = cmsURL + "&type=" + type;
-        }
-    
-        tinyMCE.activeEditor.windowManager.open({
-            file: cmsURL,
-            title: 'File Manager',
-            width: 1024,
-            height: 500
-        }, {
-            window: win,
-            input: field_name
-        });
-        return false;
-    }
-    
+    </script>
 ```
