@@ -1,7 +1,7 @@
 FileManagerBundle
 =================
 
-[![Tests][1]][2] [![Code Quality][3]][4] [![Code Coverage][5]][6] [![Symfony 2.x and 3.x][7]][8]
+[![Tests][1]][2] [![Code Quality][3]][4] [![Code Coverage][5]][6] [![Symfony 2.x, 3.x, 4.x][7]][8]
 
 FileManager is a simple Multilingual File Manager Bundle for Symfony
 
