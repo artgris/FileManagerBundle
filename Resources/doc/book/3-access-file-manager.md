@@ -25,9 +25,10 @@ Here is a list of URL parameters:
 | `orderby` | `String` |  False    | `name`, `date`, `size`, `dimension`     |         | Sort files |
 | `order` | `String` |  False    | `asc`, `desc`     |         | Order by asc or desc | 
 | `extra` | `Array` |  False    |                    |  `null`       | extra parameters (used by service configuration)
+| `route` | `String` |  False    |                    |         | a folder path under the 'dir' folder ex: /subfolder
 
 Example:
 
-    path('file_manager', {module:'tiny', type:'image', conf:'perso', extra: {'user':'miamolex', 'allow': true}})
+    path('file_manager', {module:'tiny', type:'image', conf:'perso', extra: {'user':'miamolex', 'allow': true}, route: '/subfolder'})
     
-    # Access URL: /manager/?module=tiny&type=image&conf=perso&extra[user]=miamolex&extra[allow]=1
+    # Access URL: /manager/?module=tiny&type=image&conf=perso&extra[user]=miamolex&extra[allow]=1&route=/subfolder
