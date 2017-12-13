@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('web_dir')
-                    ->defaultValue('www')
+                    ->defaultValue('web')
                 ->end()
                 ->arrayNode('conf')
                     ->prototype('array')
