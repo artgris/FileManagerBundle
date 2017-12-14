@@ -102,28 +102,17 @@ class FileManager
         if ($baseUrl) {
             return $baseUrl . $this->getCurrentRoute() . DIRECTORY_SEPARATOR;
         }
-
         return false;
     }
 
     private function getBaseUrl()
     {
-        $webPath = realpath($this->kernelRoute . '/../' . $this->webDir);
-        $dir = $this->getConfiguration()['dir'];
-        $base = '';
-        if (is_link($dir)) {
-            $dirl = new \SplFileInfo($dir);
-            if (strpos(realpath($dirl->getPath()), $webPath) === 0) {
-                $base = realpath($dirl->getPath()) . DIRECTORY_SEPARATOR . $dirl->getFilename();
-            }
-        } else {
-            $base = $this->getBasePath();
-        }
-
+        $webPath = '..' . DIRECTORY_SEPARATOR . $this->webDir;
+        $dirl = new \SplFileInfo($this->getConfiguration()['dir']);
+        $base = $dirl->getPathname();
         if (0 === strpos($base, $webPath)) {
             return substr($base, strlen($webPath));
         }
-
         return false;
     }
 
