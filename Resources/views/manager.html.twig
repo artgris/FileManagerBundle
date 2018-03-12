@@ -60,7 +60,7 @@
                     data-placement="left"
                     data-html="true"
                     data-href='{{ path('file_manager_delete', fileManager.queryParameters) }}'>
-                <span class="glyphicon glyphicon-remove"></span>
+                <i class="glyphicon glyphicon-remove"></i>
                 <span>{{ 'button.delete.current'|trans }}</span>
             </button>
         {% endif %}
@@ -93,7 +93,7 @@
             <div class="col-lg-12">
                 {% endif %}
                 <form id="form-multiple-delete">
-                    {% include '@ArtgrisFileManager/views/_'~fileManager.view~'.html.twig' with {'fileManager' :fileManager,  'fileArray' : fileArray, 'formDelete' : formDelete} only %}
+                    {% include '@ArtgrisFileManager/views/_manager_view.html.twig' with {'fileManager' :fileManager,  'fileArray' : fileArray, 'formDelete' : formDelete} only %}
                 </form>
             </div>
         </div>
@@ -143,14 +143,13 @@
             '</div>'
         });
     }
+
     // display session flash messages
-    {% if app.session.started and app.session.flashBag.peekAll is not empty %}
-    {% for type, messages in app.session.flashBag.all %}
+    {% for type, messages in app.flashes %}
     {% for message in messages %}
     displayAlert('{{ type }}', '{{ message|trans|e('js') }}')
     {% endfor %}
     {% endfor %}
-    {% endif %}
 </script>
 <script src="{{ asset('bundles/artgrisfilemanager/js/manager.js') }}"></script>
 </body>

@@ -12,7 +12,7 @@ file:
     unauthorized: The files no longer exist or you are not authorized to access this page
 folder:
   add:
-    danger: An error occurred while creating your directory at %message%
+    danger: "An error occurred while creating the directory: %message%"
     success: Folder has been created successfully
   deleted:
     success: Folder has been deleted successfully
@@ -21,7 +21,7 @@ button:
   cancel: CANCEL
   refresh: Refresh
   parent: Parent
-  rename: RENAME
+  save: Save
   add:
     files: Add files...
     folder: New folder...
@@ -51,3 +51,5 @@ size:
   mb: MB
   kb: kB
 select-all: Select all
+upload:
+  exception_move_uploaded_file: Permission denied

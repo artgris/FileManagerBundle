@@ -384,8 +384,10 @@ class UploadHandler
         switch ($last) {
             case 'g':
                 $val *= 1024;
+                // no break
             case 'm':
                 $val *= 1024;
+                // no break
             case 'k':
                 $val *= 1024;
         }
@@ -837,6 +839,7 @@ class UploadHandler
             case 'gif':
             case 'png':
                 imagecolortransparent($new_img, imagecolorallocate($new_img, 0, 0, 0));
+                // no break
             case 'png':
                 imagealphablending($new_img, false);
                 imagesavealpha($new_img, true);
@@ -1180,7 +1183,13 @@ class UploadHandler
                         FILE_APPEND
                     );
                 } else {
-                    move_uploaded_file($uploaded_file, $file_path);
+                    try {
+                        move_uploaded_file($uploaded_file, $file_path);
+                    } catch (\Exception $e) {
+                        $file->error = $this->get_error_message('upload.exception_move_uploaded_file');
+
+                        return $file;
+                    }
                 }
             } else {
                 // Non-multipart uploads (PUT method support)

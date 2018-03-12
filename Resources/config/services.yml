@@ -4,13 +4,16 @@ services:
         tags:
             - { name: twig.extension }
         arguments: ['@file_type_service']
+        public: true
 
     file_type_service:
         class: Artgris\Bundle\FileManagerBundle\Service\FileTypeService
         arguments: ['@router']
+        public: true
 
     order_extension:
         class: Artgris\Bundle\FileManagerBundle\Twig\OrderExtension
         tags:
             - { name: twig.extension }
         arguments: ['@router']
+        public: true

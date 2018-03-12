@@ -63,7 +63,7 @@ Creating Your First File Manager
 
 Create a folder **uploads** in **web**.
  
-####Add following min configuration :
+#### Add following minimal configuration :
 
 ```yaml
 # app/config/config.yml

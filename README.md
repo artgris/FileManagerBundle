@@ -1,7 +1,7 @@
 FileManagerBundle
 =================
 
-[![Tests][1]][2] [![Code Quality][3]][4] [![Code Coverage][5]][6] [![Symfony 2.x and 3.x][7]][8]
+[![Tests][1]][2] [![Code Quality][3]][4] [![Code Coverage][5]][6] [![Symfony 2.x, 3.x and 4.x][7]][8]
 
 FileManager is a simple Multilingual File Manager Bundle for Symfony
 
@@ -14,7 +14,7 @@ FileManager is a simple Multilingual File Manager Bundle for Symfony
 
 **Features**
 *  Upload, delete (multiple), rename, download and sort files
-*  Create and delete folders
+*  Create, rename and delete folders
 *  Manage **Public** and **Private** folders
 *  **Multilingual** (English, French)
 *  **Fully responsive design** (bootstrap)
@@ -110,11 +110,12 @@ Creating Your First File Manager
 
 Create a folder **uploads** in **web**.
  
-#### Add following configuration :
+#### Add following configuration (symfony4) :
 
 ```yaml
 # app/config/config.yml
 artgris_file_manager:
+    web_dir: public                 # set your public Directory (not required, default value: web)
     conf:
         default:
             dir: "../web/uploads"
@@ -129,5 +130,5 @@ file manager
 [4]: https://insight.sensiolabs.com/projects/701afcd5-edde-421a-ab6c-0188bfa7e7dc
 [5]: https://coveralls.io/repos/artgris/FileManagerBundle/badge.svg?branch=master
 [6]: https://coveralls.io/r/artgris/FileManagerBundle?branch=master
-[7]: https://img.shields.io/badge/Symfony-%202.x%20and%203.x-green.svg
+[7]: https://img.shields.io/badge/symfony-2.x%2C%203.x%20and%204.x-green.svg
 [8]: https://symfony.com/

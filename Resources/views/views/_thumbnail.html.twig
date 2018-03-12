@@ -22,7 +22,7 @@
             <div class="thumbnail-img">
                 {{ fileEntity.preview.html|raw }}
             </div>
-            <p {{ fileEntity.attribut(fileManager.module)|raw }}>
+            <p {{ fileEntity.attribut|raw }}>
                 {{ (fileEntity.preview.folder is defined ? fileEntity.preview.folder : file.fileName)|raw }}<br>
                 <small>{{ fileEntity.file.mTime|date('d/m/Y') }}  {{ fileEntity.HTMLSize ? ' - '~fileEntity.HTMLSize|trans|raw }}</small>
                 <br>

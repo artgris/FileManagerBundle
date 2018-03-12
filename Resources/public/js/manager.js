@@ -19,6 +19,7 @@ $(function () {
                 break;
         }
     };
+
     $.contextMenu({
         selector: '.file',
         callback: callback,
@@ -51,11 +52,7 @@ $(function () {
         $downloadButton[0].click();
     }
 
-    if (tree === true) {
-
-        // sticky kit
-        $("#tree-block").stick_in_parent();
-
+    function initTree(treedata) {
         $('#tree').jstree({
             'core': {
                 'data': treedata,
@@ -66,6 +63,14 @@ $(function () {
                 document.location = data.node.a_attr.href;
             }
         });
+    }
+
+    if (tree === true) {
+
+        // sticky kit
+        $("#tree-block").stick_in_parent();
+
+        initTree(treedata);
     }
     $(document)
     // checkbox select all
@@ -172,12 +177,13 @@ $(function () {
                     url: url,
                     type: 'GET'
                 }).done(function (data) {
-
                     // update file list
                     $('#form-multiple-delete').html(data.data);
-                    var $tree = $('#tree');
-                    $tree.jstree(true).settings.core.data = data.treeData;
-                    $tree.jstree(true).refresh();
+                    if (tree === true) {
+                        $('#tree').data('jstree', false).empty();
+                        initTree(data.treeData);
+                    }
+
                     $('#select-all').prop('checked', false);
                     $('#js-delete-multiple-modal').addClass('disabled');
 
@@ -190,7 +196,7 @@ $(function () {
             }
         });
     }).on('fileuploadfail', function (e, data) {
-        $.each(data.files, function (index) {
+        $.each(data.files, function (index, file) {
             displayError('File upload failed.')
         });
     });

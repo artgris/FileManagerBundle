@@ -79,10 +79,9 @@ class FileTypeService
             $filePathTmp = strtok($filePath, '?');
             $extension = pathinfo($filePathTmp, PATHINFO_EXTENSION);
         }
-
         switch (true) {
+            case filter_var($filePath, FILTER_VALIDATE_URL):
             case preg_match('/(gif|png|jpe?g|svg)$/i', $extension):
-                /* @var FileManager $fileManager */
                 return [
                     'path' => $filePath,
                     'html' => "<img src=\"{$filePath}\" height='{$size}'>",

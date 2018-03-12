@@ -33,8 +33,8 @@
             {% set file = fileEntity.file %}
             <tr class="{{ file.type }}">
                 <td><input type="checkbox" class="checkbox" name="delete[]" value="{{ file.fileName }}" title="{{ file.fileName }}"></td>
-                <td>{{ fileEntity.preview.html|raw }}</td>
-                <td {{ fileEntity.attribut(fileManager.module)|raw }}>
+                <td>{{ fileEntity.preview ? fileEntity.preview.html|raw }}</td>
+                <td {{ fileEntity.attribut|raw }}>
                     {{ (fileEntity.preview.folder is defined ? fileEntity.preview.folder : file.fileName)|raw }}
                 </td>
                 <td class="hidden-xs">
@@ -76,7 +76,7 @@
                 </button>
                     </span>
                     {% if file.type == "file" %}
-                        <a data-placement="left" title="{{ 'download'|trans }}" class="btn btn-xs btn-default js-download"
+                        <a data-placement="left" title="{{ 'title.download'|trans }}" class="btn btn-xs btn-default js-download"
                            href="{{ path('file_manager_file', fileManager.queryParameters|merge({'fileName':file.fileName})) }}" download>
                             <span class="fa fa-download"></span>
                         </a>

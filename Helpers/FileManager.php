@@ -17,6 +17,7 @@ class FileManager
     private $kernelRoute;
     private $router;
     private $configuration;
+    private $webDir;
 
     /**
      * FileManager constructor.
@@ -26,9 +27,10 @@ class FileManager
      * @param $kernelRoute
      * @param Router $router
      *
+     * @param $webDir
      * @internal param $basePath
      */
-    public function __construct($queryParameters, $configuration, $kernelRoute, Router $router)
+    public function __construct($queryParameters, $configuration, $kernelRoute, Router $router, $webDir)
     {
         $this->queryParameters = $queryParameters;
         $this->configuration = $configuration;
@@ -36,6 +38,7 @@ class FileManager
         $this->router = $router;
         // Check Security
         $this->checkSecurity();
+        $this->webDir = $webDir;
     }
 
     public function getDirName()
@@ -51,7 +54,7 @@ class FileManager
     public function getRegex()
     {
         if (isset($this->configuration['regex'])) {
-            return '/'.$this->configuration['regex'].'/i';
+            return '/' . $this->configuration['regex'] . '/i';
         }
 
         switch ($this->getType()) {
@@ -73,7 +76,7 @@ class FileManager
 
     public function getCurrentPath()
     {
-        return realpath($this->getBasePath().$this->getCurrentRoute());
+        return realpath($this->getBasePath() . $this->getCurrentRoute());
     }
 
     // parent url
@@ -97,20 +100,19 @@ class FileManager
     {
         $baseUrl = $this->getBaseUrl();
         if ($baseUrl) {
-            return $baseUrl.$this->getCurrentRoute().DIRECTORY_SEPARATOR;
+            return $baseUrl . $this->getCurrentRoute() . DIRECTORY_SEPARATOR;
         }
-
         return false;
     }
 
     private function getBaseUrl()
     {
-        $webPath = realpath($this->kernelRoute.'/../web');
-
-        if (0 === strpos($this->getBasePath(), $webPath)) {
-            return substr($this->getBasePath(), strlen($webPath));
+        $webPath = '..' . DIRECTORY_SEPARATOR . $this->webDir;
+        $dirl = new \SplFileInfo($this->getConfiguration()['dir']);
+        $base = $dirl->getPathname();
+        if (0 === strpos($base, $webPath)) {
+            return substr($base, strlen($webPath));
         }
-
         return false;
     }
 

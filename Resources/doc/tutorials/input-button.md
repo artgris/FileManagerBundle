@@ -2,10 +2,18 @@ How to add a button that open the File manager to fill out an input field with t
 ==========================================================================================
 
 
-> This example uses bootstrap
+> Required: bootstrap and jquery
 
+### Step 1 - Create a `button` conf
 
-### Create input and button
+```yml
+artgris_file_manager:
+    conf:
+        button:
+            dir: "../web/uploads"
+```
+
+### Step 2 - Create input and button
 
 ```html  
 <form>
@@ -27,7 +35,7 @@ How to add a button that open the File manager to fill out an input field with t
 </form>
 ```
 
-### Add modal with an iframe of your file manager; use `module:1`
+### Step 3 - Add modal with an iframe of your file manager; use `module:1`
 
 ```html 
  <!-- Modal -->
@@ -40,7 +48,7 @@ How to add a button that open the File manager to fill out an input field with t
                     <h4 class="modal-title" id="myModalLabel">File Manager</h4>
                 </div>
                 <div class="modal-body">
-                    <iframe id="myframe" src="{{ path('file_manager', {module:1, conf:'tiny'}) }}" width="100%" height="500"
+                    <iframe id="myframe" src="{{ path('file_manager', {module:1, conf:'button'}) }}" width="100%" height="500"
                             frameborder="0"></iframe>
                 </div>
                 <div class="modal-footer">
@@ -51,7 +59,7 @@ How to add a button that open the File manager to fill out an input field with t
     </div>
 ```
 
-### Add following js
+### Step 4 - Add following js
 
 ```js 
     <script>
