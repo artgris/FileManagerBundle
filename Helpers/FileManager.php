@@ -100,14 +100,14 @@ class FileManager
     {
         $baseUrl = $this->getBaseUrl();
         if ($baseUrl) {
-            return $baseUrl . $this->getCurrentRoute() . DIRECTORY_SEPARATOR;
+            return $baseUrl . $this->getCurrentRoute() . '/';
         }
         return false;
     }
 
     private function getBaseUrl()
     {
-        $webPath = '..' . DIRECTORY_SEPARATOR . $this->webDir;
+        $webPath = '../' . $this->webDir;
         $dirl = new \SplFileInfo($this->getConfiguration()['dir']);
         $base = $dirl->getPathname();
         if (0 === strpos($base, $webPath)) {
