@@ -39,7 +39,6 @@ class FileManager
         $this->kernelRoute = $kernelRoute;
         $this->router = $router;
         // Check Security
-        $this->checkDirectoryExists();
         $this->checkSecurity();
         $this->webDir = $webDir;
     }
@@ -57,7 +56,7 @@ class FileManager
     public function getRegex()
     {
         if (isset($this->configuration['regex'])) {
-            return '/'.$this->configuration['regex'].'/i';
+            return '/' . $this->configuration['regex'] . '/i';
         }
 
         switch ($this->getType()) {
@@ -79,7 +78,7 @@ class FileManager
 
     public function getCurrentPath()
     {
-        return realpath($this->getBasePath().$this->getCurrentRoute());
+        return realpath($this->getBasePath() . $this->getCurrentRoute());
     }
 
     // parent url
@@ -103,7 +102,7 @@ class FileManager
     {
         $baseUrl = $this->getBaseUrl();
         if ($baseUrl) {
-            return $baseUrl.$this->getCurrentRoute().'/';
+            return $baseUrl . $this->getCurrentRoute() . '/';
         }
 
         return false;
@@ -111,7 +110,7 @@ class FileManager
 
     private function getBaseUrl()
     {
-        $webPath = '../'.$this->webDir;
+        $webPath = '../' . $this->webDir;
         $dirl = new \SplFileInfo($this->getConfiguration()['dir']);
         $base = $dirl->getPathname();
         if (0 === mb_strpos($base, $webPath)) {
@@ -123,16 +122,23 @@ class FileManager
 
     private function checkDirectoryExists()
     {
-        $fileSystem = new Filesystem();
-        $dir = $this->getConfiguration()['dir'];
-        $exist = $fileSystem->exists($dir);
-        if ($exist === false) {
-            throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, "Directory does not exist.");
-        }
+
     }
 
     private function checkSecurity()
     {
+
+        if (!isset($this->configuration['dir'])) {
+            throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, 'Please define a "dir" parameter in your config.yml');
+        }
+        $dir = $this->configuration['dir'];
+
+        $fileSystem = new Filesystem();
+        $exist = $fileSystem->exists($dir);
+        if ($exist === false) {
+            throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, "Directory does not exist.");
+        }
+
         $currentPath = $this->getCurrentPath();
 
         // check Path security
@@ -140,9 +146,7 @@ class FileManager
             throw new HttpException(Response::HTTP_UNAUTHORIZED, 'You are not allowed to access this folder.');
         }
 
-        if (!isset($this->configuration['dir'])) {
-            throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, 'Please define a "dir" parameter in your config.yml');
-        }
+
     }
 
     public function getModule()
