@@ -360,9 +360,7 @@ class ManagerController extends Controller
             ->setMethod('DELETE')
             ->add('DELETE', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-danger pull-right',
-                    'data-toggle' => 'tooltip',
-                    'title' => 'button.delete.action'
+                    'class' => 'btn btn-danger',
                 ],
                 'label' => 'button.delete.action'
             ])
@@ -374,7 +372,6 @@ class ManagerController extends Controller
      */
     private function createRenameForm()
     {
-        $translator = $this->get('translator');
 
         return $this->createFormBuilder()
             ->add('name', TextType::class, [
@@ -387,7 +384,7 @@ class ManagerController extends Controller
                 'attr' => [
                     'class' => 'btn btn-primary',
                 ],
-                'label' => $translator->trans('title.rename.file'),
+                'label' => 'button.rename.action',
             ])
             ->getForm();
     }

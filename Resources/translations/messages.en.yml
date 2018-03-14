@@ -29,6 +29,8 @@ button:
     current: Delete current folder
     selected: Delete selected files
     action: DELETE
+  rename:
+    action: RENAME
   tree: Tree
 title:
   add:

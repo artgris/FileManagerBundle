@@ -29,6 +29,8 @@ button:
     current: Supprimer le dossier courant
     selected: Supprimer les fichiers sélectionnés
     action: SUPPRIMER
+  rename:
+    action: RENOMMER
   tree: Arborescence
 title:
   add:
