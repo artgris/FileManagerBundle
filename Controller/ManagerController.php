@@ -343,6 +343,9 @@ class ManagerController extends Controller
 
                 $this->dispatch(FileManagerEvents::POST_DELETE_FOLDER);
                 $queryParameters['route'] = dirname($fileManager->getCurrentRoute());
+                if ($queryParameters['route'] = "/") {
+                    unset($queryParameters['route']);
+                }
 
                 return $this->redirectToRoute('file_manager', $queryParameters);
             }

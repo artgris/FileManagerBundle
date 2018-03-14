@@ -169,7 +169,8 @@ class FileManager
 
     public function getRoute()
     {
-        return isset($this->getQueryParameters()['route']) ? $this->getQueryParameters()['route'] : null;
+
+        return isset($this->getQueryParameters()['route']) && $this->getQueryParameters()['route'] != "/"  ? $this->getQueryParameters()['route'] : null;
     }
 
     /**

@@ -20,7 +20,7 @@
 </head>
 <body>
 <div class="container-fluid ">
-    <div class="well-sm top-bar" id="top-bar">
+    <div class="row top-bar" id="top-bar">
         <a type="button" title="{{ 'button.tree'|trans }}"
            href="{{ path('file_manager', fileManager.queryParameters|merge({'tree': fileManager.tree == true ? 0 : 1 })) }}"
            class="btn btn-sm btn-default {{ fileManager.tree ? 'active' }}">
@@ -37,17 +37,17 @@
             <i class="glyphicon glyphicon-refresh"></i>
         </button>
 
-        <span class="btn btn-success btn-sm fileinput-button">
-        <i class="glyphicon glyphicon-plus"></i>
-        <span>{{ 'button.add.files'|trans }}</span>
-        <input id="fileupload" type="file"
-               data-url="{{ path('file_manager_upload', fileManager.queryParameters) }}"
-               name="files[]" multiple=""
-               accept="{{ fileManager.configuration.accept is defined ? fileManager.configuration.accept : (fileManager.type ? accept(fileManager.type)) }}">
-        </span>
+        <button class="btn btn-success btn-sm fileinput-button">
+            <i class="glyphicon glyphicon-file"></i>
+            <span>{{ 'button.add.files'|trans }}</span>
+            <input id="fileupload" type="file"
+                   data-url="{{ path('file_manager_upload', fileManager.queryParameters) }}"
+                   name="files[]" multiple=""
+                   accept="{{ fileManager.configuration.accept is defined ? fileManager.configuration.accept : (fileManager.type ? accept(fileManager.type)) }}">
+        </button>
 
         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addFolder">
-            <i class="glyphicon glyphicon-plus"></i>
+            <i class="glyphicon glyphicon-folder-open"></i>
             <span>{{ 'button.add.folder'|trans }}</span>
         </button>
         {% if fileManager.parent %}

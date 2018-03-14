@@ -1,4 +1,22 @@
+// function allowDrop(ev) {
+//     ev.preventDefault();
+// }
+//
+// function drag(ev) {
+//     ev.dataTransfer.setData("text", ev.target.getAttribute("data-value"));
+// }
+//
+// function drop(ev) {
+//     ev.preventDefault();
+//     var data = ev.dataTransfer.getData("text");
+//     console.log(data)
+//     console.log(ev.target.getAttribute("data-value"))
+//     // ev.target.appendChild(document.getElementById(data));
+// }
+
+
 $(function () {
+
     var $renameModal = $('#js-confirm-rename');
     var $deleteModal = $('#js-confirm-delete');
     var callback = function (key, opt) {

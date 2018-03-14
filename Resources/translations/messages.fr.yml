@@ -21,7 +21,7 @@ button:
   cancel: ANNULER
   refresh: Rafraîchir
   parent: Parent
-  save: Enregistrer
+  save: ENREGISTRER
   add:
     files: Nouveau fichiers ...
     folder: Nouveau dossier...
