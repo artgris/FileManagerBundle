@@ -17,11 +17,11 @@ class UnExistDirConfTest extends AbstractTestCase
     {
         $this->getManagerPage();
         $this->assertContains(
-            'You are not allowed to access this folder',
+            'Directory does not exist.',
             $this->client->getResponse()->getContent()
         );
         $this->assertSame(
-            Response::HTTP_UNAUTHORIZED,
+            Response::HTTP_INTERNAL_SERVER_ERROR,
             $this->client->getResponse()->getStatusCode()
         );
     }

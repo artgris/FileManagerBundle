@@ -4,6 +4,7 @@ namespace Artgris\Bundle\FileManagerBundle\Helpers;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
@@ -126,7 +127,7 @@ class FileManager
         $dir = $this->getConfiguration()['dir'];
         $exist = $fileSystem->exists($dir);
         if ($exist === false) {
-            throw new HttpException(500, "The directory '{$dir}' does not exist.");
+            throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, "Directory does not exist.");
         }
     }
 
@@ -136,11 +137,11 @@ class FileManager
 
         // check Path security
         if ($currentPath === false || mb_strpos($currentPath, $this->getBasePath()) !== 0) {
-            throw new HttpException(401, 'You are not allowed to access this folder.');
+            throw new HttpException(Response::HTTP_UNAUTHORIZED, 'You are not allowed to access this folder.');
         }
 
         if (!isset($this->configuration['dir'])) {
-            throw new HttpException(500, 'Please define a "dir" parameter in your config.yml');
+            throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, 'Please define a "dir" parameter in your config.yml');
         }
     }
 
