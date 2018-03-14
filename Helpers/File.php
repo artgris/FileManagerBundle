@@ -29,10 +29,10 @@ class File
     /**
      * File constructor.
      *
-     * @param SplFileInfo $file
+     * @param SplFileInfo         $file
      * @param TranslatorInterface $translator
-     * @param FileTypeService $fileTypeService
-     * @param FileManager $fileManager
+     * @param FileTypeService     $fileTypeService
+     * @param FileManager         $fileManager
      *
      * @internal param $module
      */
@@ -66,7 +66,7 @@ class File
             $kb = $this->translator->trans('size.kb');
             $mb = $this->translator->trans('size.mb');
 
-            return $size > 1000 ? number_format(($size / 1000), 1, '.', '') . ' ' . $mb : number_format($size, 1, '.', '') . ' ' . $kb;
+            return $size > 1000 ? number_format(($size / 1000), 1, '.', '').' '.$mb : number_format($size, 1, '.', '').' '.$kb;
         }
     }
 

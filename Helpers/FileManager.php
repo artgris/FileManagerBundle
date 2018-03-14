@@ -3,6 +3,7 @@
 namespace Artgris\Bundle\FileManagerBundle\Helpers;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
@@ -26,8 +27,8 @@ class FileManager
      * @param $configuration
      * @param $kernelRoute
      * @param Router $router
-     *
      * @param $webDir
+     *
      * @internal param $basePath
      */
     public function __construct($queryParameters, $configuration, $kernelRoute, Router $router, $webDir)
@@ -37,6 +38,7 @@ class FileManager
         $this->kernelRoute = $kernelRoute;
         $this->router = $router;
         // Check Security
+        $this->checkDirectoryExists();
         $this->checkSecurity();
         $this->webDir = $webDir;
     }
@@ -54,7 +56,7 @@ class FileManager
     public function getRegex()
     {
         if (isset($this->configuration['regex'])) {
-            return '/' . $this->configuration['regex'] . '/i';
+            return '/'.$this->configuration['regex'].'/i';
         }
 
         switch ($this->getType()) {
@@ -76,7 +78,7 @@ class FileManager
 
     public function getCurrentPath()
     {
-        return realpath($this->getBasePath() . $this->getCurrentRoute());
+        return realpath($this->getBasePath().$this->getCurrentRoute());
     }
 
     // parent url
@@ -100,27 +102,40 @@ class FileManager
     {
         $baseUrl = $this->getBaseUrl();
         if ($baseUrl) {
-            return $baseUrl . $this->getCurrentRoute() . '/';
+            return $baseUrl.$this->getCurrentRoute().'/';
         }
+
         return false;
     }
 
     private function getBaseUrl()
     {
-        $webPath = '../' . $this->webDir;
+        $webPath = '../'.$this->webDir;
         $dirl = new \SplFileInfo($this->getConfiguration()['dir']);
         $base = $dirl->getPathname();
-        if (0 === strpos($base, $webPath)) {
-            return substr($base, strlen($webPath));
+        if (0 === mb_strpos($base, $webPath)) {
+            return mb_substr($base, mb_strlen($webPath));
         }
+
         return false;
+    }
+
+    private function checkDirectoryExists()
+    {
+        $fileSystem = new Filesystem();
+        $dir = $this->getConfiguration()['dir'];
+        $exist = $fileSystem->exists($dir);
+        if ($exist === false) {
+            throw new HttpException(500, "The directory '{$dir}' does not exist.");
+        }
     }
 
     private function checkSecurity()
     {
         $currentPath = $this->getCurrentPath();
+
         // check Path security
-        if ($currentPath === false || strpos($currentPath, $this->getBasePath()) !== 0) {
+        if ($currentPath === false || mb_strpos($currentPath, $this->getBasePath()) !== 0) {
             throw new HttpException(401, 'You are not allowed to access this folder.');
         }
 
