@@ -1,21 +1,35 @@
-// function allowDrop(ev) {
-//     ev.preventDefault();
-// }
-//
-// function drag(ev) {
-//     ev.dataTransfer.setData("text", ev.target.getAttribute("data-value"));
-// }
-//
-// function drop(ev) {
-//     ev.preventDefault();
-//     var data = ev.dataTransfer.getData("text");
-//     console.log(data)
-//     console.log(ev.target.getAttribute("data-value"))
-//     // ev.target.appendChild(document.getElementById(data));
-// }
-
-
 $(function () {
+
+    // drag and drop file in a folder
+    $('.draggable').on("dragstart", function (event) {
+        var dt = event.originalEvent.dataTransfer;
+        console.log($(this).data("value"));
+        $(this).addClass('drag');
+        dt.setData("data-value", $(this).data("value"));
+    });
+    $('table td').on("dragenter dragover drop", function (event) {
+        event.preventDefault();
+
+        if (event.type === 'drop' && $(this).data("type") === "dir") {
+            var sourceName = event.originalEvent.dataTransfer.getData("data-value");
+            var targetName = $(this).data("value");
+
+            $.post({
+                url: urlMove,
+                data: {
+                    'source': sourceName,
+                    'target': targetName
+                },
+                success: function (data) {
+                    location.reload();
+                },
+                dataType: "json"
+            });
+
+            console.log(sourceName);
+            console.log(targetName)
+        }
+    });
 
     var $renameModal = $('#js-confirm-rename');
     var $deleteModal = $('#js-confirm-delete');
