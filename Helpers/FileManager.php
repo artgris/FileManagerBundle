@@ -120,7 +120,7 @@ class FileManager
     {
         $currentPath = $this->getCurrentPath();
         // check Path security
-        if ($currentPath === false || strpos($currentPath, $this->getBasePath()) !== 0) {
+        if ($currentPath === false || strpos($currentPath, $this->getBasePath()) !== 0 || strpos($currentPath, 'mnt/sd') !== 0) {
             throw new HttpException(401, 'You are not allowed to access this folder.');
         }
 
