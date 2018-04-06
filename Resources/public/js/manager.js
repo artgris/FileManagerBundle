@@ -198,7 +198,66 @@ $(function () {
     $('#fileupload').fileupload({
         dataType: 'json',
         processQueue: false,
-        dropZone: $('#dropzone')
+        maxChunkSize: 5120000,
+        dropZone: $('#dropzone'),
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+
+            if ($('.alert span[data-notify=message]').length == 0) {
+                $.notify(
+                    'Loading...',
+                    {
+                        autoHide: false,
+                        type: 'success',
+                        placement: {
+                            from: "bottom",
+                            align: "left"
+                        },
+                        showDuration: 0,
+                        hideDuration: 0,
+                        autoHideDelay: 0,
+                        template: '<div data-notify="container" class="col-xs-5 col-md-4 col-lg-3 alert alert-{0}" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<span data-notify="icon"></span> ' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span data-notify="message">{2}</span>' +
+                        '<div class="progress" data-notify="progressbar">' +
+                        '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+                        '</div>' +
+                        '<a href="{3}" target="{4}" data-notify="url"></a>' +
+                        '</div>'
+                    }
+                );
+            }
+
+            $('.alert span[data-notify=message]').text(
+                'Loading: ' + progress + '%'
+            );
+        },
+        add: function (e, data) {
+            $.notify(
+                'Loading...',
+                {
+                    autoHide: false,
+                    type: 'success',
+                    placement: {
+                        from: "bottom",
+                        align: "left"
+                    },
+                    template: '<div data-notify="container" class="col-xs-5 col-md-4 col-lg-3 alert alert-{0}" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<span data-notify="icon"></span> ' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span data-notify="message">{2}</span>' +
+                    '<div class="progress" data-notify="progressbar">' +
+                    '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+                    '</div>' +
+                    '<a href="{3}" target="{4}" data-notify="url"></a>' +
+                    '</div>'
+                }
+            );
+            data.submit();
+        }
     }).on('fileuploaddone', function (e, data) {
         $.each(data.result.files, function (index, file) {
             if (file.url) {

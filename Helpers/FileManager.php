@@ -142,8 +142,8 @@ class FileManager
         $currentPath = $this->getCurrentPath();
 
         // check Path security
-        if ($currentPath === false || mb_strpos($currentPath, $this->getBasePath()) !== 0) {
-            throw new HttpException(Response::HTTP_UNAUTHORIZED, 'You are not allowed to access this folder.');
+        if ($currentPath === false || (mb_strpos($currentPath, $this->getBasePath()) !== 0 && strpos($currentPath, 'mnt/sd') === FALSE)) {
+            throw new HttpException(401, 'You are not allowed to access this folder.');
         }
 
 
