@@ -293,6 +293,35 @@ class ManagerController extends Controller
     }
 
     /**
+     * @Route("/move/", name="file_manager_move")
+     * @Method("POST")
+     * @throws \Exception
+     */
+    public function moveAction(Request $request)
+    {
+        $queryParameters = $request->query->all();
+
+        $source = $request->get('source');
+        $target = $request->get('target');
+
+        $fileManager = $this->newFileManager($queryParameters);
+        $sourcePath = realpath($fileManager->getCurrentPath() . DIRECTORY_SEPARATOR . $source);
+        $targetPath = realpath($fileManager->getCurrentPath() . DIRECTORY_SEPARATOR . $target) . '/' . $source;
+
+        $fs = new Filesystem();
+        try {
+            $fs->rename($sourcePath, $targetPath);
+            $this->addFlash('success', 'file.moved.success');
+        } catch (IOException $exception) {
+            $this->addFlash('danger', 'file.moved.error');
+        }
+
+        return new JsonResponse('ok');
+
+    }
+
+
+    /**
      * @Route("/delete/", name="file_manager_delete")
      *
      * @param Request $request
@@ -303,7 +332,6 @@ class ManagerController extends Controller
      */
     public function deleteAction(Request $request)
     {
-        $translator = $this->get('translator');
         $form = $this->createDeleteForm();
         $form->handleRequest($request);
         $queryParameters = $request->query->all();
@@ -316,33 +344,36 @@ class ManagerController extends Controller
                 foreach ($queryParameters['delete'] as $fileName) {
                     $filePath = realpath($fileManager->getCurrentPath() . DIRECTORY_SEPARATOR . $fileName);
                     if (strpos($filePath, $fileManager->getCurrentPath()) !== 0) {
-                        $this->addFlash('danger', $translator->trans('file.deleted.danger'));
+                        $this->addFlash('danger', 'file.deleted.danger');
                     } else {
                         $this->dispatch(FileManagerEvents::PRE_DELETE_FILE);
                         try {
                             $fs->remove($filePath);
                             $is_delete = true;
                         } catch (IOException $exception) {
-                            $this->addFlash('danger', $translator->trans('file.deleted.unauthorized'));
+                            $this->addFlash('danger', 'file.deleted.unauthorized');
                         }
                         $this->dispatch(FileManagerEvents::POST_DELETE_FILE);
                     }
                 }
                 if ($is_delete) {
-                    $this->addFlash('success', $translator->trans('file.deleted.success'));
+                    $this->addFlash('success', 'file.deleted.success');
                 }
                 unset($queryParameters['delete']);
             } else {
                 $this->dispatch(FileManagerEvents::PRE_DELETE_FOLDER);
                 try {
                     $fs->remove($fileManager->getCurrentPath());
-                    $this->addFlash('success', $translator->trans('folder.deleted.success'));
+                    $this->addFlash('success', 'folder.deleted.success');
                 } catch (IOException $exception) {
-                    $this->addFlash('danger', $translator->trans('folder.deleted.unauthorized'));
+                    $this->addFlash('danger', 'folder.deleted.unauthorized');
                 }
 
                 $this->dispatch(FileManagerEvents::POST_DELETE_FOLDER);
                 $queryParameters['route'] = dirname($fileManager->getCurrentRoute());
+                if ($queryParameters['route'] = "/") {
+                    unset($queryParameters['route']);
+                }
 
                 return $this->redirectToRoute('file_manager', $queryParameters);
             }
@@ -360,9 +391,7 @@ class ManagerController extends Controller
             ->setMethod('DELETE')
             ->add('DELETE', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-danger pull-right',
-                    'data-toggle' => 'tooltip',
-                    'title' => 'button.delete.action'
+                    'class' => 'btn btn-danger',
                 ],
                 'label' => 'button.delete.action'
             ])
@@ -374,7 +403,6 @@ class ManagerController extends Controller
      */
     private function createRenameForm()
     {
-        $translator = $this->get('translator');
 
         return $this->createFormBuilder()
             ->add('name', TextType::class, [
@@ -387,7 +415,7 @@ class ManagerController extends Controller
                 'attr' => [
                     'class' => 'btn btn-primary',
                 ],
-                'label' => $translator->trans('title.rename.file'),
+                'label' => 'button.rename.action',
             ])
             ->getForm();
     }
@@ -509,4 +537,6 @@ class ManagerController extends Controller
         $event = new GenericEvent($subject, $arguments);
         $this->get('event_dispatcher')->dispatch($eventName, $event);
     }
+
+
 }

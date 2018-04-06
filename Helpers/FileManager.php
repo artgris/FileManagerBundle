@@ -3,6 +3,8 @@
 namespace Artgris\Bundle\FileManagerBundle\Helpers;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
@@ -26,8 +28,8 @@ class FileManager
      * @param $configuration
      * @param $kernelRoute
      * @param Router $router
-     *
      * @param $webDir
+     *
      * @internal param $basePath
      */
     public function __construct($queryParameters, $configuration, $kernelRoute, Router $router, $webDir)
@@ -100,33 +102,51 @@ class FileManager
     {
         $baseUrl = $this->getBaseUrl();
         if ($baseUrl) {
-            return $baseUrl . $this->getCurrentRoute() . DIRECTORY_SEPARATOR;
+            return $baseUrl . $this->getCurrentRoute() . '/';
         }
+
         return false;
     }
 
     private function getBaseUrl()
     {
-        $webPath = '..' . DIRECTORY_SEPARATOR . $this->webDir;
+        $webPath = '../' . $this->webDir;
         $dirl = new \SplFileInfo($this->getConfiguration()['dir']);
         $base = $dirl->getPathname();
-        if (0 === strpos($base, $webPath)) {
-            return substr($base, strlen($webPath));
+        if (0 === mb_strpos($base, $webPath)) {
+            return mb_substr($base, mb_strlen($webPath));
         }
+
         return false;
+    }
+
+    private function checkDirectoryExists()
+    {
+
     }
 
     private function checkSecurity()
     {
+
+        if (!isset($this->configuration['dir'])) {
+            throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, 'Please define a "dir" parameter in your config.yml');
+        }
+        $dir = $this->configuration['dir'];
+
+        $fileSystem = new Filesystem();
+        $exist = $fileSystem->exists($dir);
+        if ($exist === false) {
+            throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, "Directory does not exist.");
+        }
+
         $currentPath = $this->getCurrentPath();
+
         // check Path security
-        if ($currentPath === false || (strpos($currentPath, $this->getBasePath()) !== 0 && strpos($currentPath, 'mnt/sd') === FALSE)) {
+        if ($currentPath === false || (mb_strpos($currentPath, $this->getBasePath()) !== 0 && strpos($currentPath, 'mnt/sd') === FALSE)) {
             throw new HttpException(401, 'You are not allowed to access this folder.');
         }
 
-        if (!isset($this->configuration['dir'])) {
-            throw new HttpException(500, 'Please define a "dir" parameter in your config.yml');
-        }
+
     }
 
     public function getModule()
@@ -149,7 +169,8 @@ class FileManager
 
     public function getRoute()
     {
-        return isset($this->getQueryParameters()['route']) ? $this->getQueryParameters()['route'] : null;
+
+        return isset($this->getQueryParameters()['route']) && $this->getQueryParameters()['route'] != "/"  ? $this->getQueryParameters()['route'] : null;
     }
 
     /**

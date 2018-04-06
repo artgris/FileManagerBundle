@@ -10,6 +10,9 @@ file:
     success: Les fichiers ont été supprimés avec succès
     danger: Les fichiers n'existent plus ou vous n'êtes pas autorisé à accéder à cette page
     unauthorized: Les fichiers n'existent plus ou vous n'êtes pas autorisé à accéder à cette page
+  moved:
+    success: Le fichier a été déplacé avec succès
+    error: Une erreur est survenue
 folder:
   add:
     danger: "Une erreur s'est produite lors de la création du dossier : %message%"
@@ -21,7 +24,7 @@ button:
   cancel: ANNULER
   refresh: Rafraîchir
   parent: Parent
-  save: Enregistrer
+  save: ENREGISTRER
   add:
     files: Nouveau fichiers ...
     folder: Nouveau dossier...
@@ -29,6 +32,8 @@ button:
     current: Supprimer le dossier courant
     selected: Supprimer les fichiers sélectionnés
     action: SUPPRIMER
+  rename:
+    action: RENOMMER
   tree: Arborescence
 title:
   add:
