@@ -56,7 +56,7 @@ class FileManager
     public function getRegex()
     {
         if (isset($this->configuration['regex'])) {
-            return '/' . $this->configuration['regex'] . '/i';
+            return '/'.$this->configuration['regex'].'/i';
         }
 
         switch ($this->getType()) {
@@ -78,7 +78,7 @@ class FileManager
 
     public function getCurrentPath()
     {
-        return realpath($this->getBasePath() . $this->getCurrentRoute());
+        return realpath($this->getBasePath().$this->getCurrentRoute());
     }
 
     // parent url
@@ -87,7 +87,7 @@ class FileManager
         $queryParentParameters = $this->queryParameters;
         $parentRoute = dirname($this->getCurrentRoute());
 
-        if ($parentRoute !== DIRECTORY_SEPARATOR) {
+        if (DIRECTORY_SEPARATOR !== $parentRoute) {
             $queryParentParameters['route'] = dirname($this->getCurrentRoute());
         } else {
             unset($queryParentParameters['route']);
@@ -102,7 +102,7 @@ class FileManager
     {
         $baseUrl = $this->getBaseUrl();
         if ($baseUrl) {
-            return $baseUrl . $this->getCurrentRoute() . '/';
+            return $baseUrl.$this->getCurrentRoute().'/';
         }
 
         return false;
@@ -110,7 +110,7 @@ class FileManager
 
     private function getBaseUrl()
     {
-        $webPath = '../' . $this->webDir;
+        $webPath = '../'.$this->webDir;
         $dirl = new \SplFileInfo($this->getConfiguration()['dir']);
         $base = $dirl->getPathname();
         if (0 === mb_strpos($base, $webPath)) {
@@ -122,12 +122,10 @@ class FileManager
 
     private function checkDirectoryExists()
     {
-
     }
 
     private function checkSecurity()
     {
-
         if (!isset($this->configuration['dir'])) {
             throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, 'Please define a "dir" parameter in your config.yml');
         }
@@ -135,18 +133,16 @@ class FileManager
 
         $fileSystem = new Filesystem();
         $exist = $fileSystem->exists($dir);
-        if ($exist === false) {
-            throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, "Directory does not exist.");
+        if (false === $exist) {
+            throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, 'Directory does not exist.');
         }
 
         $currentPath = $this->getCurrentPath();
 
         // check Path security
-        if ($currentPath === false || mb_strpos($currentPath, $this->getBasePath()) !== 0) {
+        if (false === $currentPath || 0 !== mb_strpos($currentPath, $this->getBasePath())) {
             throw new HttpException(Response::HTTP_UNAUTHORIZED, 'You are not allowed to access this folder.');
         }
-
-
     }
 
     public function getModule()
@@ -169,8 +165,7 @@ class FileManager
 
     public function getRoute()
     {
-
-        return isset($this->getQueryParameters()['route']) && $this->getQueryParameters()['route'] != "/"  ? $this->getQueryParameters()['route'] : null;
+        return isset($this->getQueryParameters()['route']) && '/' !== $this->getQueryParameters()['route'] ? $this->getQueryParameters()['route'] : null;
     }
 
     /**
@@ -267,11 +262,11 @@ class FileManager
 
     private function mergeQueryAndConf($parameter, $default = null)
     {
-        return $this->getQueryParameter($parameter) !== null ? $this->getQueryParameter($parameter) : ($this->getConfigurationParameter($parameter) ? $this->getConfigurationParameter($parameter) : $default);
+        return null !== $this->getQueryParameter($parameter) ? $this->getQueryParameter($parameter) : ($this->getConfigurationParameter($parameter) ? $this->getConfigurationParameter($parameter) : $default);
     }
 
     private function mergeConfAndQuery($parameter, $default = null)
     {
-        return $this->getConfigurationParameter($parameter) !== null ? $this->getConfigurationParameter($parameter) : ($this->getQueryParameter($parameter) ? $this->getQueryParameter($parameter) : $default);
+        return null !== $this->getConfigurationParameter($parameter) ? $this->getConfigurationParameter($parameter) : ($this->getQueryParameter($parameter) ? $this->getQueryParameter($parameter) : $default);
     }
 }

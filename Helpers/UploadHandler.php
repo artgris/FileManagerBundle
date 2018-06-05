@@ -198,16 +198,16 @@ class UploadHandler
 
     protected function get_full_url()
     {
-        $https = !empty($_SERVER['HTTPS']) && strcasecmp($_SERVER['HTTPS'], 'on') === 0 ||
+        $https = !empty($_SERVER['HTTPS']) && 0 === strcasecmp($_SERVER['HTTPS'], 'on') ||
             !empty($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
-            strcasecmp($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') === 0;
+            0 === strcasecmp($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https');
 
         return
             ($https ? 'https://' : 'http://').
             (!empty($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'].'@' : '').
             (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : ($_SERVER['SERVER_NAME'].
-                ($https && $_SERVER['SERVER_PORT'] === 443 ||
-                $_SERVER['SERVER_PORT'] === 80 ? '' : ':'.$_SERVER['SERVER_PORT']))).
+                ($https && 443 === $_SERVER['SERVER_PORT'] ||
+                80 === $_SERVER['SERVER_PORT'] ? '' : ':'.$_SERVER['SERVER_PORT']))).
             substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/'));
     }
 
@@ -246,7 +246,7 @@ class UploadHandler
 
     protected function get_query_separator($url)
     {
-        return strpos($url, '?') === false ? '?' : '&';
+        return false === strpos($url, '?') ? '?' : '&';
     }
 
     protected function get_download_url($file_name, $version = null, $direct = false)
@@ -283,7 +283,7 @@ class UploadHandler
             .$this->get_singular_param_name()
             .'='.rawurlencode($file->name);
         $file->deleteType = $this->options['delete_type'];
-        if ($file->deleteType !== 'DELETE') {
+        if ('DELETE' !== $file->deleteType) {
             $file->deleteUrl .= '&_method=DELETE';
         }
         if ($this->options['access_control_allow_credentials']) {
@@ -318,7 +318,7 @@ class UploadHandler
     protected function is_valid_file_object($file_name)
     {
         $file_path = $this->get_upload_path($file_name);
-        if (is_file($file_path) && $file_name[0] !== '.') {
+        if (is_file($file_path) && '.' !== $file_name[0]) {
             return true;
         }
 
@@ -536,7 +536,7 @@ class UploadHandler
                                           $index, $content_range)
     {
         // Add missing file extension for known image types:
-        if (strpos($name, '.') === false &&
+        if (false === strpos($name, '.') &&
             preg_match('/^image\/(gif|jpe?g|png)/', $type, $matches)
         ) {
             $name .= '.'.$matches[1];
@@ -692,7 +692,7 @@ class UploadHandler
             return false;
         }
         $exif = @exif_read_data($file_path);
-        if ($exif === false) {
+        if (false === $exif) {
             return false;
         }
         $orientation = (int) @$exif['Orientation'];
@@ -935,7 +935,7 @@ class UploadHandler
             $file_path,
             !empty($options['crop']) || !empty($options['no_cache'])
         );
-        if ($image->getImageFormat() === 'GIF') {
+        if ('GIF' === $image->getImageFormat()) {
             // Handle animated GIFs:
             $images = $image->coalesceImages();
             foreach ($images as $frame) {
@@ -1076,7 +1076,7 @@ class UploadHandler
                     error_log($e->getMessage());
                 }
             }
-            if ($this->options['image_library'] === 2) {
+            if (2 === $this->options['image_library']) {
                 $cmd = $this->options['identify_bin'];
                 $cmd .= ' -ping '.escapeshellarg($file_path);
                 exec($cmd, $output, $error);
@@ -1102,7 +1102,7 @@ class UploadHandler
 
     protected function create_scaled_image($file_name, $version, $options)
     {
-        if ($this->options['image_library'] === 2) {
+        if (2 === $this->options['image_library']) {
             return $this->imagemagick_create_scaled_image($file_name, $version, $options);
         }
         if ($this->options['image_library'] && extension_loaded('imagick')) {
@@ -1363,7 +1363,7 @@ class UploadHandler
     protected function send_content_type_header()
     {
         $this->header('Vary: Accept');
-        if (strpos($this->get_server_var('HTTP_ACCEPT'), 'application/json') !== false) {
+        if (false !== strpos($this->get_server_var('HTTP_ACCEPT'), 'application/json')) {
             $this->header('Content-type: application/json');
         } else {
             $this->header('Content-type: text/plain');
@@ -1447,7 +1447,7 @@ class UploadHandler
 
     public function post($print_response = true)
     {
-        if ($this->get_query_param('_method') === 'DELETE') {
+        if ('DELETE' === $this->get_query_param('_method')) {
             return $this->delete($print_response);
         }
         $upload = $this->get_upload_data($this->options['param_name']);
@@ -1512,7 +1512,7 @@ class UploadHandler
         $response = [];
         foreach ($file_names as $file_name) {
             $file_path = $this->get_upload_path($file_name);
-            $success = is_file($file_path) && $file_name[0] !== '.' && unlink($file_path);
+            $success = is_file($file_path) && '.' !== $file_name[0] && unlink($file_path);
             if ($success) {
                 foreach ($this->options['image_versions'] as $version => $options) {
                     if (!empty($version)) {

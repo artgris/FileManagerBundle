@@ -1,36 +1,5 @@
 $(function () {
 
-    // drag and drop file in a folder
-    $('.draggable').on("dragstart", function (event) {
-        var dt = event.originalEvent.dataTransfer;
-        console.log($(this).data("value"));
-        $(this).addClass('drag');
-        dt.setData("data-value", $(this).data("value"));
-    });
-    $('table td').on("dragenter dragover drop", function (event) {
-        event.preventDefault();
-
-        if (event.type === 'drop' && $(this).data("type") === "dir") {
-            var sourceName = event.originalEvent.dataTransfer.getData("data-value");
-            var targetName = $(this).data("value");
-
-            $.post({
-                url: urlMove,
-                data: {
-                    'source': sourceName,
-                    'target': targetName
-                },
-                success: function (data) {
-                    location.reload();
-                },
-                dataType: "json"
-            });
-
-            console.log(sourceName);
-            console.log(targetName)
-        }
-    });
-
     var $renameModal = $('#js-confirm-rename');
     var $deleteModal = $('#js-confirm-delete');
     var callback = function (key, opt) {

@@ -39,12 +39,12 @@ class FileTypeService
         }
         $extension = $file->getExtension();
         $type = $file->getType();
-        if ($type === 'file') {
+        if ('file' === $type) {
             $size = $this::IMAGE_SIZE[$fileManager->getView()];
-            $fileIcon = $this->fileIcon($filePath, $extension, $size);
 
-            return $fileIcon;
-        } elseif ($type === 'dir') {
+            return $this->fileIcon($filePath, $extension, $size);
+        }
+        if ('dir' === $type) {
             $href = $this->router->generate('file_manager', array_merge($fileManager->getQueryParameters(), ['route' => $fileManager->getRoute().DIRECTORY_SEPARATOR.rawurlencode($file->getFilename())]));
 
             return [
@@ -75,20 +75,21 @@ class FileTypeService
 
     public function fileIcon($filePath, $extension = null, $size = 75)
     {
-        if ($extension === null) {
+        if (null === $extension) {
             $filePathTmp = strtok($filePath, '?');
             $extension = pathinfo($filePathTmp, PATHINFO_EXTENSION);
         }
         switch (true) {
-            case filter_var($filePath, FILTER_VALIDATE_URL):
+            case $this->isYoutubeVideo($filePath):
+            case preg_match('/(mp4|ogg|webm)$/i', $extension):
+                $fa = 'fa-file-video-o';
+                break;
+            case is_array(@getimagesize($filePath)):
             case preg_match('/(gif|png|jpe?g|svg)$/i', $extension):
                 return [
                     'path' => $filePath,
                     'html' => "<img src=\"{$filePath}\" height='{$size}'>",
                 ];
-            case preg_match('/(mp4|ogg|webm)$/i', $extension):
-                $fa = 'fa-file-video-o';
-                break;
             case preg_match('/(pdf)$/i', $extension):
                 $fa = 'fa-file-pdf-o';
                 break;
@@ -104,6 +105,9 @@ class FileTypeService
             case preg_match('/(zip|rar|gz)$/i', $extension):
                 $fa = 'fa-file-archive-o';
                 break;
+            case filter_var($filePath, FILTER_VALIDATE_URL):
+                $fa = 'fa-internet-explorer';
+                break;
             default:
                 $fa = 'fa-file-o';
         }
@@ -112,5 +116,17 @@ class FileTypeService
             'path' => $filePath,
             'html' => "<i class='fa {$fa}' aria-hidden='true'></i>",
         ];
+    }
+
+    public function isYoutubeVideo($url)
+    {
+        $rx = '~
+              ^(?:https?://)?                            
+               (?:www[.])?                               
+               (?:youtube[.]com/watch[?]v=|youtu[.]be/)  
+               ([^&]{11})                                
+                ~x';
+
+        return $has_match = preg_match($rx, $url, $matches);
     }
 }

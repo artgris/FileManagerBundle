@@ -61,7 +61,7 @@ class File
 
     public function getHTMLSize()
     {
-        if ($this->getFile()->getType() === 'file') {
+        if ('file' === $this->getFile()->getType()) {
             $size = $this->file->getSize() / 1000;
             $kb = $this->translator->trans('size.kb');
             $mb = $this->translator->trans('size.mb');
@@ -81,7 +81,7 @@ class File
                 $attr .= "data-width=\"{$width}\" data-height=\"{$height}\" ";
             }
 
-            if ($this->file->getType() === 'file') {
+            if ('file' === $this->file->getType()) {
                 $attr .= "data-path=\"{$this->getPreview()['path']}\"";
                 $attr .= ' class="select"';
             }
