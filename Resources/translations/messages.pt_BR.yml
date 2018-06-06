@@ -1,0 +1,57 @@
+file:
+  add:
+    success: enviado com sucesso
+  renamed:
+    success: O arquivo foi renomeado com sucesso
+    danger: Arquivo já existe ou você não está autorizado a renomear este arquivo
+    unauthorized: Os arquivos não existem mais ou você não tem autorização para acessar esta página
+    nochanged: Nenhuma alteração detectada
+  deleted:
+    success: Os arquivos foram apagados com sucesso
+    danger: Os arquivos não existem mais ou você não tem autorização para acessar esta página
+    unauthorized: Os arquivos não existem mais ou você não tem autorização para acessar esta página
+folder:
+  add:
+    danger: "Ocorreu um erro ao criar o diretório: %message%"
+    success: Pasta criada com sucesso
+  deleted:
+    success: A pasta excluída com sucesso
+    unauthorized: A pasta não existe mais ou você não tem autorização para acessar esta página
+button:
+  cancel: CANCELAR
+  refresh: Atualizar
+  parent: Subir
+  save: SALVAR
+  add:
+    files: Adicionar arquivos...
+    folder: Nova pasta...
+  delete:
+    current: Excluir pasta atual
+    selected: Excluir arquivos selecionados
+    action: EXCLUIR
+  rename:
+    action: RENOMEAR
+  tree: Pastas
+title:
+  add:
+    folder: Nova pasta
+  rename:
+    file: Renomear
+  delete: Excluir
+  download: Download
+input:
+    default: Nova pasta
+table:
+  name: Nome
+  date: Data
+  size: Tamanho
+  dimension: Dimensão
+  actions: Ações
+confirm:
+  delete:  Tem certeza de que deseja excluir?
+size:
+  mb: MB
+  kb: kB
+select-all: Selecionar tudo
+upload:
+  exception_move_uploaded_file: Permissão negada
