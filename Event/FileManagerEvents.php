@@ -8,9 +8,14 @@ namespace Artgris\Bundle\FileManagerBundle\Event;
 final class FileManagerEvents
 {
     /** @Event("Symfony\Component\EventDispatcher\GenericEvent") */
-    const PRE_UPDATE = 'file_manager.pre_update';
+    const PRE_UPDATE_FILE = 'file_manager.pre_update_file';
     /** @Event("Symfony\Component\EventDispatcher\GenericEvent") */
-    const POST_UPDATE = 'file_manager.post_update';
+    const POST_UPDATE_FILE = 'file_manager.post_update_file';
+
+    /** @Event("Symfony\Component\EventDispatcher\GenericEvent") */
+    const PRE_UPDATE_FOLDER = 'file_manager.pre_update_folder';
+    /** @Event("Symfony\Component\EventDispatcher\GenericEvent") */
+    const POST_UPDATE_FOLDER = 'file_manager.post_update_folder';
 
     /** @Event("Symfony\Component\EventDispatcher\GenericEvent") */
     const PRE_DELETE_FILE = 'file_manager.pre_delete_file';

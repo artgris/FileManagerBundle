@@ -170,6 +170,15 @@ class ManagerController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
+
+            //TODO: Add more options if required
+            $options = [
+                'type' => 'create',
+                'dirname' => $data['name'],
+            ];
+
+            $this->dispatch(FileManagerEvents::PRE_UPDATE_FOLDER, ['options' => &$options]);
+
             $fs = new Filesystem();
             $directory = $directorytmp = $fileManager->getCurrentPath().DIRECTORY_SEPARATOR.$data['name'];
             $i = 1;
@@ -183,9 +192,12 @@ class ManagerController extends Controller
             try {
                 $fs->mkdir($directory);
                 $this->addFlash('success', $translator->trans('folder.add.success'));
+                $options['success'] = true;
             } catch (IOExceptionInterface $e) {
                 $this->addFlash('danger', $translator->trans('folder.add.danger', ['%message%' => $data['name']]));
             }
+
+            $this->dispatch(FileManagerEvents::POST_UPDATE_FOLDER, ['response' => &$options]);
 
             return $this->redirectToRoute('file_manager', $fileManager->getQueryParameters());
         }
@@ -217,6 +229,14 @@ class ManagerController extends Controller
             $extension = $data['extension'] ? '.'.$data['extension'] : '';
             $newfileName = $data['name'].$extension;
             if ($newfileName !== $fileName && isset($data['name'])) {
+                //TODO: Add more options if required
+                $options = [
+                    'type' => 'rename',
+                    'filename' => $fileName,
+                    'newfileName' => $newfileName
+                ];
+                $this->dispatch(FileManagerEvents::PRE_UPDATE_FILE, ['options' => &$options]);
+                $success = false;
                 $fileManager = $this->newFileManager($queryParameters);
                 $NewfilePath = $fileManager->getCurrentPath().DIRECTORY_SEPARATOR.$newfileName;
                 $OldfilePath = realpath($fileManager->getCurrentPath().DIRECTORY_SEPARATOR.$fileName);
@@ -228,10 +248,15 @@ class ManagerController extends Controller
                         $fs->rename($OldfilePath, $NewfilePath);
                         $this->addFlash('success', $translator->trans('file.renamed.success'));
                         //File has been renamed successfully
+                        $success = true;
                     } catch (IOException $exception) {
                         $this->addFlash('danger', $translator->trans('file.renamed.danger'));
                     }
                 }
+
+                //TODO: Add more options if required
+                $options['success'] = $success;
+                $this->dispatch(FileManagerEvents::POST_UPDATE_FILE, ['response' => &$options]);
             } else {
                 $this->addFlash('warning', $translator->trans('file.renamed.nochanged'));
             }
@@ -254,6 +279,7 @@ class ManagerController extends Controller
         $fileManager = $this->newFileManager($request->query->all());
 
         $options = [
+            'type' => 'upload',
             'upload_dir' => $fileManager->getCurrentPath().DIRECTORY_SEPARATOR,
             'upload_url' => $fileManager->getImagePath(),
             'accept_file_types' => $fileManager->getRegex(),
@@ -263,10 +289,11 @@ class ManagerController extends Controller
             $options += $fileManager->getConfiguration()['upload'];
         }
 
-        $this->dispatch(FileManagerEvents::PRE_UPDATE, ['options' => &$options]);
+        $this->dispatch(FileManagerEvents::PRE_UPDATE_FILE, ['options' => &$options]);
 
         $uploadHandler = new UploadHandler($options);
         $response = $uploadHandler->response;
+        $response['type'] = 'upload';
 
         foreach ($response['files'] as $file) {
             if (isset($file->error)) {
@@ -278,7 +305,7 @@ class ManagerController extends Controller
             }
         }
 
-        $this->dispatch(FileManagerEvents::POST_UPDATE, ['response' => &$response]);
+        $this->dispatch(FileManagerEvents::POST_UPDATE_FILE, ['response' => &$response]);
 
         return new JsonResponse($response);
     }
@@ -319,21 +346,24 @@ class ManagerController extends Controller
             // remove file
             $fileManager = $this->newFileManager($queryParameters);
             $fs = new Filesystem();
+            $options = array();
+            $is_delete = false;
             if (isset($queryParameters['delete'])) {
-                $is_delete = false;
                 foreach ($queryParameters['delete'] as $fileName) {
                     $filePath = realpath($fileManager->getCurrentPath().DIRECTORY_SEPARATOR.$fileName);
                     if (0 !== strpos($filePath, $fileManager->getCurrentPath())) {
                         $this->addFlash('danger', 'file.deleted.danger');
                     } else {
-                        $this->dispatch(FileManagerEvents::PRE_DELETE_FILE);
+                        $options['filename'] = $fileName;
+                        $this->dispatch(FileManagerEvents::PRE_DELETE_FILE, ['options' => &$options]);
                         try {
                             $fs->remove($filePath);
                             $is_delete = true;
                         } catch (IOException $exception) {
                             $this->addFlash('danger', 'file.deleted.unauthorized');
                         }
-                        $this->dispatch(FileManagerEvents::POST_DELETE_FILE);
+                        $options['success'] = $is_delete;
+                        $this->dispatch(FileManagerEvents::POST_DELETE_FILE, ['response' => &$options]);
                     }
                 }
                 if ($is_delete) {
@@ -341,15 +371,17 @@ class ManagerController extends Controller
                 }
                 unset($queryParameters['delete']);
             } else {
-                $this->dispatch(FileManagerEvents::PRE_DELETE_FOLDER);
+                $options['foldername'] = $fileManager->getCurrentRoute();
+                $this->dispatch(FileManagerEvents::PRE_DELETE_FOLDER, ['options' => &$options]);
                 try {
                     $fs->remove($fileManager->getCurrentPath());
                     $this->addFlash('success', 'folder.deleted.success');
+                    $is_delete = true;
                 } catch (IOException $exception) {
                     $this->addFlash('danger', 'folder.deleted.unauthorized');
                 }
-
-                $this->dispatch(FileManagerEvents::POST_DELETE_FOLDER);
+                $options['success'] = $is_delete;
+                $this->dispatch(FileManagerEvents::POST_DELETE_FOLDER, ['response' => &$options]);
                 $queryParameters['route'] = dirname($fileManager->getCurrentRoute());
                 if ($queryParameters['route'] = '/') {
                     unset($queryParameters['route']);
