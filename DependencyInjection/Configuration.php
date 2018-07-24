@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
                     ->prototype('array')
                         ->children()
                             ->scalarNode('dir')->end()
-                            ->enumNode('type')->values(['file', 'image', 'media'])->defaultValue('file')->end()
+                            ->enumNode('type')->values(['file', 'image', 'media'])->end()
                             ->booleanNode('tree')->end()
                             ->enumNode('view')->values(['thumbnail', 'list'])->defaultValue('list')->end()
                             ->scalarNode('regex')->end()
