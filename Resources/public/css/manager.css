@@ -119,7 +119,7 @@ button i {
 
 @media only screen and (max-width: 700px) {
 
-    .top-bar button.btn > span {
+    .top-bar .btn-action > span {
         display: none;
     }
 

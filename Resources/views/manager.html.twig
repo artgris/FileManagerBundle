@@ -37,16 +37,16 @@
             <i class="glyphicon glyphicon-refresh"></i>
         </button>
 
-        <button class="btn btn-success btn-sm fileinput-button">
+        <span class="btn btn-success btn-sm fileinput-button btn-action">
             <i class="glyphicon glyphicon-file"></i>
             <span>{{ 'button.add.files'|trans }}</span>
             <input id="fileupload" type="file"
                    data-url="{{ path('file_manager_upload', fileManager.queryParameters) }}"
                    name="files[]" multiple=""
                    accept="{{ fileManager.configuration.accept is defined ? fileManager.configuration.accept : (fileManager.type ? accept(fileManager.type)) }}">
-        </button>
+        </span>
 
-        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addFolder">
+        <button type="button" class="btn btn-primary btn-sm btn-action" data-toggle="modal" data-target="#addFolder">
             <i class="glyphicon glyphicon-folder-open"></i>
             <span>{{ 'button.add.folder'|trans }}</span>
         </button>
