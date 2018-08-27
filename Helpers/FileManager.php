@@ -262,11 +262,11 @@ class FileManager
 
     private function mergeQueryAndConf($parameter, $default = null)
     {
-        return null !== $this->getQueryParameter($parameter) ? $this->getQueryParameter($parameter) : ($this->getConfigurationParameter($parameter) ? $this->getConfigurationParameter($parameter) : $default);
+        return $this->getQueryParameter($parameter) ?? $this->getConfigurationParameter($parameter) ?? $default;
     }
 
     private function mergeConfAndQuery($parameter, $default = null)
     {
-        return null !== $this->getConfigurationParameter($parameter) ? $this->getConfigurationParameter($parameter) : ($this->getQueryParameter($parameter) ? $this->getQueryParameter($parameter) : $default);
+        return $this->getConfigurationParameter($parameter) ?? $this->getQueryParameter($parameter) ?? $default;
     }
 }

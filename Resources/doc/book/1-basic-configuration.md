@@ -55,9 +55,9 @@ artgris_file_manager:
 ## `tree` Display Folder Tree
 | Option | Type     | Required | Default value |
 | :---  |:--------:|:--------:|:--------:|
-| `tree`  | `Booleen` |  False   | True |
+| `tree`  | `Booleen` |  False   | true |
 
-Example with `tree` = False
+Example with `tree` = false
 
 <img src="https://raw.githubusercontent.com/artgris/FileManagerBundle/master/Resources/doc/images/filemanager-promo-no-tree.png" alt="Symfony Filemanager created with FileManagerBundle" align="center" />
 
