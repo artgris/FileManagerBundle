@@ -46,10 +46,10 @@ matrix:
         - ENABLE_CODE_COVERAGE="true"
   allow_failures:
     - php: nightly
-    # code coverage is very slow; allow a failure to get the Travis result early
-    - env:
-        - SYMFONY_VERSION="2.8.*"
-        - ENABLE_CODE_COVERAGE="true"
+#    # code coverage is very slow; allow a failure to get the Travis result early
+#    - env:
+#        - SYMFONY_VERSION="2.8.*"
+#        - ENABLE_CODE_COVERAGE="true"
 
 before_install:
   - stty cols 120
