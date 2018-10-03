@@ -118,7 +118,7 @@ artgris_file_manager:
     web_dir: public                 # set your public Directory (not required, default value: web)
     conf:
         default:
-            dir: "../web/uploads"
+            dir: "../public/uploads"
 ```
 
 Browse the `/manager/?conf=default` URL and you'll get access to your 

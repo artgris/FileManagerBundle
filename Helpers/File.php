@@ -29,10 +29,10 @@ class File
     /**
      * File constructor.
      *
-     * @param SplFileInfo $file
+     * @param SplFileInfo         $file
      * @param TranslatorInterface $translator
-     * @param FileTypeService $fileTypeService
-     * @param FileManager $fileManager
+     * @param FileTypeService     $fileTypeService
+     * @param FileManager         $fileManager
      *
      * @internal param $module
      */
@@ -61,12 +61,12 @@ class File
 
     public function getHTMLSize()
     {
-        if ($this->getFile()->getType() === 'file') {
+        if ('file' === $this->getFile()->getType()) {
             $size = $this->file->getSize() / 1000;
             $kb = $this->translator->trans('size.kb');
             $mb = $this->translator->trans('size.mb');
 
-            return $size > 1000 ? number_format(($size / 1000), 1, '.', '') . ' ' . $mb : number_format($size, 1, '.', '') . ' ' . $kb;
+            return $size > 1000 ? number_format(($size / 1000), 1, '.', '').' '.$mb : number_format($size, 1, '.', '').' '.$kb;
         }
     }
 
@@ -81,7 +81,7 @@ class File
                 $attr .= "data-width=\"{$width}\" data-height=\"{$height}\" ";
             }
 
-            if ($this->file->getType() === 'file') {
+            if ('file' === $this->file->getType()) {
                 $attr .= "data-path=\"{$this->getPreview()['path']}\"";
                 $attr .= ' class="select"';
             }

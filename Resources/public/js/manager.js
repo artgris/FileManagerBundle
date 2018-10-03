@@ -1,4 +1,5 @@
 $(function () {
+
     var $renameModal = $('#js-confirm-rename');
     var $deleteModal = $('#js-confirm-delete');
     var callback = function (key, opt) {

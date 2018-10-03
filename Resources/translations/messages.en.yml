@@ -21,7 +21,7 @@ button:
   cancel: CANCEL
   refresh: Refresh
   parent: Parent
-  save: Save
+  save: SAVE
   add:
     files: Add files...
     folder: New folder...
@@ -29,6 +29,8 @@ button:
     current: Delete current folder
     selected: Delete selected files
     action: DELETE
+  rename:
+    action: RENAME
   tree: Tree
 title:
   add:

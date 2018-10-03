@@ -27,7 +27,7 @@ class OrderExtension extends \Twig_Extension
 
     public function order(\Twig_Environment $environment, FileManager $fileManager, $type)
     {
-        $order = $fileManager->getQueryParameter('order') === self::ASC;
+        $order = self::ASC === $fileManager->getQueryParameter('order');
         $active = $fileManager->getQueryParameter('orderby') === $type ? 'actived' : null;
         $orderBy = [];
         $orderBy['orderby'] = $type;
@@ -43,7 +43,7 @@ class OrderExtension extends \Twig_Extension
             'href' => $href,
             'glyphicon' => $glyphicon,
             'type' => $type,
-            'islist' => $fileManager->getView() === 'list',
+            'islist' => 'list' === $fileManager->getView(),
         ]);
     }
 

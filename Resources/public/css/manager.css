@@ -80,8 +80,9 @@ i.fa {
     height: 115px;
     padding: 5px;
 }
-.thumbnail-img img{
-    max-width:100%;
+
+.thumbnail-img img {
+    max-width: 100%;
 }
 
 .thumbnail-img .fa {
@@ -99,9 +100,11 @@ i.fa {
 .no-tree-blk .thumbnail-blk .select-all {
     padding-left: 5px;
 }
+
 .thead-default a {
     color: #464a4c;
 }
+
 .thead-default span {
     color: #adadad;
 }
@@ -110,11 +113,15 @@ i.fa {
     color: #337ab7;
 }
 
-@media only screen and (max-width: 900px) {
+button i {
+    padding-right: 4px;
+}
 
- .top-bar button.btn > span {
-     display: none;
- }
+@media only screen and (max-width: 700px) {
+
+    .top-bar .btn-action > span {
+        display: none;
+    }
 
 }
 
