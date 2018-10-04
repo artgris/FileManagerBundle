@@ -45,7 +45,7 @@ class FileTypeService
             return $this->fileIcon($filePath, $extension, $size);
         }
         if ('dir' === $type) {
-            $href = $this->router->generate('file_manager', array_merge($fileManager->getQueryParameters(), ['route' => $fileManager->getRoute().DIRECTORY_SEPARATOR.rawurlencode($file->getFilename())]));
+            $href = $this->router->generate('file_manager', array_merge($fileManager->getQueryParameters(), ['route' => $fileManager->getRoute().'/'.rawurlencode($file->getFilename())]));
 
             return [
                 'path' => $filePath,
