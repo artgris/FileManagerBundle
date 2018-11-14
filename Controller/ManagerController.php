@@ -62,7 +62,7 @@ class ManagerController extends Controller
 
 
         if(isset($directoriesArbo[0]['text'])){
-            $directoriesArbo[0]['text'] = sprintf('%s <span class="label label-default">1</span>', $translator->trans('randock.ypsa.my_media_library.title'));
+            $directoriesArbo[0]['text'] = sprintf('%s <span class="label label-default">1</span>', $translator->trans('randock.ypsa.media_library.title'));
         }
 
 
