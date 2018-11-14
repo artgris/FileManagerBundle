@@ -14,6 +14,8 @@ class FileTypeService
         FileManager::VIEW_THUMBNAIL => '100',
     ];
 
+    const THUMBNAIL_FOLDER_PREFIX = '/auto-thumbnails';
+
     /**
      * @var Router
      */
@@ -32,10 +34,18 @@ class FileTypeService
 
     public function preview(FileManager $fileManager, SplFileInfo $file)
     {
+
+        $queryParameters = $fileManager->getQueryParameters();
+        if(empty($fileManager->getRoute())) {
+            $queryParameters['route'] = sprintf("%s",self::THUMBNAIL_FOLDER_PREFIX);
+        }elseif(self::THUMBNAIL_FOLDER_PREFIX !== $fileManager->getRoute()){
+            $queryParameters['route'] = sprintf("%s%s", $queryParameters['route'], self::THUMBNAIL_FOLDER_PREFIX);
+        }
+
         if ($fileManager->getImagePath()) {
             $filePath = htmlentities($fileManager->getImagePath().rawurlencode($file->getFilename()));
         } else {
-            $filePath = $this->router->generate('file_manager_file', array_merge($fileManager->getQueryParameters(), ['fileName' => rawurlencode($file->getFilename())]));
+            $filePath = $this->router->generate('file_manager_file', array_merge($queryParameters, ['fileName' => rawurlencode($file->getFilename())]));
         }
         $extension = $file->getExtension();
         $type = $file->getType();

@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Artgris\Bundle\FileManagerBundle\service\FileTypeService;
 
 /**
  * @author Arthur Gribet <a.gribet@gmail.com>
@@ -410,7 +411,7 @@ class ManagerController extends Controller
     private function retrieveSubDirectories(FileManager $fileManager, $path, $parent = DIRECTORY_SEPARATOR, $baseFolderName = false)
     {
         $directories = new Finder();
-        $directories->in($path)->ignoreUnreadableDirs()->directories()->depth(0)->sortByType()->filter(function (SplFileInfo $file) {
+        $directories->in($path)->ignoreUnreadableDirs()->exclude(FileTypeService::THUMBNAIL_FOLDER_PREFIX)->directories()->depth(0)->sortByType()->filter(function (SplFileInfo $file) {
             return $file->isReadable();
         });
 
