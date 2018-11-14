@@ -60,6 +60,12 @@ class ManagerController extends Controller
         // Folder search
         $directoriesArbo = $this->retrieveSubDirectories($fileManager, $fileManager->getDirName(), DIRECTORY_SEPARATOR, $fileManager->getBaseName());
 
+
+        if(isset($directoriesArbo[0]['text'])){
+            $directoriesArbo[0]['text'] = sprintf('%s <span class="label label-default">1</span>', $translator->trans('randock.ypsa.my_media_library.title'));
+        }
+
+
         // File search
         $finderFiles = new Finder();
         $finderFiles->in($fileManager->getCurrentPath())->depth(0);
