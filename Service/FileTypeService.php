@@ -14,7 +14,7 @@ class FileTypeService
         FileManager::VIEW_THUMBNAIL => '100',
     ];
 
-    const THUMBNAIL_FOLDER_PREFIX = '/auto-thumbnails';
+    const THUMBNAIL_FOLDER_PREFIX = 'auto-thumbnails';
 
     /**
      * @var Router
@@ -37,9 +37,9 @@ class FileTypeService
 
         $queryParameters = $fileManager->getQueryParameters();
         if(empty($fileManager->getRoute())) {
-            $queryParameters['route'] = sprintf("%s",self::THUMBNAIL_FOLDER_PREFIX);
-        }elseif(self::THUMBNAIL_FOLDER_PREFIX !== $fileManager->getRoute()){
-            $queryParameters['route'] = sprintf("%s%s", $queryParameters['route'], self::THUMBNAIL_FOLDER_PREFIX);
+            $queryParameters['route'] = sprintf("/%s",self::THUMBNAIL_FOLDER_PREFIX);
+        }elseif(sprintf("/%s",self::THUMBNAIL_FOLDER_PREFIX) !== $fileManager->getRoute()){
+            $queryParameters['route'] = sprintf("%s/%s", $queryParameters['route'], self::THUMBNAIL_FOLDER_PREFIX);
         }
 
         if ($fileManager->getImagePath()) {
