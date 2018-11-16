@@ -225,14 +225,30 @@ class ManagerController extends Controller
             $newfileName = $data['name'].$extension;
             if ($newfileName !== $fileName && isset($data['name'])) {
                 $fileManager = $this->newFileManager($queryParameters);
-                $NewfilePath = $fileManager->getCurrentPath().DIRECTORY_SEPARATOR.$newfileName;
-                $OldfilePath = realpath($fileManager->getCurrentPath().DIRECTORY_SEPARATOR.$fileName);
-                if (0 !== strpos($NewfilePath, $fileManager->getCurrentPath())) {
+                $newFilePath = sprintf("%s%s%s", $fileManager->getCurrentPath(), DIRECTORY_SEPARATOR, $newfileName);
+                $newThumbPath = sprintf("%s%s%s%s%s",
+                    $fileManager->getCurrentPath(),
+                    DIRECTORY_SEPARATOR,
+                    FileTypeService::THUMBNAIL_FOLDER_PREFIX,
+                    DIRECTORY_SEPARATOR,
+                    $newfileName
+                );
+
+                $oldFilePath = realpath(sprintf("%s%s%s", $fileManager->getCurrentPath(),DIRECTORY_SEPARATOR, $fileName));
+                $oldThumbPath = realpath(sprintf("%s%s%s%s%s",
+                        $fileManager->getCurrentPath(),
+                        DIRECTORY_SEPARATOR,
+                        FileTypeService::THUMBNAIL_FOLDER_PREFIX,
+                        DIRECTORY_SEPARATOR,
+                        $fileName)
+                );
+                if (0 !== strpos($newFilePath, $fileManager->getCurrentPath())) {
                     $this->addFlash('danger', $translator->trans('file.renamed.unauthorized'));
                 } else {
                     $fs = new Filesystem();
                     try {
-                        $fs->rename($OldfilePath, $NewfilePath);
+                        $fs->rename($oldFilePath, $newFilePath);
+                        $fs->rename($oldThumbPath, $newThumbPath);
                         $this->addFlash('success', $translator->trans('file.renamed.success'));
                         //File has been renamed successfully
                     } catch (IOException $exception) {
@@ -329,13 +345,29 @@ class ManagerController extends Controller
             if (isset($queryParameters['delete'])) {
                 $is_delete = false;
                 foreach ($queryParameters['delete'] as $fileName) {
-                    $filePath = realpath($fileManager->getCurrentPath().DIRECTORY_SEPARATOR.$fileName);
+                    $filePath = realpath(sprintf("%s%s%s",
+                            $fileManager->getCurrentPath(),
+                            DIRECTORY_SEPARATOR,
+                            $fileName)
+                    );
+                    $thumbPath = realpath(
+                        sprintf("%s%s%s%s%s",
+                            $fileManager->getCurrentPath(),
+                            DIRECTORY_SEPARATOR,
+                            FileTypeService::THUMBNAIL_FOLDER_PREFIX,
+                            DIRECTORY_SEPARATOR,
+                            $fileName
+                        )
+                    );
+
+
                     if (0 !== strpos($filePath, $fileManager->getCurrentPath())) {
                         $this->addFlash('danger', 'file.deleted.danger');
                     } else {
                         $this->dispatch(FileManagerEvents::PRE_DELETE_FILE);
                         try {
                             $fs->remove($filePath);
+                            $fs->remove($thumbPath);
                             $is_delete = true;
                         } catch (IOException $exception) {
                             $this->addFlash('danger', 'file.deleted.unauthorized');
