@@ -31,7 +31,7 @@
         <tbody>
         {% for fileEntity in fileArray %}
             {% set file = fileEntity.file %}
-            <tr class="{{ file.type }}">
+            <tr class="{{ file.type }}" {% if file.type == "file" %}data-name="{{ file.fileName }}"{% endif %}>
                 <td><input type="checkbox" class="checkbox" name="delete[]" value="{{ file.fileName }}" title="{{ file.fileName }}"></td>
                 <td>{{ fileEntity.preview ? fileEntity.preview.html|raw }}</td>
                 <td data-value="{{ file.fileName }}" {{ fileEntity.attribut|raw }}>
@@ -60,6 +60,21 @@
                     <span class="fa fa-trash"></span>
                 </button>
             </span>
+                    <span data-toggle="tooltip" title="{{ 'title.move.file'|trans }}">
+                        <button type="button"
+                                class="btn btn-xs btn-default js-move-modal"
+                                data-trigger="click"
+                                data-container="body"
+                                data-toggle="modal"
+                                data-target="#moveFile"
+                                data-placement="left"
+                                data-html="true"
+                                data-name='{{ file.basename('.'~file.extension) }}'
+                                data-extension='{{ file.extension }}'
+                                data-href='{{ path('file_manager_move', fileManager.queryParameters|merge({'fileName':file.fileName})) }}'>
+                            <span class="fa fa-edit"></span>
+                        </button>
+                    </span>
                     <span data-toggle="tooltip" title="{{ 'title.rename.file'|trans }}">
                 <button type="button"
                         class="btn btn-xs btn-default js-rename-modal"

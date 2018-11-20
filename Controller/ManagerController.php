@@ -306,6 +306,96 @@ class ManagerController extends Controller
         return new JsonResponse($response);
     }
 
+
+
+    /**
+     * @Route("/folderList/", name="file_manager_folder_list")
+     *
+     * @param Request $request
+     * @throws \Exception
+     *
+     * @return JsonResponse
+     */
+    public function getFolderListAction(Request $request)
+    {
+        $queryParameters = $request->query->all();
+        $params = [];
+        $params['filename'] = $queryParameters['filename'];
+        $params['currentPath'] = $queryParameters['currentPath'];
+        $fileManager = $this->newFileManager($queryParameters);
+        $params['directories'] = $this->retrieveFolderList($fileManager->getDirName(), DIRECTORY_SEPARATOR, $fileManager->getBaseName());
+        $view = $this->renderView('@ArtgrisFileManager/views/_move_form.html.twig', $params);
+
+        return new JsonResponse(['view' => $view]);
+    }
+
+
+
+    /**
+     * @param string      $path
+     * @param string      $parent
+     * @param null|string $baseFolderName
+     *
+     * @return array|null
+     */
+    private function retrieveFolderList(
+        $path,
+        $parent = \DIRECTORY_SEPARATOR,
+        $baseFolderName = null
+    ) {
+        $directoriesFinder = new Finder();
+        $directoriesFinder->in($path)
+            ->ignoreUnreadableDirs()
+            ->exclude(FileTypeService::THUMBNAIL_FOLDER_PREFIX)
+            ->directories()
+            ->depth(0)
+            ->sortByType()
+            ->filter(function (SplFileInfo $file) {
+                return $file->isReadable();
+            });
+
+        if ($baseFolderName) {
+            $directoriesFinder->name($baseFolderName);
+        }
+        $directoriesList = [];
+
+        /** @var SplFileInfo $directory */
+        foreach ($directoriesFinder as $directory) {
+            $fileName = $baseFolderName ? '' : $parent . $directory->getFilename();
+            $directoriesList[] = [
+                'text' => $directory->getFilename(),
+                'filename' => empty($fileName) ? '/' : $fileName,
+                'children' => $this->retrieveFolderList(
+                    $directory->getPathname(),
+                    $fileName . \DIRECTORY_SEPARATOR
+                ),
+            ];
+        }
+
+        return $directoriesList;
+    }
+
+    /**
+     * @Route("/move/", name="file_manager_move")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     * @throws \Exception
+     *
+     */
+    public function moveFileAction(Request $request)
+    {
+        $queryParameters = $request->query->all();
+        unset($queryParameters['json']);
+
+        $this->move($this->newFileManager($queryParameters), $queryParameters['fileName'], $queryParameters['newPath']);
+
+        return new Response();
+    }
+
+
+
     /**
      * @Route("/file/{fileName}", name="file_manager_file")
      *
@@ -560,4 +650,79 @@ class ManagerController extends Controller
         $event = new GenericEvent($subject, $arguments);
         $this->get('event_dispatcher')->dispatch($eventName, $event);
     }
+
+
+    /**
+     * @param FileManager $fileManager
+     * @param string $fileName
+     * @param string $newPath
+     */
+    private function move(FileManager $fileManager, $fileName, $newPath)
+    {
+
+        $filesystem = new Filesystem();
+
+        $newFilePath = sprintf('%s%s%s%s',
+            $fileManager->getBasePath(),
+            $newPath,
+            \DIRECTORY_SEPARATOR,
+            $fileName
+        );
+
+        $oldFilePath = realpath(
+            sprintf('%s%s%s',
+                $fileManager->getCurrentPath(),
+                \DIRECTORY_SEPARATOR,
+                $fileName
+            )
+        );
+
+        $newThumbPathFolder = sprintf('%s%s%s%s',
+            $fileManager->getBasePath(),
+            $newPath,
+            \DIRECTORY_SEPARATOR,
+            FileTypeService::THUMBNAIL_FOLDER_PREFIX);
+
+        $newThumbPath = sprintf('%s%s%s%s%s%s',
+            $fileManager->getBasePath(),
+            $newPath,
+            \DIRECTORY_SEPARATOR,
+            FileTypeService::THUMBNAIL_FOLDER_PREFIX,
+            \DIRECTORY_SEPARATOR,
+            $fileName);
+
+
+
+        $oldThumbPath = realpath(
+            sprintf('%s%s%s%s%s',
+                $fileManager->getCurrentPath(),
+                \DIRECTORY_SEPARATOR,
+                FileTypeService::THUMBNAIL_FOLDER_PREFIX,
+                \DIRECTORY_SEPARATOR,
+                $fileName
+            )
+        );
+
+
+        if ($newFilePath === $oldFilePath) {
+            return;
+        }
+
+        if (0 === strpos($newFilePath, $fileManager->getBasePath())) {
+            try {
+                $filesystem->rename($oldFilePath, $newFilePath);
+
+                if (!$filesystem->exists($newThumbPathFolder)) {
+                    $filesystem->mkdir($newThumbPathFolder);
+                }
+                if($filesystem->exists($oldThumbPath)){
+
+                    $filesystem->rename($oldThumbPath, $newThumbPath);
+                }
+            } catch (IOException $exception) {
+            }
+        }
+    }
+
+
 }

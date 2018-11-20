@@ -1,3 +1,4 @@
+
 <div class="row margin-bottom thumbnail-blk">
     <div class="col-md-12 select-all">
         <input type="checkbox" id="select-all" title="{{ 'select-all'|trans }}"> <label for="select-all">{{ 'select-all'|trans }}</label>
@@ -15,7 +16,7 @@
     </div>
     {% for fileEntity in fileArray %}
         {% set file = fileEntity.file %}
-        <div class="{{ file.type }} col-xs-6 col-sm-4 col-md-{{ fileManager.tree == 0 ? 3 : 4 }} col-lg-2 text-center thumbnail">
+        <div class="{{ file.type }} col-xs-6 col-sm-4 col-md-{{ fileManager.tree == 0 ? 3 : 4 }} col-lg-2 text-center thumbnail" {% if file.type == "file" %}data-name="{{ file.fileName }}"{% endif %}>
             <input type="checkbox" class="checkbox" name="delete[]"
                    value="{{ file.fileName }}"
                    title="{{ file.fileName }}">
@@ -55,6 +56,21 @@
                             data-name='{{ file.basename('.'~file.extension) }}'
                             data-extension='{{ file.extension }}'
                             data-href='{{ path('file_manager_rename', fileManager.queryParameters|merge({'fileName':file.fileName})) }}'>
+                    <span class="fa fa-edit"></span>
+                    </button>
+                </span>
+                <span data-toggle="tooltip" title="{{ 'title.move.file'|trans }}">
+                    <button type="button"
+                            class="btn btn-sm btn-default js-move-modal"
+                            data-trigger="click"
+                            data-container="body"
+                            data-toggle="modal"
+                            data-target="#moveFile"
+                            data-placement="left"
+                            data-html="true"
+                            data-name='{{ file.basename('.'~file.extension) }}'
+                            data-extension='{{ file.extension }}'
+                            data-href='{{ path('file_manager_move', fileManager.queryParameters|merge({'fileName':file.fileName})) }}'>
                     <span class="fa fa-edit"></span>
                     </button>
                 </span>

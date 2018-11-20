@@ -1,0 +1,32 @@
+{% macro recursiveDirectory(directory) %}
+    {% import _self as self %}
+    <li class="ypsa-medialibrary-move">
+        <span data-path="{{ directory.filename }}">{{ directory.text }}</span>
+        {% if directory.children|length %}
+            <ul>
+                {% for child in directory.children %}
+                    {{ self.recursiveDirectory(child) }}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </li>
+{% endmacro %}
+
+{% from _self import recursiveDirectory %}
+
+{% block styles %}
+    <style>
+        .ypsa-medialibrary-move span:hover {
+            color:#0a8cf0;
+            font-weight: bold;
+            cursor:pointer;
+        }
+    </style>
+{% endblock %}
+<div id="ypsa-move-select" data-file="{{ filename }}" data-current-path="{{ currentPath }}">
+    <ul>
+        {% for directory in directories %}
+            {{ recursiveDirectory(directory) }}
+        {% endfor %}
+    </ul>
+</div>
