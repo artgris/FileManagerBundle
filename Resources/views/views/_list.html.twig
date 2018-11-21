@@ -1,4 +1,18 @@
 <div class="table-responsive list-blk">
+    <div class="col-md-12 select-all">
+        <input type="checkbox" id="select-all" title="{{ 'select-all'|trans }}"> <label for="select-all">{{ 'select-all'|trans }}</label>
+        <a id="js-delete-multiple-modal"
+           class="btn btn-xs btn-danger disabled pull-right"
+           type="button"
+           data-trigger="click"
+           data-container="body"
+           data-toggle="modal"
+           data-target="#js-confirm-delete"
+           data-placement="left"
+           data-html="true">
+            <i class="fa fa-check-square-o"></i> {{ 'button.delete.selected'|trans }}
+        </a>
+    </div>
     <table class="table">
         <colgroup>
             <col>
@@ -86,19 +100,4 @@
         {% endfor %}
         </tbody>
     </table>
-</div>
-<div class="row">
-    <div class="col-lg-12 nopadding">
-        <a id="js-delete-multiple-modal"
-           class="btn btn-xs btn-danger disabled"
-           type="button"
-           data-trigger="click"
-           data-container="body"
-           data-toggle="modal"
-           data-target="#js-confirm-delete"
-           data-placement="left"
-           data-html="true">
-            <i class="fa fa-check-square-o"></i> {{ 'button.delete.selected'|trans }}
-        </a>
-    </div>
 </div>
