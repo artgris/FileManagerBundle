@@ -90,6 +90,7 @@ class ManagerControllerTest extends AbstractTestCase
         $crawler = $this->getManagerPage();
         $urls = [
             '/manager/?conf=default&tree=0',
+            null,
             '/manager/?conf=default&view=list',
             '/manager/?conf=default&view=thumbnail',
         ];
