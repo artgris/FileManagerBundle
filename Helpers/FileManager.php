@@ -120,10 +120,6 @@ class FileManager
         return false;
     }
 
-    private function checkDirectoryExists()
-    {
-    }
-
     private function checkSecurity()
     {
         if (!isset($this->configuration['dir'])) {
