@@ -37,9 +37,11 @@ Example with a Public folder :
 artgris_file_manager:
     conf:
         public:
-            dir: '../web/uploads' # equivalent with '%kernel.root_dir%/../web/uploads'
+            dir: '../web/uploads'
 ```    
 >Browse the `/manager/?conf=public` URL to get access to this File Manager
+
+>"../web/" or "../public/" (symfony 4) in dir path are required to get 'public' image urls otherwise filemanager thinks it's a private directory.
 
 Example with a Private folder :
     
@@ -47,7 +49,7 @@ Example with a Private folder :
 artgris_file_manager:
     conf:
         private:
-            dir: '../private' # equivalent to '%kernel.root_dir%/../private'
+            dir: '../private'
 ```
 
 >Browse the `/manager/?conf=private` URL to get access to this File Manager
