@@ -47,33 +47,33 @@
                     <small>{{ fileEntity.HTMLDimension }}</small>
                 </td>
                 <td class="text-right">
-            <span data-toggle="tooltip" title="{{ 'title.delete'|trans }}">
-                <button type="button"
-                        class="btn btn-xs btn-danger js-delete-modal"
-                        data-trigger="click"
-                        data-container="body"
-                        data-toggle="modal"
-                        data-target="#js-confirm-delete"
-                        data-placement="left"
-                        data-html="true"
-                        data-href='{{ path('file_manager_delete', fileManager.queryParameters|merge({'delete[]':file.fileName})) }}'>
-                    <span class="fa fa-trash"></span>
-                </button>
-            </span>
+                    <span data-toggle="tooltip" title="{{ 'title.delete'|trans }}">
+                        <button type="button"
+                                class="btn btn-xs btn-danger js-delete-modal"
+                                data-trigger="click"
+                                data-container="body"
+                                data-toggle="modal"
+                                data-target="#js-confirm-delete"
+                                data-placement="left"
+                                data-html="true"
+                                data-href='{{ path('file_manager_delete', fileManager.queryParameters|merge({'delete[]':file.fileName})) }}'>
+                            <span class="fa fa-trash"></span>
+                        </button>
+                    </span>
                     <span data-toggle="tooltip" title="{{ 'title.rename.file'|trans }}">
-                <button type="button"
-                        class="btn btn-xs btn-default js-rename-modal"
-                        data-trigger="click"
-                        data-container="body"
-                        data-toggle="modal"
-                        data-target="#js-confirm-rename"
-                        data-placement="left"
-                        data-html="true"
-                        data-name='{{ file.basename('.'~file.extension) }}'
-                        data-extension='{{ file.extension }}'
-                        data-href='{{ path('file_manager_rename', fileManager.queryParameters|merge({'fileName':file.fileName})) }}'>
-                <span class="fa fa-edit"></span>
-                </button>
+                        <button type="button"
+                                class="btn btn-xs btn-default js-rename-modal"
+                                data-trigger="click"
+                                data-container="body"
+                                data-toggle="modal"
+                                data-target="#js-confirm-rename"
+                                data-placement="left"
+                                data-html="true"
+                                data-name='{{ file.basename('.'~file.extension) }}'
+                                data-extension='{{ file.extension }}'
+                                data-href='{{ path('file_manager_rename', fileManager.queryParameters|merge({'fileName':file.fileName})) }}'>
+                        <span class="fa fa-edit"></span>
+                        </button>
                     </span>
                     {% if file.type == "file" %}
                         <a data-placement="left" title="{{ 'title.download'|trans }}" class="btn btn-xs btn-default js-download"
@@ -86,19 +86,4 @@
         {% endfor %}
         </tbody>
     </table>
-</div>
-<div class="row">
-    <div class="col-lg-12 nopadding">
-        <a id="js-delete-multiple-modal"
-           class="btn btn-xs btn-danger disabled"
-           type="button"
-           data-trigger="click"
-           data-container="body"
-           data-toggle="modal"
-           data-target="#js-confirm-delete"
-           data-placement="left"
-           data-html="true">
-            <i class="fa fa-check-square-o"></i> {{ 'button.delete.selected'|trans }}
-        </a>
-    </div>
 </div>
