@@ -34,7 +34,7 @@ class OrderExtension extends \Twig_Extension
         $orderBy['order'] = $active ? ($order ? self::DESC : self::ASC) : self::ASC;
         $parameters = array_merge($fileManager->getQueryParameters(), $orderBy);
 
-        $glyphicon = $active ? '-'.($order ? self::ASC : self::DESC) : '';
+        $glyphicon = $active ? '-' . ($order ? self::ASC : self::DESC) : '';
 
         $href = $this->router->generate('file_manager', $parameters);
 
@@ -53,7 +53,8 @@ class OrderExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'order' => new \Twig_SimpleFunction('order', [$this, 'order'], ['needs_environment' => true, 'is_safe' => ['html']]),
+            'order' => new \Twig_SimpleFunction('order', [$this, 'order'],
+                ['needs_environment' => true, 'is_safe' => ['html']]),
         ];
     }
 }

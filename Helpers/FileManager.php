@@ -56,7 +56,7 @@ class FileManager
     public function getRegex()
     {
         if (isset($this->configuration['regex'])) {
-            return '/'.$this->configuration['regex'].'/i';
+            return '/' . $this->configuration['regex'] . '/i';
         }
 
         switch ($this->getType()) {
@@ -78,7 +78,7 @@ class FileManager
 
     public function getCurrentPath()
     {
-        return realpath($this->getBasePath().$this->getCurrentRoute());
+        return realpath($this->getBasePath() . $this->getCurrentRoute());
     }
 
     // parent url
@@ -102,7 +102,7 @@ class FileManager
     {
         $baseUrl = $this->getBaseUrl();
         if ($baseUrl) {
-            return $baseUrl.$this->getCurrentRoute().'/';
+            return $baseUrl . $this->getCurrentRoute() . '/';
         }
 
         return false;
@@ -110,7 +110,7 @@ class FileManager
 
     private function getBaseUrl()
     {
-        $webPath = '../'.$this->webDir;
+        $webPath = '../' . $this->webDir;
         $dirl = new \SplFileInfo($this->getConfiguration()['dir']);
         $base = $dirl->getPathname();
         if (0 === mb_strpos($base, $webPath)) {
@@ -123,7 +123,8 @@ class FileManager
     private function checkSecurity()
     {
         if (!isset($this->configuration['dir'])) {
-            throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, 'Please define a "dir" parameter in your config.yml');
+            throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR,
+                'Please define a "dir" parameter in your config.yml');
         }
         $dir = $this->configuration['dir'];
 
