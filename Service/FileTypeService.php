@@ -4,8 +4,8 @@ namespace Artgris\Bundle\FileManagerBundle\Service;
 
 use Artgris\Bundle\FileManagerBundle\Helpers\FileManager;
 use SplFileInfo;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Asset\Packages;
+use Symfony\Component\Routing\RouterInterface;
 
 class FileTypeService
 {
@@ -15,17 +15,17 @@ class FileTypeService
     ];
 
     /**
-     * @var Router
+     * @var RouterInterface
      */
     private $router;
 
     /**
      * FileTypeService constructor.
      *
-     * @param Router   $router
+     * @param RouterInterface $router
      * @param Packages $packages
      */
-    public function __construct(Router $router)
+    public function __construct(RouterInterface $router)
     {
         $this->router = $router;
     }

@@ -2,10 +2,10 @@
 
 namespace Artgris\Bundle\FileManagerBundle\Helpers;
 
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * @author Arthur Gribet <a.gribet@gmail.com>
@@ -27,12 +27,12 @@ class FileManager
      * @param $queryParameters
      * @param $configuration
      * @param $kernelRoute
-     * @param Router $router
+     * @param RouterInterface $router
      * @param $webDir
      *
      * @internal param $basePath
      */
-    public function __construct($queryParameters, $configuration, $kernelRoute, Router $router, $webDir)
+    public function __construct($queryParameters, $configuration, $kernelRoute, RouterInterface $router, $webDir)
     {
         $this->queryParameters = $queryParameters;
         $this->configuration = $configuration;
@@ -205,7 +205,7 @@ class FileManager
     }
 
     /**
-     * @return Router
+     * @return RouterInterface
      */
     public function getRouter()
     {
@@ -213,9 +213,9 @@ class FileManager
     }
 
     /**
-     * @param Router $router
+     * @param RouterInterface $router
      */
-    public function setRouter(Router $router)
+    public function setRouter(RouterInterface $router)
     {
         $this->router = $router;
     }

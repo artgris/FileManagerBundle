@@ -3,7 +3,7 @@
 namespace Artgris\Bundle\FileManagerBundle\Twig;
 
 use Artgris\Bundle\FileManagerBundle\Helpers\FileManager;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 
 class OrderExtension extends \Twig_Extension
 {
@@ -11,16 +11,16 @@ class OrderExtension extends \Twig_Extension
     const DESC = 'desc';
 
     /**
-     * @var Router
+     * @var RouterInterface
      */
     private $router;
 
     /**
      * OrderExtension constructor.
      *
-     * @param Router $router
+     * @param RouterInterface $router
      */
-    public function __construct(Router $router)
+    public function __construct(RouterInterface $router)
     {
         $this->router = $router;
     }
