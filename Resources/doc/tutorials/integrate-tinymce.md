@@ -13,12 +13,12 @@ artgris_file_manager:
             dir: "../web/uploads"
 ```
 
-### Step 3 - Add TinyMCE textarea
+### Step 2 - Add TinyMCE textarea
 ```html
 <textarea name="" cols="30" rows="10" id="mytextarea"></textarea>
 ```  
 
-### Step 4 - Init TinyMCE with `file_browser_callback: myFileBrowser,` option :
+### Step 3 - Init TinyMCE with `file_browser_callback: myFileBrowser,` option :
 
 ```javascript  
     <script type="text/javascript">
@@ -37,7 +37,7 @@ artgris_file_manager:
         ...
 ```    
   
-### Step 5 - Add `myFileBrowser()` function with the right URL:
+### Step 4 - Add `myFileBrowser()` function with the right URL:
   
 ```javascript     
         function myFileBrowser(field_name, url, type, win) {
