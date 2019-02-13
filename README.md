@@ -47,6 +47,7 @@ Documentation
 #### Tutorials
 
   * [How to integrate FileManagerBundle into Tinymce](Resources/doc/tutorials/integrate-tinymce.md)
+  * [How to integrate FileManagerBundle into FOSCKEditorBundle](Resources/doc/tutorials/integrate-fos-ckeditor.md)
   * [How to add a button that open the File manager to fill out an input field with the file URL](Resources/doc/tutorials/input-button.md)
   
 
