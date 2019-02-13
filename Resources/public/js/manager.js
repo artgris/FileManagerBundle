@@ -152,6 +152,17 @@ $(function () {
         });
     }
 
+    // Module CKEditor
+    if (moduleName === 'ckeditor') {
+        $('#form-multiple-delete').on('click', '.select', function () {
+            var url = new URL(window.location.href);
+            var funcNum = url.searchParams.get("CKEditorFuncNum");
+            var fileUrl = $(this).attr("data-path");
+            window.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
+            window.close();
+        });
+    }
+
     // Global functions
     // display error alert
     function displayError(msg) {
