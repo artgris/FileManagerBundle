@@ -370,6 +370,7 @@ class ManagerController extends Controller
         return $this->createFormBuilder()
             ->setMethod('DELETE')
             ->add('DELETE', SubmitType::class, [
+                'translation_domain' => 'messages',
                 'attr' => [
                     'class' => 'btn btn-danger',
                 ],
