@@ -33,7 +33,7 @@ fos_ck_editor:
                 module: ckeditor
 ```  
 
-### Step 3 - add a new field
+### Step 3 - Add a new field
 
 ```php
     use FOS\CKEditorBundle\Form\Type\CKEditorType;
