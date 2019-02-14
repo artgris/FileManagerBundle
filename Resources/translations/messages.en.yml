@@ -39,6 +39,8 @@ title:
     file: Rename
   delete: Delete
   download: Download
+  preview:
+    file: Open
 input:
     default: Untitled folder
 table:

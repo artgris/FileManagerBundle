@@ -3,11 +3,11 @@
         <colgroup>
             <col>
             <col>
-            <col class="col-lg-8">
+            <col class="col-lg-7">
             <col class="col-lg-1">
             <col class="col-lg-1">
             <col class="col-lg-1">
-            <col class="col-lg-1">
+            <col class="col-lg-2">
         </colgroup>
         <thead class="thead-default">
         <tr>
@@ -31,7 +31,7 @@
         <tbody>
         {% for fileEntity in fileArray %}
             {% set file = fileEntity.file %}
-            <tr class="{{ file.type }}">
+            <tr class="{{ fileEntity.isImage() ? 'img' : file.type }}">
                 <td><input type="checkbox" class="checkbox" name="delete[]" value="{{ file.fileName }}" title="{{ file.fileName }}"></td>
                 <td>{{ fileEntity.preview ? fileEntity.preview.html|raw }}</td>
                 <td data-value="{{ file.fileName }}" {{ fileEntity.attribut|raw }}>
@@ -80,6 +80,20 @@
                            href="{{ path('file_manager_file', fileManager.queryParameters|merge({'fileName':file.fileName})) }}" download>
                             <span class="fa fa-download"></span>
                         </a>
+                        {% if fileEntity.isImage() %}
+                            <span data-toggle="tooltip" title="{{ 'title.preview.file'|trans }}">
+                                <button type="button"
+                                        class="btn btn-xs btn-default js-open-modal"
+                                        data-trigger="click"
+                                        data-container="body"
+                                        data-toggle="modal"
+                                        data-target="#js-display-image"
+                                        data-placement="left"
+                                        data-href='{{ fileEntity.preview.path }}'>
+                                <span class="fa fa-eye"></span>
+                                </button>
+                            </span>
+                        {% endif %}
                     {% endif %}
                 </td>
             </tr>

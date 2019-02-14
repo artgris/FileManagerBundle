@@ -39,6 +39,8 @@ title:
     file: Renommer
   delete: Supprimer
   download: Télécharger
+  preview:
+    file: Ouvrir
 input:
     default: Dossier sans titre
 table:

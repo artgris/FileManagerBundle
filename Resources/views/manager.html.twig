@@ -133,6 +133,7 @@
     <script src="{{ asset('bundles/artgrisfilemanager/libs/sticky-kit/jquery.sticky-kit.min.js') }}"></script>
     <script src="{{ asset('bundles/artgrisfilemanager/libs/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js') }}"></script>
     <script src="{{ asset('bundles/artgrisfilemanager/libs/jQuery-contextMenu/dist/jquery.contextMenu.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/artgrisfilemanager/libs/jquery-lazy/jquery.lazy.min.js') }}"></script>
     <script>
         var treedata = {{ treeData|raw }};
         var tree = {{ fileManager.tree ? 'true' : 'false' }}
@@ -143,6 +144,7 @@
         var deleteMessage = "{{ 'title.delete'|trans }}"
         var renameMessage = "{{ 'title.rename.file'|trans }}"
         var downloadMessage = "{{ 'title.download'|trans }}"
+        var previewMessage = "{{ 'title.preview.file'|trans }}"
     </script>
     <script>
         // display alert
