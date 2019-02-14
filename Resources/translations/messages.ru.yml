@@ -39,6 +39,8 @@ title:
     file: Переименовать
   delete: Удалить
   download: Скачать
+  preview:
+    file: открыть
 input:
     default: Новая папка
 table:

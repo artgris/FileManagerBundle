@@ -15,12 +15,12 @@
     </div>
     {% for fileEntity in fileArray %}
         {% set file = fileEntity.file %}
-        <div class="{{ file.type }} col-xs-6 col-sm-4 col-md-{{ fileManager.tree == 0 ? 3 : 4 }} col-lg-2 text-center thumbnail">
+        <div class="{{ fileEntity.isImage() ? 'img' : file.type }} col-xs-6 col-sm-4 col-md-{{ fileManager.tree == 0 ? 3 : 4 }} col-lg-2 text-center thumbnail">
             <input type="checkbox" class="checkbox" name="delete[]"
                    value="{{ file.fileName }}"
                    title="{{ file.fileName }}">
             <div class="thumbnail-img">
-                {{ fileEntity.preview.html|raw }}
+                {{ fileEntity.preview ? fileEntity.preview.html|raw }}
             </div>
             <p {{ fileEntity.attribut|raw }}>
                 {{ (fileEntity.preview.folder is defined ? fileEntity.preview.folder : file.fileName)|raw }}<br>
@@ -63,6 +63,20 @@
                        href="{{ path('file_manager_file', fileManager.queryParameters|merge({'fileName':file.fileName})) }}" download>
                         <span class="fa fa-download"></span>
                     </a>
+                    {% if fileEntity.isImage()  %}
+                        <span data-toggle="tooltip" title="{{ 'title.preview.file'|trans }}">
+                                <button type="button"
+                                        class="btn btn-sm btn-default js-open-modal"
+                                        data-trigger="click"
+                                        data-container="body"
+                                        data-toggle="modal"
+                                        data-target="#js-display-image"
+                                        data-placement="left"
+                                        data-href='{{ fileEntity.preview.path }}'>
+                                <span class="fa fa-eye"></span>
+                                </button>
+                            </span>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>

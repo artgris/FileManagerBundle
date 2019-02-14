@@ -39,6 +39,8 @@ title:
     file: Renomear
   delete: Excluir
   download: Download
+  preview:
+    file: Abrir
 input:
     default: Nova pasta
 table:

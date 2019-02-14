@@ -2,6 +2,7 @@ $(function () {
 
     var $renameModal = $('#js-confirm-rename');
     var $deleteModal = $('#js-confirm-delete');
+    var $displayModal = $('#js-display-image');
     var callback = function (key, opt) {
         switch (key) {
             case 'edit':
@@ -18,6 +19,11 @@ $(function () {
                 var $downloadButton = opt.$trigger.find(".js-download")
                 downloadFile($downloadButton)
                 break;
+            case 'preview':
+                var $previewModalButton = opt.$trigger.find(".js-open-modal")
+                previewFile($previewModalButton)
+                $displayModal.modal("show");
+                break;
         }
     };
 
@@ -28,6 +34,16 @@ $(function () {
             "delete": {name: deleteMessage, icon: "fa-trash"},
             "edit": {name: renameMessage, icon: "fa-edit"},
             "download": {name: downloadMessage, icon: "fa-download"},
+        }
+    });
+    $.contextMenu({
+        selector: '.img',
+        callback: callback,
+        items: {
+            "delete": {name: deleteMessage, icon: "fa-trash"},
+            "edit": {name: renameMessage, icon: "fa-edit"},
+            "download": {name: downloadMessage, icon: "fa-download"},
+            "preview": {name: previewMessage, icon: "fa-eye"},
         }
     });
     $.contextMenu({
@@ -47,6 +63,10 @@ $(function () {
 
     function deleteFile($deleteModalButton) {
         $('#js-confirm-delete').find('form').attr('action', $deleteModalButton.data('href'));
+    }
+
+    function previewFile($previewModalButton) {
+        $('#js-display-image').find('img').attr('src', $previewModalButton.data('href'));
     }
 
     function downloadFile($downloadButton) {
@@ -86,6 +106,11 @@ $(function () {
         // delete modal buttons
         .on('click', '.js-delete-modal', function () {
                 deleteFile($(this));
+            }
+        )
+        // preview modal buttons
+        .on('click', '.js-open-modal', function () {
+                previewFile($(this));
             }
         )
         // rename modal buttons
@@ -212,5 +237,13 @@ $(function () {
             displayError('File upload failed.')
         });
     });
-})
-;
+
+    $(function() {
+        $('.lazy').Lazy({
+            effect: "fadeIn",
+            effectTime: 600,
+            threshold: 0
+        });
+    });
+
+});

@@ -39,6 +39,8 @@ title:
     file: Umebennen
   delete: Löschen
   download: Herunterladen
+  preview:
+    file: Öffnen
 input:
   default: Unbetiteltes Verzeichnis
 table:

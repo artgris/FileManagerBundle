@@ -90,6 +90,12 @@ class File
         }
     }
 
+    public function isImage() {
+
+        return array_key_exists('image', $this->preview);
+
+    }
+
     /**
      * @return SplFileInfo
      */

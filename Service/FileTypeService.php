@@ -42,8 +42,7 @@ class FileTypeService
         $type = $file->getType();
         if ('file' === $type) {
             $size = $this::IMAGE_SIZE[$fileManager->getView()];
-
-            return $this->fileIcon($filePath, $extension, $size);
+            return $this->fileIcon($filePath, $extension, $size, true);
         }
         if ('dir' === $type) {
             $href = $this->router->generate('file_manager', array_merge($fileManager->getQueryParameters(),
@@ -75,7 +74,7 @@ class FileTypeService
         return $accept;
     }
 
-    public function fileIcon($filePath, $extension = null, $size = 75)
+    public function fileIcon($filePath, $extension = null, $size = 75, $lazy = false)
     {
         if (null === $extension) {
             $filePathTmp = strtok($filePath, '?');
@@ -88,9 +87,16 @@ class FileTypeService
                 break;
             case is_array(@getimagesize($filePath)):
             case preg_match('/(gif|png|jpe?g|svg)$/i', $extension):
+                if ($lazy) {
+                    $html = "<img class=\"lazy\" data-src=\"{$filePath}\" height='{$size}'>";
+                } else {
+                    $html = "<img src=\"{$filePath}\" height='{$size}'>";
+                }
+
                 return [
                     'path' => $filePath,
-                    'html' => "<img src=\"{$filePath}\" height='{$size}'>",
+                    'html' => $html,
+                    'image' => true
                 ];
             case preg_match('/(pdf)$/i', $extension):
                 $fa = 'fa-file-pdf-o';
