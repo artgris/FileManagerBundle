@@ -216,6 +216,9 @@ $(function () {
                 }).done(function (data) {
                     // update file list
                     $('#form-multiple-delete').html(data.data);
+
+                    lazy();
+
                     if (tree === true) {
                         $('#tree').data('jstree', false).empty();
                         initTree(data.treeData);
@@ -239,11 +242,15 @@ $(function () {
     });
 
     $(function() {
+        lazy();
+    });
+
+    function lazy () {
         $('.lazy').Lazy({
             effect: "fadeIn",
             effectTime: 600,
             threshold: 0
         });
-    });
+    }
 
 });
