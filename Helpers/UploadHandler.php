@@ -161,6 +161,7 @@ class UploadHandler
 //                )
             ],
             'print_response' => true,
+            'override' => false,
         ];
         if ($options) {
             $this->options = $options + $this->options;
@@ -515,6 +516,10 @@ class UploadHandler
     protected function get_unique_filename($file_path, $name, $size, $type, $error,
                                            $index, $content_range)
     {
+        if ( $this->options['override']) {
+            return $name;
+        }
+
         while (is_dir($this->get_upload_path($name))) {
             $name = $this->upcount_name($name);
         }

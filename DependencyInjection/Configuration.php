@@ -52,6 +52,7 @@ class Configuration implements ConfigurationInterface
                                             ->end()
                                         ->end()
                                     ->end()
+                                    ->booleanNode('override')->defaultValue(false)->end()
                                 ->end()
                             ->end()
                         ->end()

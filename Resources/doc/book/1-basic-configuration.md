@@ -257,6 +257,20 @@ artgris_file_manager:
                   
 ```
 
+#### Extra Option: Override 
+
+Overwrite an existing file with the same name (included image_versions):
+
+
+```yml 
+artgris_file_manager:
+    conf:
+        public:
+            dir: '../web/uploads'
+            upload:
+                override: true
+```
+
 -------------------------------------------------------------------------------
 
 [Chapter 2 - Service Configuration](2-service-configuration.md) &rarr;
