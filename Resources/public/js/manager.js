@@ -66,7 +66,7 @@ $(function () {
     }
 
     function previewFile($previewModalButton) {
-        $('#js-display-image').find('img').attr('src', $previewModalButton.data('href'));
+        $('#js-display-image').find('img').attr('src', $previewModalButton.data('href') + '?'+new Date().getTime());
     }
 
     function downloadFile($downloadButton) {
