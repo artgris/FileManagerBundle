@@ -171,7 +171,7 @@
         }
 
         // display session flash messages
-        {% for type, messages in app.flashes %}
+        {% for type, messages in app.session.flashbag.all %}
         {% for message in messages %}
         displayAlert('{{ type }}', '{{ message|trans|e('js') }}')
         {% endfor %}
