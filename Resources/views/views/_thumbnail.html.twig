@@ -1,17 +1,6 @@
 <div class="row margin-bottom thumbnail-blk">
     <div class="col-md-12 select-all">
         <input type="checkbox" id="select-all" title="{{ 'select-all'|trans }}"> <label for="select-all">{{ 'select-all'|trans }}</label>
-        <a id="js-delete-multiple-modal"
-           class="btn btn-xs btn-danger disabled pull-right"
-           type="button"
-           data-trigger="click"
-           data-container="body"
-           data-toggle="modal"
-           data-target="#js-confirm-delete"
-           data-placement="left"
-           data-html="true">
-            <i class="fa fa-check-square-o"></i> {{ 'button.delete.selected'|trans }}
-        </a>
     </div>
     {% for fileEntity in fileArray %}
         {% set file = fileEntity.file %}
@@ -40,7 +29,7 @@
                                 data-placement="left"
                                 data-html="true"
                                 data-href='{{ path('file_manager_delete', fileManager.queryParameters|merge({'delete[]':file.fileName})) }}'>
-                            <span class="fa fa-trash"></span>
+                           <span class="far fa-trash-alt"></span>
                         </button>
                     </span>
                 <span data-toggle="tooltip" title="{{ 'title.rename.file'|trans }}">
@@ -55,15 +44,15 @@
                             data-name='{{ file.basename('.'~file.extension) }}'
                             data-extension='{{ file.extension }}'
                             data-href='{{ path('file_manager_rename', fileManager.queryParameters|merge({'fileName':file.fileName})) }}'>
-                    <span class="fa fa-edit"></span>
+                    <span class="far fa-edit"></span>
                     </button>
                 </span>
                 {% if file.type == "file" %}
                     <a data-placement="left" title="{{ 'title.download'|trans }}" class="btn btn-sm btn-default js-download"
                        href="{{ path('file_manager_file', fileManager.queryParameters|merge({'fileName':file.fileName})) }}" download>
-                        <span class="fa fa-download"></span>
+                        <span class="fas fa-download"></span>
                     </a>
-                    {% if fileEntity.isImage()  %}
+                    {% if fileEntity.isImage() %}
                         <span data-toggle="tooltip" title="{{ 'title.preview.file'|trans }}">
                                 <button type="button"
                                         class="btn btn-sm btn-default js-open-modal"
@@ -73,7 +62,7 @@
                                         data-target="#js-display-image"
                                         data-placement="left"
                                         data-href='{{ fileEntity.preview.path }}'>
-                                <span class="fa fa-eye"></span>
+                                <span class="fas fa-eye"></span>
                                 </button>
                             </span>
                     {% endif %}

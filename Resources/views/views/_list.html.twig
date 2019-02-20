@@ -57,7 +57,7 @@
                                 data-placement="left"
                                 data-html="true"
                                 data-href='{{ path('file_manager_delete', fileManager.queryParameters|merge({'delete[]':file.fileName})) }}'>
-                            <span class="fa fa-trash"></span>
+                        <span class="far fa-trash-alt"></span>
                         </button>
                     </span>
                     <span data-toggle="tooltip" title="{{ 'title.rename.file'|trans }}">
@@ -72,13 +72,13 @@
                                 data-name='{{ file.basename('.'~file.extension) }}'
                                 data-extension='{{ file.extension }}'
                                 data-href='{{ path('file_manager_rename', fileManager.queryParameters|merge({'fileName':file.fileName})) }}'>
-                        <span class="fa fa-edit"></span>
+                        <span class="far fa-edit"></span>
                         </button>
                     </span>
                     {% if file.type == "file" %}
                         <a data-placement="left" title="{{ 'title.download'|trans }}" class="btn btn-xs btn-default js-download"
                            href="{{ path('file_manager_file', fileManager.queryParameters|merge({'fileName':file.fileName})) }}" download>
-                            <span class="fa fa-download"></span>
+                            <span class="fas fa-download"></span>
                         </a>
                         {% if fileEntity.isImage() %}
                             <span data-toggle="tooltip" title="{{ 'title.preview.file'|trans }}">
@@ -90,7 +90,7 @@
                                         data-target="#js-display-image"
                                         data-placement="left"
                                         data-href='{{ fileEntity.preview.path }}'>
-                                <span class="fa fa-eye"></span>
+                                <span class="fas fa-eye"></span>
                                 </button>
                             </span>
                         {% endif %}

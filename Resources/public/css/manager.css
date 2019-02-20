@@ -35,9 +35,9 @@ body {
     background-color: #beebff;
 }
 
-i.fa {
-    font-size: 1.4em;
-}
+/*i.fa,i.far,i.fas {*/
+    /*font-size: 1.4em;*/
+/*}*/
 
 .alert > [data-notify="message"] {
     font-size: 80%;
@@ -85,7 +85,7 @@ i.fa {
     max-width: 100%;
 }
 
-.thumbnail-img .fa {
+.thumbnail-img .fa,.thumbnail-img .fas, .thumbnail-img .far {
     font-size: 6em;
 }
 

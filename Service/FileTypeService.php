@@ -50,7 +50,7 @@ class FileTypeService
 
             return [
                 'path' => $filePath,
-                'html' => "<i class='fa fa-folder-o' aria-hidden='true'></i>",
+                'html' => "<i class='fas fa-folder-open' aria-hidden='true'></i>",
                 'folder' => '<a  href="' . $href . '">' . $file->getFilename() . '</a>',
             ];
         }
@@ -82,12 +82,15 @@ class FileTypeService
         }
         switch (true) {
             case $this->isYoutubeVideo($filePath):
-            case preg_match('/(mp4|ogg|webm)$/i', $extension):
-                $fa = 'fa-file-video-o';
+            case preg_match('/(mp4|ogg|webm|avi|wmv|mov)$/i', $extension):
+                $fa = 'far fa-file-video';
+                break;
+            case preg_match('/(mp3|wav)$/i', $extension):
+                $fa = 'far fa-file-audio';
                 break;
             case is_array(@getimagesize($filePath)):
             case preg_match('/(gif|png|jpe?g|svg)$/i', $extension):
-            $fileName = $filePath .'?'.  time();
+            $fileName = $filePath .'&time='.  time();
                 if ($lazy) {
                     $html = "<img class=\"lazy\" data-src=\"{$fileName}\" height='{$size}'>";
                 } else {
@@ -100,30 +103,30 @@ class FileTypeService
                     'image' => true
                 ];
             case preg_match('/(pdf)$/i', $extension):
-                $fa = 'fa-file-pdf-o';
+                $fa = 'far fa-file-pdf';
                 break;
             case preg_match('/(docx?)$/i', $extension):
-                $fa = 'fa-file-word-o';
+                $fa = 'far fa-file-word';
                 break;
             case preg_match('/(xlsx?|csv)$/i', $extension):
-                $fa = 'fa-file-excel-o';
+                $fa = 'far fa-file-excel';
                 break;
             case preg_match('/(pptx?)$/i', $extension):
-                $fa = 'fa-file-powerpoint-o';
+                $fa = 'far fa-file-powerpoint';
                 break;
             case preg_match('/(zip|rar|gz)$/i', $extension):
-                $fa = 'fa-file-archive-o';
+                $fa = 'far fa-file-archive';
                 break;
             case filter_var($filePath, FILTER_VALIDATE_URL):
-                $fa = 'fa-internet-explorer';
+                $fa = 'fab fa-internet-explorer';
                 break;
             default:
-                $fa = 'fa-file-o';
+                $fa = 'far fa-file';
         }
 
         return [
             'path' => $filePath,
-            'html' => "<i class='fa {$fa}' aria-hidden='true'></i>",
+            'html' => "<i class='{$fa}' aria-hidden='true'></i>",
         ];
     }
 
