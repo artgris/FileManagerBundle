@@ -90,7 +90,10 @@ class FileTypeService
                 break;
             case is_array(@getimagesize($filePath)):
             case preg_match('/(gif|png|jpe?g|svg)$/i', $extension):
-            $fileName = $filePath .'&time='.  time();
+                $query = parse_url($filePath, PHP_URL_QUERY);
+                $time = 'time=' . time();
+                $fileName = $query ? $filePath . '&' . $time : $filePath . '?' . $time;
+
                 if ($lazy) {
                     $html = "<img class=\"lazy\" data-src=\"{$fileName}\" height='{$size}'>";
                 } else {

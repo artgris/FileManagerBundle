@@ -66,7 +66,13 @@ $(function () {
     }
 
     function previewFile($previewModalButton) {
-        $('#js-display-image').find('img').attr('src', $previewModalButton.data('href') + '&time=' + new Date().getTime());
+        var href = addParameterToURL($previewModalButton.data('href'), 'time=' + new Date().getTime());
+        $('#js-display-image').find('img').attr('src', href);
+    }
+
+    function addParameterToURL(_url, param){
+        _url += (_url.split('?')[1] ? '&':'?') + param;
+        return _url;
     }
 
     function downloadFile($downloadButton) {
