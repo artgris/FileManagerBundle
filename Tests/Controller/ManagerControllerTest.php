@@ -28,7 +28,7 @@ class ManagerControllerTest extends AbstractTestCase
 
         $cssList = [
             '/bundles/artgrisfilemanager/libs/bootstrap/dist/css/bootstrap.min.css',
-            '/bundles/artgrisfilemanager/libs/components-font-awesome/css/font-awesome.min.css',
+            'https://use.fontawesome.com/releases/v5.7.2/css/all.css',
             '/bundles/artgrisfilemanager/libs/jstree/dist/themes/default/style.min.css',
             '/bundles/artgrisfilemanager/libs/blueimp-file-upload/css/jquery.fileupload.css',
             '/bundles/artgrisfilemanager/css/manager.css',
@@ -65,12 +65,6 @@ class ManagerControllerTest extends AbstractTestCase
                 $crawler->filter('script')->eq($i)->attr('src')
             );
         }
-    }
-
-    public function testListViewAction()
-    {
-        $crawler = $this->getManagerPage();
-        $this->assertSame('Add files...', trim($crawler->filter('.fileinput-button span')->text()));
     }
 
     public function testNoParent()
