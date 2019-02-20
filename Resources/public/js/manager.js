@@ -31,27 +31,27 @@ $(function () {
         selector: '.file',
         callback: callback,
         items: {
-            "delete": {name: deleteMessage, icon: "fa-trash"},
-            "edit": {name: renameMessage, icon: "fa-edit"},
-            "download": {name: downloadMessage, icon: "fa-download"},
+            "delete": {name: deleteMessage, icon: "far fa-trash-alt"},
+            "edit": {name: renameMessage, icon: "far fa-edit"},
+            "download": {name: downloadMessage, icon: "fas fa-download"},
         }
     });
     $.contextMenu({
         selector: '.img',
         callback: callback,
         items: {
-            "delete": {name: deleteMessage, icon: "fa-trash"},
-            "edit": {name: renameMessage, icon: "fa-edit"},
-            "download": {name: downloadMessage, icon: "fa-download"},
-            "preview": {name: previewMessage, icon: "fa-eye"},
+            "delete": {name: deleteMessage, icon: "far fa-trash-alt"},
+            "edit": {name: renameMessage, icon: "far fa-edit"},
+            "download": {name: downloadMessage, icon: "fas fa-download"},
+            "preview": {name: previewMessage, icon: "fas fa-eye"},
         }
     });
     $.contextMenu({
         selector: '.dir',
         callback: callback,
         items: {
-            "delete": {name: deleteMessage, icon: "fa-trash"},
-            "edit": {name: renameMessage, icon: "fa-edit"},
+            "delete": {name: deleteMessage, icon: "far fa-trash-alt"},
+            "edit": {name: renameMessage, icon: "far fa-edit"},
         }
     });
 

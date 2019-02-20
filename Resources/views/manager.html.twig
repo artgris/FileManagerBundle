@@ -8,8 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/libs/bootstrap/dist/css/bootstrap.min.css') }}">
-        <link rel="stylesheet"
-              href="{{ asset('bundles/artgrisfilemanager/libs/components-font-awesome/css/font-awesome.min.css') }}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
         <link rel="stylesheet"
               href="{{ asset('bundles/artgrisfilemanager/libs/jstree/dist/themes/default/style.min.css') }}">
         <link rel="stylesheet"
@@ -28,21 +27,21 @@
                 <a type="button" title="{{ 'button.tree'|trans }}"
                    href="{{ path('file_manager', fileManager.queryParameters|merge({'tree': fileManager.tree == true ? 0 : 1 })) }}"
                    class="btn btn-sm btn-default {{ fileManager.tree ? 'active' }}">
-                    <span class="fa fa-navicon"></span>
+                    <span class="fas fa-bars"></span>
                 </a>
                 {% if fileManager.parent %}
                     <a class="btn btn-default btn-sm"
                        title="{{ 'button.parent'|trans }}"
                        href="{{ fileManager.parent }}">
-                        <span class="fa fa-level-up"></span></a>
+                        <span class="fas fa-level-up-alt"></span></a>
                 {% endif %}
                 <button type="button" title="{{ 'button.refresh'|trans }}" class="btn btn-default btn-sm "
                         onClick="window.location.reload()">
-                    <i class="glyphicon glyphicon-refresh"></i>
+                    <span class="fas fa-sync"></span>
                 </button>
 
                 <span class="btn btn-success btn-sm fileinput-button btn-action">
-                    <i class="glyphicon glyphicon-file"></i>
+                    <span class="far fa-file"></span>
                     <span>{{ 'button.add.files'|trans }}</span>
                         <input id="fileupload" type="file"
                                data-url="{{ path('file_manager_upload', fileManager.queryParameters) }}"
@@ -50,7 +49,7 @@
                                accept="{{ fileManager.configuration.accept is defined ? fileManager.configuration.accept : (fileManager.type ? accept(fileManager.type)) }}">
                 </span>
                 <button type="button" class="btn btn-primary btn-sm btn-action" data-toggle="modal" data-target="#addFolder">
-                    <i class="glyphicon glyphicon-folder-open"></i>
+                    <span class="far fa-folder-open"></span>
                     <span>{{ 'button.add.folder'|trans }}</span>
                 </button>
                 {% if fileManager.parent %}
@@ -63,7 +62,7 @@
                             data-placement="left"
                             data-html="true"
                             data-href='{{ path('file_manager_delete', fileManager.queryParameters) }}'>
-                        <i class="glyphicon glyphicon-remove"></i>
+                        <span class="far fa-trash-alt"></span>
                         <span>{{ 'button.delete.current'|trans }}</span>
                     </button>
                 {% endif %}
@@ -76,7 +75,7 @@
                    data-target="#js-confirm-delete"
                    data-placement="left"
                    data-html="true">
-                    <i class="fa fa-check-square-o"></i>
+                    <span class="far fa-check-square"></span>
                     <span>{{ 'button.delete.selected'|trans }}</span>
                 </a>
             {% endblock %}
@@ -90,11 +89,11 @@
                     {% endif %}
                     <a type="button" href="{{ path('file_manager', fileManager.queryParameters|merge({'view':"list"})) }}"
                        class="btn btn-sm btn-default {{ fileManager.view == 'list' ? 'active' }}">
-                        <span class="fa fa-th-list"></span>
+                        <span class="fas fa-th-list"></span>
                     </a>
                     <a type="button" href="{{ path('file_manager', fileManager.queryParameters|merge({'view':'thumbnail'})) }}"
                        class="btn btn-sm btn-default {{ fileManager.view == 'thumbnail' ? 'active' }}">
-                        <span class="fa fa-th"></span>
+                        <span class="fas fa-th"></span>
                     </a>
                 </div>
             {% endblock %}

@@ -434,7 +434,7 @@ class ManagerController extends Controller
 
             $directoriesList[] = [
                 'text' => $directory->getFilename().$fileSpan,
-                'icon' => 'fa fa-folder-o',
+                'icon' => 'far fa-folder-open',
                 'children' => $this->retrieveSubDirectories($fileManager, $directory->getPathname(), $fileName.DIRECTORY_SEPARATOR),
                 'a_attr' => [
                     'href' => $fileName ? $this->generateUrl('file_manager', $queryParameters) : $this->generateUrl('file_manager', $queryParametersRoute),

@@ -2,17 +2,17 @@
 /*!
  * jQuery contextMenu - Plugin for simple contextMenu handling
  *
- * Version: v2.4.4
+ * Version: v2.8.0
  *
  * Authors: Björn Brala (SWIS.nl), Rodney Rehm, Addy Osmani (patches for FF)
  * Web: http://swisnl.github.io/jQuery-contextMenu/
  *
- * Copyright (c) 2011-2017 SWIS BV and contributors
+ * Copyright (c) 2011-2019 SWIS BV and contributors
  *
  * Licensed under
  *   MIT License http://www.opensource.org/licenses/mit-license
  *
- * Date: 2017-03-15T09:15:11.021Z
+ * Date: 2019-01-16T15:45:48.418Z
  */
 @-webkit-keyframes cm-spin {
   0% {
@@ -54,8 +54,8 @@
   font-style: normal; 
   font-weight: normal;
 
-  src: url("font/context-menu-icons.eot?2yjad");
-  src: url("font/context-menu-icons.eot?2yjad#iefix") format("embedded-opentype"), url("font/context-menu-icons.woff2?2yjad") format("woff2"), url("font/context-menu-icons.woff?2yjad") format("woff"), url("font/context-menu-icons.ttf?2yjad") format("truetype");
+  src: url("font/context-menu-icons.eot?2lkho");
+  src: url("font/context-menu-icons.eot?2lkho#iefix") format("embedded-opentype"), url("font/context-menu-icons.woff2?2lkho") format("woff2"), url("font/context-menu-icons.woff?2lkho") format("woff"), url("font/context-menu-icons.ttf?2lkho") format("truetype");
 }
 
 .context-menu-icon-add:before {
@@ -128,6 +128,7 @@
 .context-menu-icon.context-menu-icon--fa {
   display: list-item;
   font-family: inherit;
+  line-height: inherit;
 }
 .context-menu-icon.context-menu-icon--fa::before {
   position: absolute;
@@ -156,6 +157,24 @@
   color: #bbb;
 }
 
+.context-menu-icon.context-menu-icon--fa5 {
+  display: list-item;
+  font-family: inherit;
+  line-height: inherit;
+}
+.context-menu-icon.context-menu-icon--fa5 i, .context-menu-icon.context-menu-icon--fa5 svg {
+  position: absolute;
+  top: .3em; 
+  left: .5em;
+  color: #2980b9;
+}
+.context-menu-icon.context-menu-icon--fa5.context-menu-hover > i, .context-menu-icon.context-menu-icon--fa5.context-menu-hover > svg {
+  color: #fff;
+}
+.context-menu-icon.context-menu-icon--fa5.context-menu-disabled i, .context-menu-icon.context-menu-icon--fa5.context-menu-disabled svg {
+  color: #bbb;
+}
+
 .context-menu-list {
   position: absolute; 
   display: inline-block;
@@ -175,6 +194,9 @@
 
 .context-menu-item {
   position: relative;
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
   padding: .2em 2em;
   color: #2f2f2f;
   -webkit-user-select: none;
