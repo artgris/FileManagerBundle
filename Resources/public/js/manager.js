@@ -66,7 +66,7 @@ $(function () {
     }
 
     function previewFile($previewModalButton) {
-        $('#js-display-image').find('img').attr('src', $previewModalButton.data('href') + '?'+new Date().getTime());
+        $('#js-display-image').find('img').attr('src', $previewModalButton.data('href') + '&time=' + new Date().getTime());
     }
 
     function downloadFile($downloadButton) {
@@ -241,16 +241,10 @@ $(function () {
         });
     });
 
-    $(function() {
-        lazy();
-    });
 
-    function lazy () {
-        $('.lazy').Lazy({
-            effect: "fadeIn",
-            effectTime: 600,
-            threshold: 0
-        });
+    function lazy() {
+        $('.lazy').Lazy({});
     }
 
+    lazy();
 });
