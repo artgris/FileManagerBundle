@@ -70,8 +70,8 @@ $(function () {
         $('#js-display-image').find('img').attr('src', href);
     }
 
-    function addParameterToURL(_url, param){
-        _url += (_url.split('?')[1] ? '&':'?') + param;
+    function addParameterToURL(_url, param) {
+        _url += (_url.split('?')[1] ? '&' : '?') + param;
         return _url;
     }
 
@@ -161,25 +161,38 @@ $(function () {
     if (moduleName === 'tiny') {
 
         $('#form-multiple-delete').on('click', '.select', function () {
-            var args = top.tinymce.activeEditor.windowManager.getParams();
-            var input = args.input;
-            var document = args.window.document;
-            var divInputSplit = document.getElementById(input).parentNode.id.split("_");
 
-            // set url
-            document.getElementById(input).value = $(this).attr("data-path");
 
-            // set width and height
-            var baseId = divInputSplit[0] + '_';
-            var baseInt = parseInt(divInputSplit[1], 10);
+            var windowManager = top != undefined && top.tinymceWindowManager != undefined ? top.tinymceWindowManager : '';
 
-            divWidth = baseId + (baseInt + 3);
-            divHeight = baseId + (baseInt + 5);
+            // tinymce 5
+            if (windowManager != '') {
+                if (top.tinymceCallBackURL != undefined)
+                    top.tinymceCallBackURL = $(this).attr("data-path");
+                windowManager.close();
+            } else {
+                // tinymce 4
+                var args = top.tinymce.activeEditor.windowManager.getParams();
+                var input = args.input;
+                var document = args.window.document;
+                var divInputSplit = document.getElementById(input).parentNode.id.split("_");
 
-            document.getElementById(divWidth).value = $(this).attr("data-width");
-            document.getElementById(divHeight).value = $(this).attr("data-height");
+                // set url
+                document.getElementById(input).value = $(this).attr("data-path");
 
-            top.tinymce.activeEditor.windowManager.close();
+                // set width and height
+                var baseId = divInputSplit[0] + '_';
+                var baseInt = parseInt(divInputSplit[1], 10);
+
+                divWidth = baseId + (baseInt + 3);
+                divHeight = baseId + (baseInt + 5);
+
+                document.getElementById(divWidth).value = $(this).attr("data-width");
+                document.getElementById(divHeight).value = $(this).attr("data-height");
+
+                top.tinymce.activeEditor.windowManager.close();
+            }
+
         });
     }
 
