@@ -43,13 +43,13 @@ Documentation
   * [Chapter 2 - Service Configuration](Resources/doc/book/2-service-configuration.md)
   * [Chapter 3 - Access to the File Manager](Resources/doc/book/3-access-file-manager.md)
   * [Chapter 4 - Security](Resources/doc/book/4-security.md)
-
+  
 #### Tutorials
 
   * [How to integrate FileManagerBundle into Tinymce](Resources/doc/tutorials/integrate-tinymce.md)
   * [How to integrate FileManagerBundle into FOSCKEditorBundle](Resources/doc/tutorials/integrate-fos-ckeditor.md)
   * [How to add a button that open the File manager to fill out an input field with the file URL](Resources/doc/tutorials/input-button.md)
-
+  
 
 Installation
 ------------
@@ -80,14 +80,9 @@ class AppKernel extends Kernel
     // ...
 }
 ```
-If symfony loads from `config/bundles.php` then add this to `bundles.php`:
-```php
-Artgris\Bundle\FileManagerBundle\ArtgrisFileManagerBundle::class => ['all' => true]
-```
-
 ### Step 3: Load the Routes
 
-In Symfony 3.4, this can be in `annotation.yml` because symfony uses notation for routing.
+
 ```yaml
 # app/config/routing.yml
 artgris_bundle_file_manager:
@@ -103,22 +98,20 @@ artgris_bundle_file_manager:
 php bin/console assets:install --symlink
 ```
 
-### Step 5:  Enable the translator service
+### Step 5:  Enable the translator service 
 
 ```yml
 # app/config/config.yml
 framework:
     translator: { fallbacks: [ "en" ] }
-```
-
+```    
+    
 Creating Your First File Manager
 ---------------------------------
 
 Create a folder **uploads** in **web**.
-
+ 
 #### Add following configuration (symfony4) :
-
-For symfony 3.4, this can be added in `parameter` section of `services.yaml`.
 
 ```yaml
 # app/config/config.yml
@@ -129,9 +122,9 @@ artgris_file_manager:
             dir: "../public/uploads"
 ```
 
-Browse the `/manager/?conf=default` URL and you'll get access to your
+Browse the `/manager/?conf=default` URL and you'll get access to your 
 file manager
-
+ 
 [1]: https://travis-ci.org/artgris/FileManagerBundle.svg?branch=master
 [2]: https://travis-ci.org/artgris/FileManagerBundle
 [3]: https://insight.sensiolabs.com/projects/701afcd5-edde-421a-ab6c-0188bfa7e7dc/mini.png
