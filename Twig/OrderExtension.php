@@ -35,7 +35,7 @@ class OrderExtension extends \Twig_Extension
         $orderBy['order'] = $active ? ($order ? self::DESC : self::ASC) : self::ASC;
         $parameters = array_merge($fileManager->getQueryParameters(), $orderBy);
 
-        $icon = $active ? '-' . ($order ? self::ICON[self::ASC] : self::ICON[self::DESC]) : '';
+        $icon = $active ? '-'.($order ? self::ICON[self::ASC] : self::ICON[self::DESC]) : '';
 
         $href = $this->router->generate('file_manager', $parameters);
 

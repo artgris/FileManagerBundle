@@ -23,7 +23,7 @@ class FileTypeService
      * FileTypeService constructor.
      *
      * @param RouterInterface $router
-     * @param Packages $packages
+     * @param Packages        $packages
      */
     public function __construct(RouterInterface $router)
     {
@@ -33,7 +33,7 @@ class FileTypeService
     public function preview(FileManager $fileManager, SplFileInfo $file)
     {
         if ($fileManager->getImagePath()) {
-            $filePath = htmlentities($fileManager->getImagePath() . rawurlencode($file->getFilename()));
+            $filePath = htmlentities($fileManager->getImagePath().rawurlencode($file->getFilename()));
         } else {
             $filePath = $this->router->generate('file_manager_file',
                 array_merge($fileManager->getQueryParameters(), ['fileName' => rawurlencode($file->getFilename())]));
@@ -42,16 +42,17 @@ class FileTypeService
         $type = $file->getType();
         if ('file' === $type) {
             $size = $this::IMAGE_SIZE[$fileManager->getView()];
+
             return $this->fileIcon($filePath, $extension, $size, true);
         }
         if ('dir' === $type) {
             $href = $this->router->generate('file_manager', array_merge($fileManager->getQueryParameters(),
-                ['route' => $fileManager->getRoute() . '/' . rawurlencode($file->getFilename())]));
+                ['route' => $fileManager->getRoute().'/'.rawurlencode($file->getFilename())]));
 
             return [
                 'path' => $filePath,
                 'html' => "<i class='fas fa-folder-open' aria-hidden='true'></i>",
-                'folder' => '<a  href="' . $href . '">' . $file->getFilename() . '</a>',
+                'folder' => '<a  href="'.$href.'">'.$file->getFilename().'</a>',
             ];
         }
     }
@@ -91,8 +92,8 @@ class FileTypeService
             case is_array(@getimagesize($filePath)):
             case preg_match('/(gif|png|jpe?g|svg)$/i', $extension):
                 $query = parse_url($filePath, PHP_URL_QUERY);
-                $time = 'time=' . time();
-                $fileName = $query ? $filePath . '&' . $time : $filePath . '?' . $time;
+                $time = 'time='.time();
+                $fileName = $query ? $filePath.'&'.$time : $filePath.'?'.$time;
 
                 if ($lazy) {
                     $html = "<img class=\"lazy\" data-src=\"{$fileName}\" height='{$size}'>";
@@ -103,7 +104,7 @@ class FileTypeService
                 return [
                     'path' => $filePath,
                     'html' => $html,
-                    'image' => true
+                    'image' => true,
                 ];
             case preg_match('/(pdf)$/i', $extension):
                 $fa = 'far fa-file-pdf';

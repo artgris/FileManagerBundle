@@ -42,9 +42,9 @@ class ManagerController extends Controller
      *
      * @param Request $request
      *
-     * @return Response
-     *
      * @throws \Exception
+     *
+     * @return Response
      */
     public function indexAction(Request $request)
     {
@@ -73,7 +73,7 @@ class ManagerController extends Controller
         switch ($orderBy) {
             case 'name':
                 $finderFiles->sort(function (SplFileInfo $a, SplFileInfo $b) {
-                    return strcmp(strtolower($b->getFilename()), strtolower($a->getFilename()));
+                    return strcmp(mb_strtolower($b->getFilename()), mb_strtolower($a->getFilename()));
                 });
                 break;
             case 'date':
@@ -176,7 +176,7 @@ class ManagerController extends Controller
 
             while ($fs->exists($directorytmp)) {
                 $directorytmp = "{$directory} ({$i})";
-                ++$i;
+                $i++;
             }
             $directory = $directorytmp;
 
@@ -201,9 +201,9 @@ class ManagerController extends Controller
      * @param Request $request
      * @param $fileName
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function renameFileAction(Request $request, $fileName)
     {
@@ -220,7 +220,7 @@ class ManagerController extends Controller
                 $fileManager = $this->newFileManager($queryParameters);
                 $NewfilePath = $fileManager->getCurrentPath().DIRECTORY_SEPARATOR.$newfileName;
                 $OldfilePath = realpath($fileManager->getCurrentPath().DIRECTORY_SEPARATOR.$fileName);
-                if (0 !== strpos($NewfilePath, $fileManager->getCurrentPath())) {
+                if (0 !== mb_strpos($NewfilePath, $fileManager->getCurrentPath())) {
                     $this->addFlash('danger', $translator->trans('file.renamed.unauthorized'));
                 } else {
                     $fs = new Filesystem();
@@ -245,9 +245,9 @@ class ManagerController extends Controller
      *
      * @param Request $request
      *
-     * @return Response
-     *
      * @throws \Exception
+     *
+     * @return Response
      */
     public function uploadFileAction(Request $request)
     {
@@ -289,9 +289,9 @@ class ManagerController extends Controller
      * @param Request $request
      * @param $fileName
      *
-     * @return BinaryFileResponse
-     *
      * @throws \Exception
+     *
+     * @return BinaryFileResponse
      */
     public function binaryFileResponseAction(Request $request, $fileName)
     {
@@ -306,9 +306,9 @@ class ManagerController extends Controller
      * @param Request $request
      * @Method("DELETE")
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
     {
@@ -323,7 +323,7 @@ class ManagerController extends Controller
                 $is_delete = false;
                 foreach ($queryParameters['delete'] as $fileName) {
                     $filePath = realpath($fileManager->getCurrentPath().DIRECTORY_SEPARATOR.$fileName);
-                    if (0 !== strpos($filePath, $fileManager->getCurrentPath())) {
+                    if (0 !== mb_strpos($filePath, $fileManager->getCurrentPath())) {
                         $this->addFlash('danger', 'file.deleted.danger');
                     } else {
                         $this->dispatch(FileManagerEvents::PRE_DELETE_FILE);
@@ -464,27 +464,6 @@ class ManagerController extends Controller
         return iterator_count($files);
     }
 
-    /*
-     * Base Path
-     */
-    private function getBasePath($queryParameters)
-    {
-        $conf = $queryParameters['conf'];
-        $managerConf = $this->getParameter('artgris_file_manager')['conf'];
-        if (isset($managerConf[$conf]['dir'])) {
-            return $managerConf[$conf];
-        }
-
-        if (isset($managerConf[$conf]['service'])) {
-            $extra = isset($queryParameters['extra']) ? $queryParameters['extra'] : [];
-            $conf = $this->get($managerConf[$conf]['service'])->getConf($extra);
-
-            return $conf;
-        }
-
-        throw new \RuntimeException('Please define a "dir" or a "service" parameter in your config.yml');
-    }
-
     /**
      * @return mixed
      */
@@ -496,9 +475,9 @@ class ManagerController extends Controller
     /**
      * @param $queryParameters
      *
-     * @return FileManager
-     *
      * @throws \Exception
+     *
+     * @return FileManager
      */
     private function newFileManager($queryParameters)
     {
@@ -507,7 +486,7 @@ class ManagerController extends Controller
         }
         $webDir = $this->getParameter('artgris_file_manager')['web_dir'];
 
-        $this->fileManager = new FileManager($queryParameters, $this->getBasePath($queryParameters), $this->getKernelRoute(), $this->get('router'), $webDir);
+        $this->fileManager = new FileManager($queryParameters, $this->get('artgris_bundle_file_manager.service.filemanager_service')->getBasePath($queryParameters), $this->getKernelRoute(), $this->get('router'), $webDir);
 
         return $this->fileManager;
     }
