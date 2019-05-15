@@ -16,10 +16,10 @@ class FilemanagerService
      */
     private $container;
 
-    public function __construct(ParameterBagInterface $parameterBag, ContainerInterface $container)
+    public function __construct(array $artgrisFileManagerConfig, ContainerInterface $container)
     {
-        $this->artgrisFileManagerConfig = $parameterBag->get('artgris_file_manager');
         $this->container = $container;
+        $this->artgrisFileManagerConfig = $artgrisFileManagerConfig;
     }
 
     public function getBasePath($queryParameters)

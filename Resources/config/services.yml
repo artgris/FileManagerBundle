@@ -20,5 +20,5 @@ services:
 
     artgris_bundle_file_manager.service.filemanager_service:
         class: Artgris\Bundle\FileManagerBundle\Service\FilemanagerService
-        arguments: ['@parameter_bag', '@service_container']
+        arguments: ['%artgris_file_manager%', '@service_container']
         public: true
