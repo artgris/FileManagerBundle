@@ -27,10 +27,8 @@ matrix:
     # testing Symfony 4 release
     - php: 7.2
       env:
-        - SYMFONY_VERSION="4.1.*"
-    - php: 7.1
-      env:
-        - SYMFONY_VERSION="4.0.*"
+        - SYMFONY_VERSION="4.2.*"
+        - ENABLE_CODE_COVERAGE="true"
     # stable (most recent stable versions)
     - php: 7.1
       env:
@@ -43,7 +41,6 @@ matrix:
     - php: 5.6
       env:
         - SYMFONY_VERSION="2.8.*"
-        - ENABLE_CODE_COVERAGE="true"
   allow_failures:
     - php: nightly
 #    # code coverage is very slow; allow a failure to get the Travis result early
