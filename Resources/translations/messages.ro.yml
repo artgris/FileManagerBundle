@@ -1,0 +1,59 @@
+file:
+  add:
+    success: a fost adaugata cu succes
+  renamed:
+    success: Fisierul a fost redenumit cu succes
+    danger: Fisierul deja exista sau nu esti autorizat sa redenumesti acest fisier
+    unauthorized: Fisierul nu mai exista sau nu esti autorizat sa accesezi aceasta pagina
+    nochanged: Nu a fost detectata nici o schimbare
+  deleted:
+    success: Fisierul a fost sters cu succes
+    danger: Fisierul nu mai exista sau nu esti autorizat sa accesezi aceasta pagina
+    unauthorized: Fisierul nu mai exista sau nu esti autorizat sa accesezi aceasta pagina
+folder:
+  add:
+    danger: "A aparut o eroare in timpul crearii directorului: %message%"
+    success: Folderul a fost creat cu succes
+  deleted:
+    success: Directorul a fost sters cu succes
+    unauthorized: Directorul nu mai exista sau nu esti autorizat sa accesezi aceasta pagina
+button:
+  cancel: ANULEAZA
+  refresh: Reimprospateaza
+  parent: Parinte
+  save: SALVEAZA
+  add:
+    files: Adauga fisiere...
+    folder: Director nou...
+  delete:
+    current: Sterge directorul curent
+    selected: Sterge fisierele selectate
+    action: STERGE
+  rename:
+    action: REDENUMESTE
+  tree: Tree
+title:
+  add:
+    folder: Director nou
+  rename:
+    file: Redenumeste
+  delete: Sterge
+  download: Download
+  preview:
+    file: Deschide
+input:
+  default: Director nedenumit
+table:
+  name: Nume
+  date: Data
+  size: Marime
+  dimension: Dimensiuni
+  actions: Actiuni
+confirm:
+  delete:  Esti sigur ca vrei sa stergi?
+size:
+  mb: MB
+  kb: kB
+select-all: Selecteaza tot
+upload:
+  exception_move_uploaded_file: Permisiune anulata
