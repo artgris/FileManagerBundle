@@ -199,8 +199,8 @@ $(function () {
     // Module CKEditor
     if (moduleName === 'ckeditor') {
         $('#form-multiple-delete').on('click', '.select', function () {
-            var url = new URL(window.location.href);
-            var funcNum = url.searchParams.get("CKEditorFuncNum");
+            var regex = new RegExp("[\\?&]CKEditorFuncNum=([^&#]*)");
+            var funcNum = regex.exec(location.search)[1];
             var fileUrl = $(this).attr("data-path");
             window.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
             window.close();
