@@ -38,9 +38,6 @@ matrix:
     - php: 7.0
       env: SYMFONY_VERSION="3.1.*"
     # common (some popular version combinations)
-    - php: 5.6
-      env:
-        - SYMFONY_VERSION="2.8.*"
   allow_failures:
     - php: nightly
 #    # code coverage is very slow; allow a failure to get the Travis result early
