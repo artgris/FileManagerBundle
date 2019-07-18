@@ -47,7 +47,6 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "AppTestBundle\\": "/Tests/Fixtures/App/",
       "Artgris\\Bundle\\FileManagerBundle\\Tests\\": "/Tests/"
     }
   }
