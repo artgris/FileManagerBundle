@@ -133,3 +133,8 @@ file manager
 [6]: https://coveralls.io/r/artgris/FileManagerBundle?branch=master
 [7]: https://img.shields.io/badge/symfony-2.x%2C%203.x%20and%204.x-green.svg
 [8]: https://symfony.com/
+
+
+#### Run tests:
+
+    vendor/bin/phpunit
