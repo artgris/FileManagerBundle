@@ -1,0 +1,59 @@
+file:
+  add:
+    success: is succesvol geuploaded
+  renamed:
+    success: Bestand is succesvol hernoemd naar een ander bestand
+    danger: Bestand bestaat al of u bent niet bevoegd om dit bestand een andere naam te geven.
+    unauthorized: De bestanden bestaan niet meer of u bent niet bevoegd om deze pagina te openen.
+    nochanged: Geen wijziging gedetecteerd
+  deleted:
+    success: De bestanden zijn met succes verwijderd
+    danger: De bestanden bestaan niet meer of u bent niet bevoegd om deze pagina te openen.
+    unauthorized: De bestanden bestaan niet meer of u bent niet bevoegd om deze pagina te openen.
+folder:
+  add:
+    danger: "Er is een fout opgetreden tijdens het aanmaken van de directory: %message%"
+    success: Map is met succes aangemaakt
+  deleted:
+    success:  Map is met succes verwijderd.
+    unauthorized: Map bestaat niet meer of u bent niet bevoegd om deze pagina te openen.
+button:
+  cancel: ANULEREN
+  refresh: Verfrissen
+  parent: Parent
+  save: OPSLAAN
+  add:
+    files: Voeg bestanden toe...
+    folder: Nieuwe map...
+  delete:
+    current: Verwijder huidige map
+    selected: Geselecteerde bestanden verwijderen
+    action: VERWIJDER
+  rename:
+    action: HERNOEMEN
+  tree: Boom
+title:
+  add:
+    folder: Nieuwe map
+  rename:
+    file: Hernoemen
+  delete: Verwijderen
+  download: Downloaden
+  preview:
+    file: Openen
+input:
+    default: Naamloze map
+table:
+  name: Naam
+  date: Datum
+  size: Grootte
+  dimension: Dimensie
+  actions: Acties
+confirm:
+  delete:  Weet u zeker dat u wilt verwijderen?
+size:
+  mb: MB
+  kb: kB
+select-all: Selecter alle
+upload:
+  exception_move_uploaded_file: Toestemming geweigerd
