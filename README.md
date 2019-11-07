@@ -29,7 +29,6 @@ FileManager is a simple Multilingual File Manager Bundle for Symfony
     * **Drag & Drop support**
     * **Min/Max file size restriction**
     * **Thumbnails generation**
-    * **Client-side image resizing/crop**
     * [Exhaustive options](https://github.com/blueimp/jQuery-File-Upload/blob/master/server/php/UploadHandler.php)
 * Compatible with [**FOSCKEditorBundle**](https://github.com/FriendsOfSymfony/FOSCKEditorBundle)
 
