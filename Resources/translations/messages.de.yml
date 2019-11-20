@@ -3,20 +3,20 @@ file:
     success: wurde erfolgreich hochgeladen
   renamed:
     success: Die Datei wurde erfolgreich umbenannt
-    danger: Die Datei exisitert bereits oder Sie haben keine Rechte sie zu umbennen
-    unauthorized: Die Datei exisitert nicht mehr oder Sie haben keine Zugriffsrechte auf diese Seite
+    danger: Die Datei existiert bereits oder Sie haben keine Rechte sie umzubenennen
+    unauthorized: Die Datei existiert nicht mehr oder Sie haben keine Zugriffsrechte auf diese Seite
     nochanged: Kein Änderung festgestellt
   deleted:
     success: Die Dateien wurden erfolgreich gelöscht
-    danger: Die Datei exisitert nicht mehr oder Sie haben keine Zugriffsrechte auf diese Seite
-    unauthorized: Die Datei exisitert nicht mehr oder Sie haben keine Zugriffsrechte auf diese Seite
+    danger: Die Datei existiert nicht mehr oder Sie haben keine Zugriffsrechte auf diese Seite
+    unauthorized: Die Datei existiert nicht mehr oder Sie haben keine Zugriffsrechte auf diese Seite
 folder:
   add:
-    danger: "Beim erstellen des Verzeichnises ist ein Fehler aufgetreten : %message%"
+    danger: "Beim Erstellen des Verzeichnisses ist ein Fehler aufgetreten : %message%"
     success: Das Verzeichnis wurde erfolgreich erstellt
   deleted:
     success: Das Verzeichnis wurde erfolgreich gelöscht
-    unauthorized: Die Datei exisitert nicht mehr oder Sie haben keine Zugriffsrechte auf diese Seite
+    unauthorized: Die Datei existiert nicht mehr oder Sie haben keine Zugriffsrechte auf diese Seite
 button:
   cancel: ABBRECHEN
   refresh: Neu laden
@@ -30,13 +30,13 @@ button:
     selected: Ausgewählte Datei löschen
     action: LÖSCHEN
   rename:
-    action: UMBENNENEN
+    action: UMBENENNEN
   tree: Baumstruktur
 title:
   add:
     folder: Neues Verzeichnis
   rename:
-    file: Umebennen
+    file: Umbenennen
   delete: Löschen
   download: Herunterladen
   preview:
@@ -46,11 +46,11 @@ input:
 table:
   name: Name
   date: Datum
-  size: Grösse
-  dimension: Dimension
+  size: Größe
+  dimension: Auflösung
   actions: Aktionen
 confirm:
-  delete:  Wollen Sie wirklich löschen ?
+  delete:  Möchten Sie dies wirklich löschen?
 size:
   mb: Mb
   kb: kb
@@ -58,15 +58,15 @@ select-all: Alles auswählen
 upload:
   exception_move_uploaded_file: Zugriff verweigert
 
-'The uploaded file exceeds the upload_max_filesize directive in php.ini': Die maximale Dateigrösse (upload_max_filesize) wurde erreicht
-'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form': Die maximale Dateigrösse (MAX_FILE_SIZE) wurde erreicht
-'The uploaded file was only partially uploaded': Datei wurde nur teils hochgeladen
+'The uploaded file exceeds the upload_max_filesize directive in php.ini': Die Dateigrösse überschreitet die maximal erlaubte Größe (upload_max_filesize in php.ini)
+'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form': Die Dateigrösse überschreitet die maximal erlaubte Größe (MAX_FILE_SIZE im HTML-Formular)
+'The uploaded file was only partially uploaded': Datei wurde nur teilweise hochgeladen
 'No file was uploaded': Es wurde keine Datei hochgeladen
 'Missing a temporary folder': Es fehlt das temporäre Verzeichnis
 'Failed to write file to disk': Datei kann nicht gespeichert werden
-'A PHP extension stopped the file upload': ein PHP Modul blockiert das hochladen
-'The uploaded file exceeds the post_max_size directive in php.ini': Die Dateigrösse überschreitet die erlaubte Grösse des Servers (post_max_size)
-'File is too big': Die Datei ist zu gross
+'A PHP extension stopped the file upload': Eine PHP-Erweiterung blockiert das Hochladen
+'The uploaded file exceeds the post_max_size directive in php.ini': Die Dateigrösse überschreitet die maximal erlaubte Größe (post_max_size in php.ini)
+'File is too big': Die Datei ist zu groß
 'File is too small': Die Datei ist zu klein
 'Filetype not allowed': Der Dateityp ist nicht erlaubt
 'Maximum number of files exceeded': Die maximale Anzahl Dateien wurde erreicht
@@ -74,5 +74,5 @@ upload:
 'Image requires a minimum width': Das Bild ist zu schmal
 'Image exceeds maximum height': Das Bild ist zu hoch
 'Image requires a minimum height': Das Bild ist zu niedrig
-'File upload aborted': Der upload wurde abgebrochen
-'Failed to resize image': Beim Bildskalieren ist ein Fehler aufgetreten
+'File upload aborted': Der Upload wurde abgebrochen
+'Failed to resize image': Beim Skalieren des Bildes ist ein Fehler aufgetreten
