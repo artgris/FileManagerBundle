@@ -137,3 +137,7 @@ file manager
 #### Run tests:
 
     vendor/bin/phpunit
+    
+#### Demo Application
+
+[FileManagerDemo](https://github.com/artgris/FileManagerBundleDemo) is a complete Symfony application (Symfony 4.4) created to showcase FileManagerBundle features.
