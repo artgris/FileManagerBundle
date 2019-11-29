@@ -274,7 +274,7 @@ class ManagerController extends Controller
             }
 
             if (!$fileManager->getImagePath()) {
-                $file->url = $this->generateUrl('file_manager_file', array_merge($fileManager->getQueryParameters(), ['fileName' => $file->url]));
+                $file->url = $this->generateUrl('file_manager_file', array_merge($fileManager->getQueryParameters(), ['fileName' => $file->name]));
             }
         }
 
