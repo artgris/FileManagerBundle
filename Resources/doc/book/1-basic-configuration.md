@@ -175,8 +175,6 @@ artgris_file_manager:
 #### `image_versions` image version
  
 
->By default, upload widget save the original image
-
 if you need thumbmail, or another format for the original image you have following option :
 
 
@@ -187,6 +185,7 @@ if you need thumbmail, or another format for the original image you have followi
 | `max_width`      | `Interger` |  False    |     null                       | Max width after resize/crop (px)                    |
 | `max_height`     | `Interger` |  False    |     null                       | Max height after resize/crop (px)                   |
 
+>The key determines whether you save only the version of the image or whether you save the original and the version of the image in a subfolder (subfolder name = key name)
                                                 
 Example with original image + thumbmail 80px x 80px
 
@@ -211,6 +210,7 @@ artgris_file_manager:
                 image_library: 3
                 image_versions: {'': {max_width: 100, max_height: 100}}
 ```
+> this configuration only saves the version of the image in the current folder.
 
 Complexe example with multiple image sizes:
 
