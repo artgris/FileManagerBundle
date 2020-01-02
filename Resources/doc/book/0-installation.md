@@ -76,7 +76,7 @@ artgris_file_manager:
 Browse the `/manager/?conf=default` URL and you'll get access to your file manager
     
     
-<img src="https://raw.githubusercontent.com/artgris/FileManagerBundle/master/Resources/doc/images/filemanager-promo.png?" alt="Symfony Filemanager created with FileManagerBundle" />
+<img src="https://raw.githubusercontent.com/artgris/FileManagerBundle/master/Resources/doc/images/filemanager-promo.jpg" alt="Symfony Filemanager created with FileManagerBundle" />
 
 
 -------------------------------------------------------------------------------
