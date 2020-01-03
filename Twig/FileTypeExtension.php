@@ -3,11 +3,13 @@
 namespace Artgris\Bundle\FileManagerBundle\Twig;
 
 use Artgris\Bundle\FileManagerBundle\Service\FileTypeService;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * @author Arthur Gribet <a.gribet@gmail.com>
  */
-class FileTypeExtension extends \Twig_Extension
+class FileTypeExtension extends AbstractExtension
 {
     private $fileTypeService;
 
@@ -32,8 +34,8 @@ class FileTypeExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'accept' => new \Twig_SimpleFunction('accept', [$this, 'accept'], ['needs_environment' => false, 'is_safe' => ['html']]),
-            'fileIcon' => new \Twig_SimpleFunction('fileIcon', [$this, 'fileIcon'], ['needs_environment' => false, 'is_safe' => ['html']]),
+            'accept' => new TwigFunction('accept', [$this, 'accept'], ['needs_environment' => false, 'is_safe' => ['html']]),
+            'fileIcon' => new TwigFunction('fileIcon', [$this, 'fileIcon'], ['needs_environment' => false, 'is_safe' => ['html']]),
         ];
     }
 }

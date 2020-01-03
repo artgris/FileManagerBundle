@@ -4,7 +4,7 @@ namespace Artgris\Bundle\FileManagerBundle\Helpers;
 
 use Artgris\Bundle\FileManagerBundle\Service\FileTypeService;
 use Symfony\Component\Finder\SplFileInfo;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class File
 {

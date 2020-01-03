@@ -2,6 +2,7 @@
 
 namespace Artgris\Bundle\FileManagerBundle\DependencyInjection;
 
+use App\Kernel;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -15,8 +16,9 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('artgris_file_manager');
+        // symfony > 4.2
+        $treeBuilder = new TreeBuilder('artgris_file_manager');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
