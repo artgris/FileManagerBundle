@@ -54,6 +54,7 @@ class ManagerControllerTest extends AbstractTestCase
             '/bundles/artgrisfilemanager/libs/blueimp-file-upload/js/vendor/jquery.ui.widget.js',
             '/bundles/artgrisfilemanager/libs/blueimp-file-upload/js/jquery.iframe-transport.js',
             '/bundles/artgrisfilemanager/libs/blueimp-file-upload/js/jquery.fileupload.js',
+            '/bundles/artgrisfilemanager/libs/blueimp-file-upload/js/jquery.fileupload-process.js',
             '/bundles/artgrisfilemanager/libs/sticky-kit/jquery.sticky-kit.min.js',
             '/bundles/artgrisfilemanager/libs/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js',
             '/bundles/artgrisfilemanager/libs/jQuery-contextMenu/dist/jquery.contextMenu.min.js',
