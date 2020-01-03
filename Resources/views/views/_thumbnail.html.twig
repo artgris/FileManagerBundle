@@ -1,24 +1,36 @@
 <div class="row margin-bottom thumbnail-blk">
-    <div class="col-md-12 select-all">
-        <input type="checkbox" id="select-all" title="{{ 'select-all'|trans }}"> <label for="select-all">{{ 'select-all'|trans }}</label>
-    </div>
+    {% block select_all %}
+        <div class="col-md-12 select-all">
+            <input type="checkbox" id="select-all" title="{{ 'select-all'|trans }}"> <label
+                    for="select-all">{{ 'select-all'|trans }}</label>
+        </div>
+    {% endblock %}
     {% for fileEntity in fileArray %}
         {% set file = fileEntity.file %}
         <div class="{{ fileEntity.isImage() ? 'img' : file.type }} col-xs-6 col-sm-4 col-md-{{ fileManager.tree == 0 ? 3 : 4 }} col-lg-2 text-center thumbnail">
-            <input type="checkbox" class="checkbox" name="delete[]"
-                   value="{{ file.fileName }}"
-                   title="{{ file.fileName }}">
-            <div class="thumbnail-img">
-                {{ fileEntity.preview ? fileEntity.preview.html|raw }}
-            </div>
+            {% block file_checkbox %}
+                <input type="checkbox" class="checkbox" name="delete[]"
+                       value="{{ file.fileName }}"
+                       title="{{ file.fileName }}">
+            {% endblock %}
+            {% block file_preview %}
+                <div class="thumbnail-img">
+                    {{ fileEntity.preview ? fileEntity.preview.html|raw }}
+                </div>
+            {% endblock %}
             <p {{ fileEntity.attribut|raw }}>
-                {{ (fileEntity.preview.folder is defined ? fileEntity.preview.folder : file.fileName)|raw }}<br>
-                <small>{{ fileEntity.file.mTime|date('d/m/Y') }}  {{ fileEntity.HTMLSize ? ' - '~fileEntity.HTMLSize|trans|raw }}</small>
+                {% block file_name %}
+                    {{ (fileEntity.preview.folder is defined ? fileEntity.preview.folder : file.fileName)|raw }}<br>
+                {% endblock %}
+                <small>{% block file_date %}{{ fileEntity.file.mTime|date('d/m/Y') }}{% endblock %} {% block file_size %}{{ fileEntity.HTMLSize ? ' - '~fileEntity.HTMLSize|trans|raw }}{% endblock %}</small>
                 <br>
-                <small>{{ fileEntity.HTMLDimension }}</small>
+                {% block file_dimension %}
+                    <small>{{ fileEntity.HTMLDimension }}</small>
+                {% endblock %}
                 <br>
             </p>
             <div class="row">
+                {% block list_action %}
                     <span data-toggle="tooltip" title="{{ 'title.delete'|trans }}">
                         <button type="button"
                                 class="btn btn-sm btn-danger js-delete-modal"
@@ -32,7 +44,7 @@
                            <span class="far fa-trash-alt"></span>
                         </button>
                     </span>
-                <span data-toggle="tooltip" title="{{ 'title.rename.file'|trans }}">
+                    <span data-toggle="tooltip" title="{{ 'title.rename.file'|trans }}">
                     <button type="button"
                             class="btn btn-sm btn-default js-rename-modal"
                             data-trigger="click"
@@ -47,13 +59,15 @@
                     <span class="far fa-edit"></span>
                     </button>
                 </span>
-                {% if file.type == "file" %}
-                    <a data-placement="left" title="{{ 'title.download'|trans }}" class="btn btn-sm btn-default js-download"
-                       href="{{ path('file_manager_file', fileManager.queryParameters|merge({'fileName':file.fileName})) }}" download>
-                        <span class="fas fa-download"></span>
-                    </a>
-                    {% if fileEntity.isImage() %}
-                        <span data-toggle="tooltip" title="{{ 'title.preview.file'|trans }}">
+                    {% if file.type == "file" %}
+                        <a data-placement="left" title="{{ 'title.download'|trans }}"
+                           class="btn btn-sm btn-default js-download"
+                           href="{{ path('file_manager_file', fileManager.queryParameters|merge({'fileName':file.fileName})) }}"
+                           download>
+                            <span class="fas fa-download"></span>
+                        </a>
+                        {% if fileEntity.isImage() %}
+                            <span data-toggle="tooltip" title="{{ 'title.preview.file'|trans }}">
                                 <button type="button"
                                         class="btn btn-sm btn-default js-open-modal"
                                         data-trigger="click"
@@ -65,8 +79,9 @@
                                 <span class="fas fa-eye"></span>
                                 </button>
                             </span>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
+                {% endblock %}
             </div>
         </div>
     {% endfor %}

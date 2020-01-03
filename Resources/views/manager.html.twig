@@ -7,8 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/libs/bootstrap/dist/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link rel="stylesheet"
+              href="{{ asset('bundles/artgrisfilemanager/libs/bootstrap/dist/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+              integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+              crossorigin="anonymous">
         <link rel="stylesheet"
               href="{{ asset('bundles/artgrisfilemanager/libs/jstree/dist/themes/default/style.min.css') }}">
         <link rel="stylesheet"
@@ -22,6 +25,14 @@
 <body>
 {% block body %}
     <div class="container-fluid ">
+        {% block progress_bar %}
+            <div class="row">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="0" aria-valuemin="0"
+                         aria-valuemax="100"></div>
+                </div>
+            </div>
+        {% endblock %}
         <div class="row top-bar" id="top-bar">
             {% block actions %}
                 <a type="button" title="{{ 'button.tree'|trans }}"
@@ -48,7 +59,8 @@
                                name="files[]" multiple=""
                                accept="{{ fileManager.configuration.accept is defined ? fileManager.configuration.accept : (fileManager.type ? accept(fileManager.type)) }}">
                 </span>
-                <button type="button" class="btn btn-primary btn-sm btn-action" data-toggle="modal" data-target="#addFolder">
+                <button type="button" class="btn btn-primary btn-sm btn-action" data-toggle="modal"
+                        data-target="#addFolder">
                     <span class="far fa-folder-open"></span>
                     <span>{{ 'button.add.folder'|trans }}</span>
                 </button>
@@ -87,11 +99,13 @@
                         {{ order(fileManager, 'size') }}
                         {{ order(fileManager, 'dimension') }}
                     {% endif %}
-                    <a type="button" href="{{ path('file_manager', fileManager.queryParameters|merge({'view':"list"})) }}"
+                    <a type="button"
+                       href="{{ path('file_manager', fileManager.queryParameters|merge({'view':"list"})) }}"
                        class="btn btn-sm btn-default {{ fileManager.view == 'list' ? 'active' }}">
                         <span class="fas fa-th-list"></span>
                     </a>
-                    <a type="button" href="{{ path('file_manager', fileManager.queryParameters|merge({'view':'thumbnail'})) }}"
+                    <a type="button"
+                       href="{{ path('file_manager', fileManager.queryParameters|merge({'view':'thumbnail'})) }}"
                        class="btn btn-sm btn-default {{ fileManager.view == 'thumbnail' ? 'active' }}">
                         <span class="fas fa-th"></span>
                     </a>
@@ -129,10 +143,12 @@
     <script src="{{ asset('bundles/artgrisfilemanager/libs/blueimp-file-upload/js/vendor/jquery.ui.widget.js') }}"></script>
     <script src="{{ asset('bundles/artgrisfilemanager/libs/blueimp-file-upload/js/jquery.iframe-transport.js') }}"></script>
     <script src="{{ asset('bundles/artgrisfilemanager/libs/blueimp-file-upload/js/jquery.fileupload.js') }}"></script>
+    <script src="{{ asset('bundles/artgrisfilemanager/libs/blueimp-file-upload/js/jquery.fileupload-process.js') }}"></script>
     <script src="{{ asset('bundles/artgrisfilemanager/libs/sticky-kit/jquery.sticky-kit.min.js') }}"></script>
     <script src="{{ asset('bundles/artgrisfilemanager/libs/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js') }}"></script>
     <script src="{{ asset('bundles/artgrisfilemanager/libs/jQuery-contextMenu/dist/jquery.contextMenu.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/artgrisfilemanager/libs/jquery-lazy/jquery.lazy.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/artgrisfilemanager/libs/jquery-lazy/jquery.lazy.min.js') }}"></script>
     <script>
         var treedata = {{ treeData|raw }};
         var tree = {{ fileManager.tree ? 'true' : 'false' }}

@@ -100,7 +100,7 @@ $(function () {
         initTree(treedata);
     }
     $(document)
-    // checkbox select all
+        // checkbox select all
         .on('click', '#select-all', function () {
             var checkboxes = $('#form-multiple-delete').find(':checkbox')
             if ($(this).is(':checked')) {
@@ -258,12 +258,32 @@ $(function () {
         $.each(data.files, function (index, file) {
             displayError('File upload failed.')
         });
-    });
+    }).on('fileuploadprogressall', function (e, data) {
 
+        if (e.isDefaultPrevented()) {
+            return false;
+        }
+        var progress = Math.floor((data.loaded / data.total) * 100);
+
+        $('.progress-bar')
+            .removeClass("notransition")
+            .attr('aria-valuenow', progress)
+            .css('width', progress + '%');
+
+    }).on('fileuploadstop', function (e) {
+        if (e.isDefaultPrevented()) {
+            return false;
+        }
+        $('.progress-bar')
+            .addClass("notransition")
+            .attr('aria-valuenow', 0)
+            .css('width', 0 + '%');
+    });
 
     function lazy() {
         $('.lazy').Lazy({});
     }
 
     lazy();
-});
+})
+;
