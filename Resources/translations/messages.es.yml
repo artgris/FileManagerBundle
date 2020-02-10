@@ -1,0 +1,59 @@
+file:
+  add:
+    success: Se cargó correctamente
+  renamed:
+    success: El archivo ha cambiado de nombre correctamente
+    danger: El archivo ya existe o no está autorizado para cambiar el nombre de este archivo
+    unauthorized: Los archivos ya no existen o no está autorizado para acceder a esta página
+    nochanged: No se detectó ningún cambio
+  deleted:
+    success: Los archivos se han eliminado correctamente
+    danger: Los archivos ya no existen o no está autorizado para acceder a esta página
+    unauthorized: Los archivos ya no existen o no está autorizado para acceder a esta página
+folder:
+  add:
+    danger: "Se produjo un error al crear el directorio: %message%"
+    success: La carpeta se ha creado correctamente
+  deleted:
+    success: La carpeta se ha eliminado correctamente
+    unauthorized: La carpeta ya no existe o no está autorizado para acceder a esta página
+button:
+  cancel: CANCELAR
+  refresh: Actualizar
+  parent: Padre
+  save: GUARDAR
+  add:
+    files: Agregar archivos...
+    folder: Nueva carpeta...
+  delete:
+    current: Eliminar la carpeta actual
+    selected: Eliminar archivos seleccionados
+    action: BORRAR
+  rename:
+    action: RENOMBRAR
+  tree: Árbol
+title:
+  add:
+    folder: Nueva carpeta
+  rename:
+    file: Renombrar
+  delete: Eliminar
+  download: Descargar
+  preview:
+    file: Abrir
+input:
+    default: Carpeta sin título
+table:
+  name: Nombre
+  date: Fecha
+  size: Tamaño
+  dimension: Dimensión
+  actions: Acciones
+confirm:
+  delete: ¿Está seguro de que desea eliminar?
+size:
+  mb: MB
+  kb: kB
+select-all: Seleccionar todo
+upload:
+  exception_move_uploaded_file: Permiso denegado
