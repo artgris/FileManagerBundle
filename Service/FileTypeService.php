@@ -89,7 +89,6 @@ class FileTypeService
             case preg_match('/(mp3|wav)$/i', $extension):
                 $fa = 'far fa-file-audio';
                 break;
-            case is_array(@getimagesize($filePath)):
             case preg_match('/(gif|png|jpe?g|svg)$/i', $extension):
                 $query = parse_url($filePath, PHP_URL_QUERY);
                 $time = 'time='.time();
