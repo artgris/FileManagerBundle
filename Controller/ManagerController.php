@@ -10,7 +10,6 @@ use Artgris\Bundle\FileManagerBundle\Service\FilemanagerService;
 use Artgris\Bundle\FileManagerBundle\Service\FileTypeService;
 use Artgris\Bundle\FileManagerBundle\Twig\OrderExtension;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\CssSelector\XPath\TranslatorInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -30,6 +29,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @author Arthur Gribet <a.gribet@gmail.com>
