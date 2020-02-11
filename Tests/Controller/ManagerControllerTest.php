@@ -8,7 +8,6 @@ class ManagerControllerTest extends AbstractTestCase
 {
     public function setUp(): void
     {
-        parent::setUp();
         $this->initClient(['environment' => 'default']);
     }
 

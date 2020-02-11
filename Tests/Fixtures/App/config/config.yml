@@ -1,22 +1,23 @@
-# Basic config common to all functional tests
-# Can be easily overridden in each test config
-parameters:
-    locale: en
-
 framework:
-    secret:          secret
-    translator:      ~
-    default_locale:  '%locale%'
-    test:            ~
-    router:          { resource: '%kernel.project_dir%/config/routing.yml' }
-    form:            true
-    validation:      { enable_annotations: true }
-    templating:      { engines: ['twig'] }
-    profiler:
-        collect: true
+    secret: '%env(APP_SECRET)%'
+    #csrf_protection: true
+    #http_method_override: true
+
+    # Enables session support. Note that the session will ONLY be started if you read or write from it.
+    # Remove or comment this section to explicitly disable session support.
     session:
         storage_id: session.storage.mock_file
 
+    #esi: true
+    #fragments: true
+    php_errors:
+        log: true
+
+    test: true
+
+    router:
+        utf8: true
+        resource: "%kernel.project_dir%/Tests/Fixtures/App/config/routing.yml"
 security:
     firewalls:
         secured_area:
@@ -31,3 +32,6 @@ services:
         class: Psr\Log\NullLogger
 
 
+sensio_framework_extra:
+    router:
+        annotations: false

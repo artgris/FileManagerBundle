@@ -9,14 +9,13 @@ class UnExistDirConfTest extends AbstractTestCase
 {
     public function setUp(): void
     {
-        parent::setUp();
         $this->initClient(['environment' => 'unexist']);
     }
 
     public function testUnExistDirConfManager()
     {
         $this->getManagerPage();
-        $this->assertContains(
+        $this->assertStringContainsString(
             'Directory does not exist.',
             $this->client->getResponse()->getContent()
         );

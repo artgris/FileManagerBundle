@@ -4,5 +4,5 @@ imports:
 artgris_file_manager:
     conf:
         default:
-            dir: "%kernel.project_dir%/../web/uploads"
+            dir: "%kernel.project_dir%/Tests/Fixtures/web/uploads"
 
