@@ -29,11 +29,6 @@ class File
     /**
      * File constructor.
      *
-     * @param SplFileInfo         $file
-     * @param TranslatorInterface $translator
-     * @param FileTypeService     $fileTypeService
-     * @param FileManager         $fileManager
-     *
      * @internal param $module
      */
     public function __construct(SplFileInfo $file, TranslatorInterface $translator, FileTypeService $fileTypeService, FileManager $fileManager)
@@ -92,7 +87,7 @@ class File
 
     public function isImage()
     {
-        return array_key_exists('image', $this->preview);
+        return \array_key_exists('image', $this->preview);
     }
 
     /**

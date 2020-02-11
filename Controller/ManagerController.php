@@ -71,8 +71,6 @@ class ManagerController extends AbstractController
     /**
      * @Route("/", name="file_manager")
      *
-     * @param Request $request
-     *
      * @throws \Exception
      *
      * @return Response
@@ -87,7 +85,7 @@ class ManagerController extends AbstractController
         $fileManager = $this->newFileManager($queryParameters);
 
         // Folder search
-        $directoriesArbo = $this->retrieveSubDirectories($fileManager, $fileManager->getDirName(), DIRECTORY_SEPARATOR, $fileManager->getBaseName());
+        $directoriesArbo = $this->retrieveSubDirectories($fileManager, $fileManager->getDirName(), \DIRECTORY_SEPARATOR, $fileManager->getBaseName());
 
         // File search
         $finderFiles = new Finder();
@@ -201,12 +199,12 @@ class ManagerController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $fs = new Filesystem();
-            $directory = $directorytmp = $fileManager->getCurrentPath().DIRECTORY_SEPARATOR.$data['name'];
+            $directory = $directorytmp = $fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$data['name'];
             $i = 1;
 
             while ($fs->exists($directorytmp)) {
                 $directorytmp = "{$directory} ({$i})";
-                $i++;
+                ++$i;
             }
             $directory = $directorytmp;
 
@@ -228,7 +226,6 @@ class ManagerController extends AbstractController
     /**
      * @Route("/rename/{fileName}", name="file_manager_rename")
      *
-     * @param Request $request
      * @param $fileName
      *
      * @throws \Exception
@@ -247,8 +244,8 @@ class ManagerController extends AbstractController
             $newfileName = $data['name'].$extension;
             if ($newfileName !== $fileName && isset($data['name'])) {
                 $fileManager = $this->newFileManager($queryParameters);
-                $NewfilePath = $fileManager->getCurrentPath().DIRECTORY_SEPARATOR.$newfileName;
-                $OldfilePath = realpath($fileManager->getCurrentPath().DIRECTORY_SEPARATOR.$fileName);
+                $NewfilePath = $fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$newfileName;
+                $OldfilePath = realpath($fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$fileName);
                 if (0 !== mb_strpos($NewfilePath, $fileManager->getCurrentPath())) {
                     $this->addFlash('danger', $this->translator->trans('file.renamed.unauthorized'));
                 } else {
@@ -272,8 +269,6 @@ class ManagerController extends AbstractController
     /**
      * @Route("/upload/", name="file_manager_upload")
      *
-     * @param Request $request
-     *
      * @throws \Exception
      *
      * @return Response
@@ -283,7 +278,7 @@ class ManagerController extends AbstractController
         $fileManager = $this->newFileManager($request->query->all());
 
         $options = [
-            'upload_dir' => $fileManager->getCurrentPath().DIRECTORY_SEPARATOR,
+            'upload_dir' => $fileManager->getCurrentPath().\DIRECTORY_SEPARATOR,
             'upload_url' => $fileManager->getImagePath(),
             'accept_file_types' => $fileManager->getRegex(),
             'print_response' => false,
@@ -307,7 +302,6 @@ class ManagerController extends AbstractController
             }
         }
 
-
         $this->dispatch(FileManagerEvents::POST_UPDATE, ['response' => &$response]);
 
         return new JsonResponse($response);
@@ -316,7 +310,6 @@ class ManagerController extends AbstractController
     /**
      * @Route("/file/{fileName}", name="file_manager_file")
      *
-     * @param Request $request
      * @param $fileName
      *
      * @throws \Exception
@@ -327,13 +320,11 @@ class ManagerController extends AbstractController
     {
         $fileManager = $this->newFileManager($request->query->all());
 
-        return new BinaryFileResponse($fileManager->getCurrentPath().DIRECTORY_SEPARATOR.urldecode($fileName));
+        return new BinaryFileResponse($fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.urldecode($fileName));
     }
 
     /**
      * @Route("/delete/", name="file_manager_delete",  methods={"DELETE"})
-     *
-     * @param Request $request
      *
      * @throws \Exception
      *
@@ -351,7 +342,7 @@ class ManagerController extends AbstractController
             if (isset($queryParameters['delete'])) {
                 $is_delete = false;
                 foreach ($queryParameters['delete'] as $fileName) {
-                    $filePath = realpath($fileManager->getCurrentPath().DIRECTORY_SEPARATOR.$fileName);
+                    $filePath = realpath($fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$fileName);
                     if (0 !== mb_strpos($filePath, $fileManager->getCurrentPath())) {
                         $this->addFlash('danger', 'file.deleted.danger');
                     } else {
@@ -379,7 +370,7 @@ class ManagerController extends AbstractController
                 }
 
                 $this->dispatch(FileManagerEvents::POST_DELETE_FOLDER);
-                $queryParameters['route'] = dirname($fileManager->getCurrentRoute());
+                $queryParameters['route'] = \dirname($fileManager->getCurrentRoute());
                 if ($queryParameters['route'] = '/') {
                     unset($queryParameters['route']);
                 }
@@ -430,14 +421,13 @@ class ManagerController extends AbstractController
     }
 
     /**
-     * @param FileManager $fileManager
      * @param $path
      * @param string $parent
      * @param bool   $baseFolderName
      *
      * @return array|null
      */
-    private function retrieveSubDirectories(FileManager $fileManager, $path, $parent = DIRECTORY_SEPARATOR, $baseFolderName = false)
+    private function retrieveSubDirectories(FileManager $fileManager, $path, $parent = \DIRECTORY_SEPARATOR, $baseFolderName = false)
     {
         $directories = new Finder();
         $directories->in($path)->ignoreUnreadableDirs()->directories()->depth(0)->sortByType()->filter(function (SplFileInfo $file) {
@@ -464,7 +454,7 @@ class ManagerController extends AbstractController
             $directoriesList[] = [
                 'text' => $directory->getFilename().$fileSpan,
                 'icon' => 'far fa-folder-open',
-                'children' => $this->retrieveSubDirectories($fileManager, $directory->getPathname(), $fileName.DIRECTORY_SEPARATOR),
+                'children' => $this->retrieveSubDirectories($fileManager, $directory->getPathname(), $fileName.\DIRECTORY_SEPARATOR),
                 'a_attr' => [
                     'href' => $fileName ? $this->generateUrl('file_manager', $queryParameters) : $this->generateUrl('file_manager', $queryParametersRoute),
                 ], 'state' => [
