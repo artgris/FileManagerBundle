@@ -25,6 +25,7 @@
     "symfony/event-dispatcher": "^4.2|^5.0",
     "symfony/validator": "^4.2|^5.0",
     "symfony/asset": "^4.2|^5.0",
+    "symfony/expression-language": "^4.2|^5.0",
     "oomphinc/composer-installers-extender": "^1.1"
   },
   "require-dev": {
