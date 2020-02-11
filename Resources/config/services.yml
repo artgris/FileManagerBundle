@@ -6,10 +6,6 @@ services:
 
     Artgris\Bundle\FileManagerBundle\Controller\:
         resource: '../../Controller/*'
-#
-#    Artgris\Bundle\FileManagerBundle\Controller\:
-#        resource: '../../Controller'
-#        tags: ['controller.service_arguments']
 
     Artgris\Bundle\FileManagerBundle\Twig\FileTypeExtension:
         tags:
