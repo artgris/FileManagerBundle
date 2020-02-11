@@ -8,7 +8,7 @@ framework:
     translator:      ~
     default_locale:  '%locale%'
     test:            ~
-    router:          { resource: '%kernel.root_dir%/config/routing.yml' }
+    router:          { resource: '%kernel.project_dir%/config/routing.yml' }
     form:            true
     validation:      { enable_annotations: true }
     templating:      { engines: ['twig'] }
@@ -29,3 +29,5 @@ security:
 services:
     logger:
         class: Psr\Log\NullLogger
+
+

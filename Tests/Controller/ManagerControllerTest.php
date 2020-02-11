@@ -6,7 +6,7 @@ use Artgris\Bundle\FileManagerBundle\Tests\Fixtures\AbstractTestCase;
 
 class ManagerControllerTest extends AbstractTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->initClient(['environment' => 'default']);

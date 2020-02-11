@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UnExistDirConfTest extends AbstractTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->initClient(['environment' => 'unexist']);

@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EmptyConfTest extends AbstractTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->initClient(['environment' => 'empty']);
