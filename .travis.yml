@@ -15,9 +15,6 @@ matrix:
   fast_finish: true
   include:
     # Test the latest stable release
-    - php: 7.1
-      env: CHECK_PHP_SYNTAX="true"
-
     - php: 7.2
 
       # Minimum supported dependencies with the latest and oldest PHP version
