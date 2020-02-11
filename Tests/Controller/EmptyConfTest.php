@@ -15,7 +15,7 @@ class EmptyConfTest extends AbstractTestCase
     public function testUndefinedConfManager()
     {
         $this->getManagerPage();
-        $this->assertStringContainsString(
+        $this->assertContains(
             'Please define a &quot;dir&quot; or a &quot;service&quot; parameter in your config.yml',
             $this->client->getResponse()->getContent()
         );

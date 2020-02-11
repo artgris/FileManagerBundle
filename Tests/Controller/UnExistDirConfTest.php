@@ -15,7 +15,7 @@ class UnExistDirConfTest extends AbstractTestCase
     public function testUnExistDirConfManager()
     {
         $this->getManagerPage();
-        $this->assertStringContainsString(
+        $this->assertContains(
             'Directory does not exist.',
             $this->client->getResponse()->getContent()
         );
