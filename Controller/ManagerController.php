@@ -368,7 +368,9 @@ class ManagerController extends Controller
      */
     private function createDeleteForm()
     {
-        return $this->createFormBuilder()
+        return $this->createFormBuilder(null, [
+            'csrf_field_name' => '_token_delete',
+        ])
             ->setMethod('DELETE')
             ->add('DELETE', SubmitType::class, [
                 'translation_domain' => 'messages',
