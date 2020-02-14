@@ -53,7 +53,7 @@
 
                 <span class="btn btn-success btn-sm fileinput-button btn-action">
                     <span class="far fa-file"></span>
-                    <span>{{ 'button.add.files'|trans }}</span>
+                    <span class="bar-action">{{ 'button.add.files'|trans }}</span>
                         <input id="fileupload" type="file"
                                data-url="{{ path('file_manager_upload', fileManager.queryParameters) }}"
                                name="files[]" multiple=""
@@ -62,7 +62,7 @@
                 <button type="button" class="btn btn-primary btn-sm btn-action" data-toggle="modal"
                         data-target="#addFolder">
                     <span class="far fa-folder-open"></span>
-                    <span>{{ 'button.add.folder'|trans }}</span>
+                    <span class="bar-action">{{ 'button.add.folder'|trans }}</span>
                 </button>
                 {% if fileManager.parent %}
                     <button type="button"
@@ -75,7 +75,7 @@
                             data-html="true"
                             data-href='{{ path('file_manager_delete', fileManager.queryParameters) }}'>
                         <span class="far fa-trash-alt"></span>
-                        <span>{{ 'button.delete.current'|trans }}</span>
+                        <span class="bar-action">>{{ 'button.delete.current'|trans }}</span>
                     </button>
                 {% endif %}
                 <a id="js-delete-multiple-modal"
@@ -88,7 +88,7 @@
                    data-placement="left"
                    data-html="true">
                     <span class="far fa-check-square"></span>
-                    <span>{{ 'button.delete.selected'|trans }}</span>
+                    <span class="bar-action">>{{ 'button.delete.selected'|trans }}</span>
                 </a>
             {% endblock %}
             {% block display %}
