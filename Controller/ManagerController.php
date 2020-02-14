@@ -368,7 +368,7 @@ class ManagerController extends Controller
      */
     private function createDeleteForm()
     {
-        return $this->createFormBuilder()
+        return $this->get('form.factory')->createNamedBuilder('delete_f')
             ->setMethod('DELETE')
             ->add('DELETE', SubmitType::class, [
                 'translation_domain' => 'messages',
@@ -385,7 +385,7 @@ class ManagerController extends Controller
      */
     private function createRenameForm()
     {
-        return $this->createFormBuilder()
+        return $this->get('form.factory')->createNamedBuilder('rename_f')
             ->add('name', TextType::class, [
                 'constraints' => [
                     new NotBlank(),
