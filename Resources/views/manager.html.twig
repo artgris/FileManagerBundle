@@ -75,7 +75,7 @@
                             data-html="true"
                             data-href='{{ path('file_manager_delete', fileManager.queryParameters) }}'>
                         <span class="far fa-trash-alt"></span>
-                        <span class="bar-action">>{{ 'button.delete.current'|trans }}</span>
+                        <span class="bar-action">{{ 'button.delete.current'|trans }}</span>
                     </button>
                 {% endif %}
                 <a id="js-delete-multiple-modal"
@@ -88,7 +88,7 @@
                    data-placement="left"
                    data-html="true">
                     <span class="far fa-check-square"></span>
-                    <span class="bar-action">>{{ 'button.delete.selected'|trans }}</span>
+                    <span class="bar-action">{{ 'button.delete.selected'|trans }}</span>
                 </a>
             {% endblock %}
             {% block display %}
