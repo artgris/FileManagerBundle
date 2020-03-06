@@ -80,7 +80,7 @@ framework:
 Creating Your First File Manager
 ---------------------------------
 
-Create a folder **uploads** in **web**.
+Create a folder **uploads** in **public**.
  
 #### Add following configuration (symfony4) :
 
