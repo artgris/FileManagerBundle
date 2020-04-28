@@ -1,0 +1,59 @@
+file:
+  add:
+    success: "S'ha carregat correctament"
+  renamed:
+    success: "L'arxiu ha canviat de nom correctament"
+    danger: "L'arxiu ja existeix o no està autoritzat per canviar el nom d'aquest arxiu"
+    unauthorized: "Els arxius ja no existeixen o no està autoritzat per accedir a aquesta pàgina"
+    nochanged: "No s'ha detectat cap canvi"
+  deleted:
+    success: "Els arxius s'han eliminat correctament"
+    danger: "Els arxius ja no existeixen o no està autoritzat per accedir a aquesta pàgina"
+    unauthorized: "Els arxius ja no existeixen o no està autoritzat per accedir a aquesta pàgina"
+folder:
+  add:
+    danger: "S'ha produït un error al crear el directori: %message%"
+    success: "La carpeta s'ha creat correctament"
+  deleted:
+    success: "La carpeta s'ha eliminat correctament"
+    unauthorized: "La carpeta ja no existeix o no està autoritzat per accedir a aquesta pàgina"
+button:
+  cancel: "CANCEL·LAR"
+  refresh: "Actualitzar"
+  parent: "Pare"
+  save: "GUARDAR"
+  add:
+    files: "Afegir arxius..."
+    folder: "Nova carpeta..."
+  delete:
+    current: "Eliminar la carpeta actual"
+    selected: "Eliminar arxius seleccionats"
+    action: "ESBORRAR"
+  rename:
+    action: "REANOMENAR"
+  tree: "Arbre"
+title:
+  add:
+    folder: "Nova carpeta"
+  rename:
+    file: "Reannomenar"
+  delete: "Eliminar"
+  download: "Descarregar"
+  preview:
+    file: "Obrir"
+input:
+    default: "Carpeta sense títol"
+table:
+  name: "Nom"
+  date: "Data"
+  size: "Mida"
+  dimension: "Dimensió"
+  actions: "Accions"
+confirm:
+  delete: "Esteu segur que voleu suprimir?"
+size:
+  mb: MB
+  kb: kB
+select-all: "Selecciona-ho tot"
+upload:
+  exception_move_uploaded_file: "Permís denegat"
