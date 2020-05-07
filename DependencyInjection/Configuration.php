@@ -15,13 +15,14 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('artgris_file_manager');
+        // symfony > 4.2
+        $treeBuilder = new TreeBuilder('artgris_file_manager');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
                 ->scalarNode('web_dir')
-                    ->defaultValue('web')
+                    ->defaultValue('public')
                 ->end()
                 ->arrayNode('conf')
                     ->prototype('array')

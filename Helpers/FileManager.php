@@ -27,7 +27,6 @@ class FileManager
      * @param $queryParameters
      * @param $configuration
      * @param $kernelRoute
-     * @param RouterInterface $router
      * @param $webDir
      *
      * @internal param $basePath
@@ -45,7 +44,7 @@ class FileManager
 
     public function getDirName()
     {
-        return dirname($this->getBasePath());
+        return \dirname($this->getBasePath());
     }
 
     public function getBaseName()
@@ -85,10 +84,10 @@ class FileManager
     public function getParent()
     {
         $queryParentParameters = $this->queryParameters;
-        $parentRoute = dirname($this->getCurrentRoute());
+        $parentRoute = \dirname($this->getCurrentRoute());
 
-        if (DIRECTORY_SEPARATOR !== $parentRoute) {
-            $queryParentParameters['route'] = dirname($this->getCurrentRoute());
+        if (\DIRECTORY_SEPARATOR !== $parentRoute) {
+            $queryParentParameters['route'] = \dirname($this->getCurrentRoute());
         } else {
             unset($queryParentParameters['route']);
         }
@@ -123,8 +122,7 @@ class FileManager
     private function checkSecurity()
     {
         if (!isset($this->configuration['dir'])) {
-            throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR,
-                'Please define a "dir" parameter in your config.yml');
+            throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, 'Please define a "dir" parameter in your config.yml');
         }
         $dir = $this->configuration['dir'];
 
@@ -213,9 +211,6 @@ class FileManager
         return $this->router;
     }
 
-    /**
-     * @param RouterInterface $router
-     */
     public function setRouter(RouterInterface $router)
     {
         $this->router = $router;
@@ -259,10 +254,10 @@ class FileManager
 
     private function mergeQueryAndConf($parameter, $default = null)
     {
-        if ($this->getQueryParameter($parameter) !== null) {
+        if (null !== $this->getQueryParameter($parameter)) {
             return $this->getQueryParameter($parameter);
         }
-        if ($this->getConfigurationParameter($parameter) !== null) {
+        if (null !== $this->getConfigurationParameter($parameter)) {
             return $this->getConfigurationParameter($parameter);
         }
 
@@ -271,10 +266,10 @@ class FileManager
 
     private function mergeConfAndQuery($parameter, $default = null)
     {
-        if ($this->getConfigurationParameter($parameter) !== null) {
+        if (null !== $this->getConfigurationParameter($parameter)) {
             return $this->getConfigurationParameter($parameter);
         }
-        if ($this->getQueryParameter($parameter) !== null) {
+        if (null !== $this->getQueryParameter($parameter)) {
             return $this->getQueryParameter($parameter);
         }
 

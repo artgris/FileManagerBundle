@@ -1,24 +1,24 @@
 services:
-    file_type_extension:
-        class: Artgris\Bundle\FileManagerBundle\Twig\FileTypeExtension
+
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    Artgris\Bundle\FileManagerBundle\Controller\:
+        resource: '../../Controller/*'
+
+    Artgris\Bundle\FileManagerBundle\Twig\FileTypeExtension:
         tags:
             - { name: twig.extension }
-        arguments: ['@file_type_service']
-        public: true
+        arguments: ['@Artgris\Bundle\FileManagerBundle\Service\FileTypeService']
 
-    file_type_service:
-        class: Artgris\Bundle\FileManagerBundle\Service\FileTypeService
+    Artgris\Bundle\FileManagerBundle\Service\FileTypeService:
         arguments: ['@router']
-        public: true
 
-    order_extension:
-        class: Artgris\Bundle\FileManagerBundle\Twig\OrderExtension
+    Artgris\Bundle\FileManagerBundle\Twig\OrderExtension:
         tags:
             - { name: twig.extension }
         arguments: ['@router']
-        public: true
 
-    artgris_bundle_file_manager.service.filemanager_service:
-        class: Artgris\Bundle\FileManagerBundle\Service\FilemanagerService
+    Artgris\Bundle\FileManagerBundle\Service\FilemanagerService:
         arguments: ['%artgris_file_manager%', '@service_container']
-        public: true

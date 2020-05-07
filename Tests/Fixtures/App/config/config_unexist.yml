@@ -4,5 +4,5 @@ imports:
 artgris_file_manager:
     conf:
         default:
-            dir: "%kernel.root_dir%/../web/unexist"
+            dir: "%kernel.project_dir%/Tests/Fixtures/web/unexist"
 

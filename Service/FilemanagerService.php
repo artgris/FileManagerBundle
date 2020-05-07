@@ -3,7 +3,6 @@
 namespace Artgris\Bundle\FileManagerBundle\Service;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class FilemanagerService
 {

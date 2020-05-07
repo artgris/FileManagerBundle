@@ -1,6 +1,5 @@
 <?php
 
-
 use Doctrine\Common\Annotations\AnnotationRegistry;
 
 $file = __DIR__.'/../vendor/autoload.php';

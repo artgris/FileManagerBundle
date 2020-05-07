@@ -4,8 +4,11 @@ namespace Artgris\Bundle\FileManagerBundle\Twig;
 
 use Artgris\Bundle\FileManagerBundle\Helpers\FileManager;
 use Symfony\Component\Routing\RouterInterface;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class OrderExtension extends \Twig_Extension
+class OrderExtension extends AbstractExtension
 {
     const ASC = 'asc';
     const DESC = 'desc';
@@ -18,15 +21,13 @@ class OrderExtension extends \Twig_Extension
 
     /**
      * OrderExtension constructor.
-     *
-     * @param RouterInterface $router
      */
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;
     }
 
-    public function order(\Twig_Environment $environment, FileManager $fileManager, $type)
+    public function order(Environment $environment, FileManager $fileManager, $type)
     {
         $order = self::ASC === $fileManager->getQueryParameter('order');
         $active = $fileManager->getQueryParameter('orderby') === $type ? 'actived' : null;
@@ -54,7 +55,7 @@ class OrderExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'order' => new \Twig_SimpleFunction('order', [$this, 'order'],
+            'order' => new TwigFunction('order', [$this, 'order'],
                 ['needs_environment' => true, 'is_safe' => ['html']]),
         ];
     }

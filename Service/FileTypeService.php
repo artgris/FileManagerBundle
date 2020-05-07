@@ -22,8 +22,7 @@ class FileTypeService
     /**
      * FileTypeService constructor.
      *
-     * @param RouterInterface $router
-     * @param Packages        $packages
+     * @param Packages $packages
      */
     public function __construct(RouterInterface $router)
     {
