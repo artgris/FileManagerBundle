@@ -111,4 +111,4 @@ file manager
     
 #### Demo Application
 
-[FileManagerDemo](https://github.com/artgris/FileManagerBundleDemo) is a complete Symfony application (Symfony 4.4) created to showcase FileManagerBundle features.
+[FileManagerDemo](https://github.com/artgris/FileManagerBundleDemo) is a complete Symfony application (Symfony 4.4 and 5.0) created to showcase FileManagerBundle features.
