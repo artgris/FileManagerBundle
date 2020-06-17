@@ -24,4 +24,4 @@ Without the configuration in the .htaccess file, allowing uploads of all file ty
 
 ### Hide and/or block access to specific files or folders
 
-Ex: https://github.com/artgris/FileManagerBundleDemo/blob/symfony-5/src/EventSubscriber/FileManagerConfiguration.php
+Example: Block and hide all files/folders with regex: "/privates|.privates/": https://github.com/artgris/FileManagerBundleDemo/blob/symfony-5/src/EventSubscriber/FileManagerConfiguration.php
