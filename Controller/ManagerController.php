@@ -132,6 +132,8 @@ class ManagerController extends AbstractController
             });
         }
 
+        $this->dispatch(FileManagerEvents::POST_FILE_FILTER_CONFIGURATION, ['finder' => $finderFiles]);
+
         $formDelete = $this->createDeleteForm()->createView();
         $fileArray = [];
         foreach ($finderFiles as $file) {
@@ -167,7 +169,6 @@ class ManagerController extends AbstractController
             'fileArray' => $fileArray,
             'formDelete' => $formDelete,
         ];
-
         if ($isJson) {
             $fileList = $this->renderView('@ArtgrisFileManager/views/_manager_view.html.twig', $parameters);
 
@@ -320,7 +321,10 @@ class ManagerController extends AbstractController
     {
         $fileManager = $this->newFileManager($request->query->all());
 
-        return new BinaryFileResponse($fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.urldecode($fileName));
+        $file = $fileManager->getCurrentPath() . \DIRECTORY_SEPARATOR . urldecode($fileName);
+        $this->dispatch(FileManagerEvents::FILE_ACCESS, ['path' => $file]);
+
+        return new BinaryFileResponse($file);
     }
 
     /**
@@ -434,6 +438,8 @@ class ManagerController extends AbstractController
             return $file->isReadable();
         });
 
+        $this->dispatch(FileManagerEvents::POST_DIRECTORY_FILTER_CONFIGURATION, ['finder' => $directories]);
+
         if ($baseFolderName) {
             $directories->name($baseFolderName);
         }
@@ -479,7 +485,7 @@ class ManagerController extends AbstractController
     {
         $files = new Finder();
         $files->in($path)->files()->depth(0)->name($regex);
-
+        $this->dispatch(FileManagerEvents::POST_FILE_FILTER_CONFIGURATION, ['finder' => $files]);
         return iterator_count($files);
     }
 
@@ -504,8 +510,7 @@ class ManagerController extends AbstractController
             throw new \RuntimeException('Please define a conf parameter in your route');
         }
         $webDir = $this->getParameter('artgris_file_manager')['web_dir'];
-
-        $this->fileManager = new FileManager($queryParameters, $this->filemanagerService->getBasePath($queryParameters), $this->getKernelRoute(), $this->get('router'), $webDir);
+        $this->fileManager = new FileManager($queryParameters, $this->filemanagerService->getBasePath($queryParameters), $this->getKernelRoute(), $this->get('router'), $this->dispatcher, $webDir);
 
         return $this->fileManager;
     }

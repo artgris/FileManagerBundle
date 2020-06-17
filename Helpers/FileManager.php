@@ -2,6 +2,9 @@
 
 namespace Artgris\Bundle\FileManagerBundle\Helpers;
 
+use Artgris\Bundle\FileManagerBundle\Event\FileManagerEvents;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -20,6 +23,10 @@ class FileManager
     private $router;
     private $configuration;
     private $webDir;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $dispatcher;
 
     /**
      * FileManager constructor.
@@ -31,12 +38,13 @@ class FileManager
      *
      * @internal param $basePath
      */
-    public function __construct($queryParameters, $configuration, $kernelRoute, RouterInterface $router, $webDir)
+    public function __construct($queryParameters, $configuration, $kernelRoute, RouterInterface $router, EventDispatcherInterface $dispatcher, $webDir)
     {
         $this->queryParameters = $queryParameters;
         $this->configuration = $configuration;
         $this->kernelRoute = $kernelRoute;
         $this->router = $router;
+        $this->dispatcher = $dispatcher;
         // Check Security
         $this->checkSecurity();
         $this->webDir = $webDir;
@@ -55,7 +63,7 @@ class FileManager
     public function getRegex()
     {
         if (isset($this->configuration['regex'])) {
-            return '/'.$this->configuration['regex'].'/i';
+            return '/' . $this->configuration['regex'] . '/i';
         }
 
         switch ($this->getType()) {
@@ -77,7 +85,7 @@ class FileManager
 
     public function getCurrentPath()
     {
-        return realpath($this->getBasePath().$this->getCurrentRoute());
+        return realpath($this->getBasePath() . $this->getCurrentRoute());
     }
 
     // parent url
@@ -101,7 +109,7 @@ class FileManager
     {
         $baseUrl = $this->getBaseUrl();
         if ($baseUrl) {
-            return $baseUrl.$this->getCurrentRoute().'/';
+            return $baseUrl . $this->getCurrentRoute() . '/';
         }
 
         return false;
@@ -109,7 +117,7 @@ class FileManager
 
     private function getBaseUrl()
     {
-        $webPath = '../'.$this->webDir;
+        $webPath = '../' . $this->webDir;
         $dirl = new \SplFileInfo($this->getConfiguration()['dir']);
         $base = $dirl->getPathname();
         if (0 === mb_strpos($base, $webPath)) {
@@ -138,6 +146,9 @@ class FileManager
         if (false === $currentPath || 0 !== mb_strpos($currentPath, $this->getBasePath())) {
             throw new HttpException(Response::HTTP_UNAUTHORIZED, 'You are not allowed to access this folder.');
         }
+        $event = new GenericEvent($this, ['path' => $currentPath]);
+        $this->dispatcher->dispatch($event, FileManagerEvents::POST_CHECK_SECURITY);
+
     }
 
     public function getModule()
