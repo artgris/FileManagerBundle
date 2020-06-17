@@ -41,7 +41,7 @@ Documentation
   * [Chapter 1 - Basic Configuration](Resources/doc/book/1-basic-configuration.md)
   * [Chapter 2 - Service Configuration](Resources/doc/book/2-service-configuration.md)
   * [Chapter 3 - Access to the File Manager](Resources/doc/book/3-access-file-manager.md)
-  * [Chapter 4 - Security](Resources/doc/book/4-security.md)
+  * [Chapter 4 - Security | Hide and/or block access to specific files or folders](Resources/doc/book/4-security.md)
   
 #### Tutorials
 
