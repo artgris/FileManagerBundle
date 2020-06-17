@@ -20,3 +20,8 @@ Example:
 Note:
 Since Apache version 2.3.9, .htaccess support is disabled by default and must be explicitly enabled with the AllowOverride directive.
 Without the configuration in the .htaccess file, allowing uploads of all file types makes your site vulnerable to remote code execution attacks.
+
+
+### Hide and/or block access to specific files or folders
+
+Ex: https://github.com/artgris/FileManagerBundleDemo/blob/symfony-5/src/EventSubscriber/FileManagerConfiguration.php
