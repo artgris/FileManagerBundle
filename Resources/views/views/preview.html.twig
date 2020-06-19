@@ -1,0 +1,8 @@
+{% if lazy %}
+    {% if twig_extension %}
+        {% set filename = include(template_from_string("{{"~image_template~"}}")) %}
+    {% endif %}
+    <img class="lazy" data-src="{{ asset(filename) }}" height="{{ size }}">
+{% else %}
+    <img src="{{ asset(filename) }}" height="{{ size }}">
+{% endif %}

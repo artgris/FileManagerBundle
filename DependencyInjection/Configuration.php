@@ -30,6 +30,8 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('dir')->end()
                             ->enumNode('type')->values(['file', 'image', 'media'])->end()
                             ->booleanNode('tree')->end()
+                            ->scalarNode('twig_extension')->end()
+                            ->booleanNode('cachebreaker')->defaultValue(true)->end()
                             ->enumNode('view')->values(['thumbnail', 'list'])->defaultValue('list')->end()
                             ->scalarNode('regex')->end()
                             ->scalarNode('service')->end()

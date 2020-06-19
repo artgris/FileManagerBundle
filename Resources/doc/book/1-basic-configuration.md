@@ -137,6 +137,34 @@ artgris_file_manager:
 
 >It is recommended to combine `regex` option with `accept` option for a better user experience
 
+## `twig_extension` to apply a twig filter or a twig function to preview images
+
+| Option | Type     | Required  | Default value |
+| :---  |:--------:|:--------:|:-------------:|
+| `twig_extension`  | `string` |  False   |  |
+
+'$IMAGE$' in string will be replace by image path.
+
+```yml  
+artgris_file_manager:
+    conf:
+        public:
+            ...
+           twig_extension: "resize($IMAGE$)"  // Twig function example
+           twig_extension: "image($IMAGE$).zoomCrop(22, 22)"  // Twig function (Gregwar/ImageBundle) example
+
+           twig_extension: "$IMAGE$|resize"   // Twig filter example
+
+```
+
+## `cachebreaker` images 
+
+| Option | Type     | Required  | Default value |
+| :---  |:--------:|:--------:|:-------------:|
+| `cachebreaker`  | `bool` |  False   | True |
+
+Adding a cachebreaker ?time=RANDOM_NUMBER or & &time=RANDOM_NUMBER at the end of the images (preview) url. It's removed if you have used "twig_extension" option.
+
 ## `upload` A non-exhaustive  configuration of the File Upload widget [blueimp/jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload)
 > [Exhaustive options](https://github.com/blueimp/jQuery-File-Upload/blob/master/server/php/UploadHandler.php) can only be defined with [The service configuration](2-service-configuration.md)
 

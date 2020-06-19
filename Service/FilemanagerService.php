@@ -31,9 +31,8 @@ class FilemanagerService
 
         if (isset($managerConf[$conf]['service'])) {
             $extra = isset($queryParameters['extra']) ? $queryParameters['extra'] : [];
-            $conf = $this->container->get($managerConf[$conf]['service'])->getConf($extra);
-
-            return $conf;
+            $confService = $this->container->get($managerConf[$conf]['service'])->getConf($extra);
+            return array_merge($managerConf[$conf], $confService);
         }
 
         throw new \RuntimeException('Please define a "dir" or a "service" parameter in your config.yml');

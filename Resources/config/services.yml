@@ -22,3 +22,6 @@ services:
 
     Artgris\Bundle\FileManagerBundle\Service\FilemanagerService:
         arguments: ['%artgris_file_manager%', '@service_container']
+
+
+    Twig\Extension\StringLoaderExtension: ~
