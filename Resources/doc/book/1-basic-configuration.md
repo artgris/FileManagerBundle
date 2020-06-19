@@ -151,7 +151,7 @@ artgris_file_manager:
         public:
             ...
            twig_extension: "resize($IMAGE$)"  // Twig function example
-           twig_extension: "image($IMAGE$).zoomCrop(22, 22)"  // Twig function (Gregwar/ImageBundle) example
+           twig_extension: "web_image($IMAGE$).zoomCrop(22, 22)"  // Twig function (Gregwar/ImageBundle) example
 
            twig_extension: "$IMAGE$|resize"   // Twig filter example
 
