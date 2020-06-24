@@ -57,3 +57,5 @@ size:
 select-all: Selecionar tudo
 upload:
   exception_move_uploaded_file: Permissão negada
+search:
+  placeholder: Pesquisa

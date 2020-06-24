@@ -285,5 +285,13 @@ $(function () {
     }
 
     lazy();
+
+    $('#search').on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $('#form-multiple-delete .file-wrapper').filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+
+    });
 })
 ;

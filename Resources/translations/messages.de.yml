@@ -57,6 +57,8 @@ size:
 select-all: Alles auswählen
 upload:
   exception_move_uploaded_file: Zugriff verweigert
+search:
+  placeholder: Suche
 
 'The uploaded file exceeds the upload_max_filesize directive in php.ini': Die Dateigrösse überschreitet die maximal erlaubte Größe (upload_max_filesize in php.ini)
 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form': Die Dateigrösse überschreitet die maximal erlaubte Größe (MAX_FILE_SIZE im HTML-Formular)

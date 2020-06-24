@@ -93,6 +93,9 @@
             {% endblock %}
             {% block display %}
                 <div class="btn-group pull-right">
+                    <input type="search" class="form-control search"
+                           name="search" id="search" placeholder="{{ 'search.placeholder'|trans }}" aria-describedby="search">
+
                     {% if fileManager.view != "list" %}
                         {{ order(fileManager, 'name') }}
                         {{ order(fileManager, 'date') }}

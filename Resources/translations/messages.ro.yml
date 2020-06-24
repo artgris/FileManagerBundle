@@ -57,3 +57,5 @@ size:
 select-all: Selecteaza tot
 upload:
   exception_move_uploaded_file: Permisiune anulata
+search:
+  placeholder: Căutare

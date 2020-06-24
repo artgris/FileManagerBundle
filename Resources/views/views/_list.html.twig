@@ -35,7 +35,7 @@
         <tbody>
         {% for fileEntity in fileArray %}
             {% set file = fileEntity.file %}
-            <tr class="{{ fileEntity.isImage() ? 'img' : file.type }}">
+            <tr class="file-wrapper {{ fileEntity.isImage() ? 'img' : file.type }}">
                 <td>
                     {% block file_checkbox %}
                         <input type="checkbox" class="checkbox" name="delete[]" value="{{ file.fileName }}"

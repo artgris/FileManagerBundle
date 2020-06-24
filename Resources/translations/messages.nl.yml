@@ -57,3 +57,5 @@ size:
 select-all: Selecter alle
 upload:
   exception_move_uploaded_file: Toestemming geweigerd
+search:
+  placeholder: Zoeken

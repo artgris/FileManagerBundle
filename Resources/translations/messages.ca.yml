@@ -57,3 +57,5 @@ size:
 select-all: "Selecciona-ho tot"
 upload:
   exception_move_uploaded_file: "Permís denegat"
+search:
+  placeholder: Cerca

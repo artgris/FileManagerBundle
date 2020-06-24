@@ -57,3 +57,5 @@ size:
 select-all: Выбрать все
 upload:
   exception_move_uploaded_file: Доступ запрещен
+search:
+  placeholder: Поиск

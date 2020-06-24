@@ -57,3 +57,5 @@ size:
 select-all: Select all
 upload:
   exception_move_uploaded_file: Permission denied
+search:
+  placeholder: Search

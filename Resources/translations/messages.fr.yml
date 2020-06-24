@@ -57,6 +57,8 @@ size:
 select-all: Tout selectionner
 upload:
   exception_move_uploaded_file: Permission refusée
+search:
+  placeholder: Recherche
 
 'The uploaded file exceeds the upload_max_filesize directive in php.ini': La taille maximum des fichiers (upload_max_filesize) a été atteinte
 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form': La taille maximum de fichier (MAX_FILE_SIZE) a été atteinte
