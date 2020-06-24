@@ -98,7 +98,7 @@ class ManagerControllerTest extends AbstractTestCase
         $crawler = $this->getManagerPage();
 
         $files = [
-            'file',
+            'file-wrapper file',
         ];
 
         foreach ($files as $i => $file) {
