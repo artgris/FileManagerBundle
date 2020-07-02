@@ -295,7 +295,7 @@ class ManagerController extends AbstractController
 
         foreach ($response['files'] as $file) {
             if (isset($file->error)) {
-                $file->error = $this->get('translator')->trans($file->error);
+                $file->error = $this->translator->trans($file->error);
             } else {
                 if (!$fileManager->getImagePath()) {
                     $file->url = $this->generateUrl('file_manager_file', array_merge($fileManager->getQueryParameters(), ['fileName' => $file->url]));
