@@ -1,4 +1,4 @@
-FileManagerBundle
+MalditoFileManagerBundle
 =================
 
 [![Tests][1]][2] [![Code Quality][3]][4] [![Code Coverage][5]][6] [![Symfony 2.x, 3.x, 4.x, 5.x][7]][8]
@@ -31,6 +31,7 @@ FileManager is a simple Multilingual File Manager Bundle for Symfony
     * **Thumbnails generation**
     * [Exhaustive options](https://github.com/blueimp/jQuery-File-Upload/blob/master/server/php/UploadHandler.php)
 * Compatible with [**FOSCKEditorBundle**](https://github.com/FriendsOfSymfony/FOSCKEditorBundle)
+* **Compatible with MalditoGutenberg editor.**
 
 Documentation
 -------------

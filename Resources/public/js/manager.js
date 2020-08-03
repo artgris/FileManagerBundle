@@ -207,6 +207,27 @@ $(function () {
         });
     }
 
+    // Module Gutenberg
+    if (moduleName.includes('gutenberg')) {
+        $('#form-multiple-delete').on('click', '.select', function () {
+
+            let fileUrl = $(this).attr("data-path");
+
+            let file = {
+                icon: "fa-image",
+                is_file: true,
+                is_image: true,
+                name: fileUrl,
+                thumb_url: fileUrl,
+                time: 1578926011,
+                url: fileUrl
+            }
+
+            window.opener.SetUrl([file]);
+            window.close();
+        });
+    }
+
     // Global functions
     // display error alert
     function displayError(msg) {
