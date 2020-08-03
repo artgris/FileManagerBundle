@@ -1,7 +1,7 @@
 {
-  "name": "artgris/filemanager-bundle",
+  "name": "malditaes/maldito-filemanager-bundle",
   "type": "symfony-bundle",
-  "description": "FileManager is a simple Multilingual File Manager Bundle for Symfony",
+  "description": "FileManager is a simple Multilingual File Manager Bundle for Symfony, compatible with Gutenberg",
   "keywords": [
     "symfony",
     "bundle",
@@ -13,6 +13,10 @@
     {
       "name": "Arthur Gribet",
       "email": "a.gribet@gmail.com"
+    },
+    {
+      "name": "David Fernández Sancho",
+      "email": "dfernandez@maldita.es"
     }
   ],
   "require": {
