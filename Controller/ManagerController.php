@@ -79,6 +79,7 @@ class ManagerController extends AbstractController
     {
         $queryParameters = $request->query->all();
         $isJson = $request->get('json') ? true : false;
+        $isXmlHttpRequest = $request->isXmlHttpRequest();
         if ($isJson) {
             unset($queryParameters['json']);
         }
@@ -221,7 +222,13 @@ class ManagerController extends AbstractController
         $parameters['form'] = $form->createView();
         $parameters['formRename'] = $formRename->createView();
 
-        return $this->render('@ArtgrisFileManager/manager.html.twig', $parameters);
+        // Change the template depending on the request type
+        if ($isXmlHttpRequest) {
+            return $this->render('@ArtgrisFileManager/manager_ajax.html.twig', $parameters);
+        }
+        else {
+            return $this->render('@ArtgrisFileManager/manager.html.twig', $parameters);
+        }
     }
 
     /**
