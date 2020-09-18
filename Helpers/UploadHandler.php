@@ -385,10 +385,10 @@ class UploadHandler
         switch ($last) {
             case 'g':
                 $val *= 1024;
-                // no break
+            // no break
             case 'm':
                 $val *= 1024;
-                // no break
+            // no break
             case 'k':
                 $val *= 1024;
         }
@@ -524,9 +524,7 @@ class UploadHandler
             $name = $this->upcount_name($name);
         }
         // Keep an existing filename if this is part of a chunked upload:
-        if (isset($content_range)) {
-            $uploaded_bytes = $this->fix_integer_overflow((int) $content_range[1]);
-        }
+        $uploaded_bytes = $this->fix_integer_overflow((int)@$content_range[1]);
         while (is_file($this->get_upload_path($name))) {
             if ($uploaded_bytes === $this->get_file_size(
                     $this->get_upload_path($name))
@@ -846,7 +844,7 @@ class UploadHandler
             case 'gif':
             case 'png':
                 imagecolortransparent($new_img, imagecolorallocate($new_img, 0, 0, 0));
-                // no break
+            // no break
             case 'png':
                 imagealphablending($new_img, false);
                 imagesavealpha($new_img, true);
