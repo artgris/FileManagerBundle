@@ -4,3 +4,4 @@ phpunit.xml
 vendor/*
 build/
 php-cs-fixer
+/.phpunit.result.cache
