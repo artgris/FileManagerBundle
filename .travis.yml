@@ -16,15 +16,13 @@ matrix:
   include:
     - php: 7.4
 
-    # Test the latest stable release
     - php: 7.2
 
-      # Minimum supported dependencies with the latest and oldest PHP version
     - php: 7.3
-      
+
       # Latest commit to master
     - php: nightly
-      env: COMPOSER_FLAGS="--ignore-platform-reqs" SYMFONY_PHPUNIT_VERSION=8.4
+      env: COMPOSER_FLAGS="--ignore-platform-reqs" SYMFONY_PHPUNIT_VERSION=9
 
   allow_failures:
     # Dev-master is allowed to fail.
