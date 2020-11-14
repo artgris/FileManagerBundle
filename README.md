@@ -108,7 +108,7 @@ file manager
 
 #### Run tests:
 
-    vendor/bin/phpunit
+    ./vendor/bin/simple-phpunit
     
 #### Demo Application
 

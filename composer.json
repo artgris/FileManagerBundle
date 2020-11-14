@@ -30,7 +30,7 @@
     "symfony/validator": "^4.4|^5.0",
     "symfony/asset": "^4.4|^5.0",
     "symfony/expression-language": "^4.4|^5.0",
-    "oomphinc/composer-installers-extender": "^1.1"
+    "oomphinc/composer-installers-extender": "^1.1|^2.0"
   },
   "require-dev": {
     "symfony/phpunit-bridge": "^4.3.5|^5.0",
