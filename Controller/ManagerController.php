@@ -9,6 +9,7 @@ use Artgris\Bundle\FileManagerBundle\Helpers\UploadHandler;
 use Artgris\Bundle\FileManagerBundle\Service\FilemanagerService;
 use Artgris\Bundle\FileManagerBundle\Service\FileTypeService;
 use Artgris\Bundle\FileManagerBundle\Twig\OrderExtension;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -56,16 +57,21 @@ class ManagerController extends AbstractController
      * @var TranslatorInterface
      */
     private $translator;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     /**
      * ManagerController constructor.
      */
-    public function __construct(FilemanagerService $filemanagerService, KernelInterface $kernel, EventDispatcherInterface $dispatcher, TranslatorInterface $translator)
+    public function __construct(FilemanagerService $filemanagerService, KernelInterface $kernel, EventDispatcherInterface $dispatcher, TranslatorInterface $translator, LoggerInterface $logger)
     {
         $this->filemanagerService = $filemanagerService;
         $this->kernel = $kernel;
         $this->dispatcher = $dispatcher;
         $this->translator = $translator;
+        $this->logger = $logger;
     }
 
     /**
@@ -213,6 +219,7 @@ class ManagerController extends AbstractController
                 $fs->mkdir($directory);
                 $this->addFlash('success', $this->translator->trans('folder.add.success'));
             } catch (IOExceptionInterface $e) {
+                $this->logger->error($e->getMessage());
                 $this->addFlash('danger', $this->translator->trans('folder.add.danger', ['%message%' => $data['name']]));
             }
 
@@ -245,17 +252,19 @@ class ManagerController extends AbstractController
             $newfileName = $data['name'].$extension;
             if ($newfileName !== $fileName && isset($data['name'])) {
                 $fileManager = $this->newFileManager($queryParameters);
-                $NewfilePath = $fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$newfileName;
-                $OldfilePath = realpath($fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$fileName);
-                if (0 !== mb_strpos($NewfilePath, $fileManager->getCurrentPath())) {
+                $newfilePath = $fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$newfileName;
+                $oldfilePath = realpath($fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$fileName);
+                if (0 !== mb_strpos($newfilePath, $fileManager->getCurrentPath())) {
+                    $this->logger->error($oldfilePath.' - The files no longer exist or you are not authorized to access this page');
                     $this->addFlash('danger', $this->translator->trans('file.renamed.unauthorized'));
                 } else {
                     $fs = new Filesystem();
                     try {
-                        $fs->rename($OldfilePath, $NewfilePath);
+                        $fs->rename($oldfilePath, $newfilePath);
                         $this->addFlash('success', $this->translator->trans('file.renamed.success'));
                         //File has been renamed successfully
                     } catch (IOException $exception) {
+                        $this->logger->error($exception->getMessage());
                         $this->addFlash('danger', $this->translator->trans('file.renamed.danger'));
                     }
                 }
@@ -295,6 +304,7 @@ class ManagerController extends AbstractController
 
         foreach ($response['files'] as $file) {
             if (isset($file->error)) {
+                $this->logger->error($file->name.' - '.$file->error);
                 $file->error = $this->translator->trans($file->error);
             } else {
                 if (!$fileManager->getImagePath()) {
@@ -348,6 +358,7 @@ class ManagerController extends AbstractController
                 foreach ($queryParameters['delete'] as $fileName) {
                     $filePath = realpath($fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$fileName);
                     if (0 !== mb_strpos($filePath, $fileManager->getCurrentPath())) {
+                        $this->logger->error($filePath.' - The files no longer exist or you are not authorized to access this page');
                         $this->addFlash('danger', 'file.deleted.danger');
                     } else {
                         $this->dispatch(FileManagerEvents::PRE_DELETE_FILE);
@@ -355,6 +366,7 @@ class ManagerController extends AbstractController
                             $fs->remove($filePath);
                             $is_delete = true;
                         } catch (IOException $exception) {
+                            $this->logger->error($exception->getMessage());
                             $this->addFlash('danger', 'file.deleted.unauthorized');
                         }
                         $this->dispatch(FileManagerEvents::POST_DELETE_FILE);
@@ -370,6 +382,7 @@ class ManagerController extends AbstractController
                     $fs->remove($fileManager->getCurrentPath());
                     $this->addFlash('success', 'folder.deleted.success');
                 } catch (IOException $exception) {
+                    $this->logger->error($exception->getMessage());
                     $this->addFlash('danger', 'folder.deleted.unauthorized');
                 }
 
