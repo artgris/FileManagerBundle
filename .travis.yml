@@ -14,19 +14,13 @@ env:
 matrix:
   fast_finish: true
   include:
+    - php: 8.0
+
     - php: 7.4
 
     - php: 7.2
 
     - php: 7.3
-
-      # Latest commit to master
-    - php: nightly
-      env: COMPOSER_FLAGS="--ignore-platform-reqs" SYMFONY_PHPUNIT_VERSION=9
-
-  allow_failures:
-    # Dev-master is allowed to fail.
-    - php: nightly
 
 before_install:
   - phpenv config-rm xdebug.ini || true
@@ -41,7 +35,3 @@ script:
   - composer validate --strict --no-check-lock
   - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS
   - if [[ "$CHECK_PHP_SYNTAX" == "true" ]]; then php php-cs-fixer --no-interaction --dry-run --diff -v fix; fi
-  # this checks that the Twig template files contain no syntax errors
-#  - ./tests/bin/console lint:twig "src" "tests"
-  # this checks that the YAML config files contain no syntax errors
-#  - ./tests/bin/console lint:yaml "tests"
