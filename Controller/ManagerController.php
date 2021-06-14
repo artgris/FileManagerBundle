@@ -328,7 +328,7 @@ class ManagerController extends AbstractController
     }
 
     /**
-     * @Route("/delete/", name="file_manager_delete",  methods={"DELETE"})
+     * @Route("/delete/", name="file_manager_delete")
      *
      * @throws \Exception
      *
@@ -392,7 +392,6 @@ class ManagerController extends AbstractController
     private function createDeleteForm()
     {
         return $this->get('form.factory')->createNamedBuilder('delete_f')
-            ->setMethod('DELETE')
             ->add('DELETE', SubmitType::class, [
                 'translation_domain' => 'messages',
                 'attr' => [
