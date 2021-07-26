@@ -221,6 +221,9 @@ class ManagerController extends AbstractController
         $parameters['form'] = $form->createView();
         $parameters['formRename'] = $formRename->createView();
 
+        $parameters['user'] = $this->getUser();
+        $parameters['permissions'] = $fileManager->getConfigurationParameter( 'permissions' );
+
         return $this->render('@ArtgrisFileManager/manager.html.twig', $parameters);
     }
 

@@ -51,6 +51,7 @@
                     <span class="fas fa-sync"></span>
                 </button>
 
+                {% if is_granted(permissions.upload_files) %}
                 <span class="btn btn-success btn-sm fileinput-button btn-action">
                     <span class="far fa-file"></span>
                     <span class="bar-action">{{ 'button.add.files'|trans }}</span>
@@ -59,12 +60,15 @@
                                name="files[]" multiple=""
                                accept="{{ fileManager.configuration.accept is defined ? fileManager.configuration.accept : (fileManager.type ? accept(fileManager.type)) }}">
                 </span>
+                {% endif %}
+                {% if is_granted(permissions.create_folders) %}
                 <button type="button" class="btn btn-primary btn-sm btn-action" data-toggle="modal"
                         data-target="#addFolder">
                     <span class="far fa-folder-open"></span>
                     <span class="bar-action">{{ 'button.add.folder'|trans }}</span>
                 </button>
-                {% if fileManager.parent %}
+                {% endif %}
+                {% if fileManager.parent and is_granted(permissions.remove_folders)   %}
                     <button type="button"
                             class="btn btn-sm btn-danger btn-action js-delete-modal"
                             data-trigger="click"
@@ -78,6 +82,7 @@
                         <span class="bar-action">{{ 'button.delete.current'|trans }}</span>
                     </button>
                 {% endif %}
+                {% if is_granted(permissions.remove_files) %}
                 <a id="js-delete-multiple-modal"
                    class="btn btn-sm btn-danger btn-action disabled"
                    type="button"
@@ -90,6 +95,7 @@
                     <span class="far fa-check-square"></span>
                     <span class="bar-action">{{ 'button.delete.selected'|trans }}</span>
                 </a>
+                {% endif %}
             {% endblock %}
             {% block display %}
                 <div class="btn-group pull-right">
