@@ -16,22 +16,14 @@ matrix:
   include:
     - php: 8.0
 
-    - php: 7.4
-
-    - php: 7.2
-
-    - php: 7.3
-
 before_install:
   - phpenv config-rm xdebug.ini || true
-  - if [[ "$CHECK_PHP_SYNTAX" == "true" ]]; then wget https://cs.symfony.com/download/php-cs-fixer-v3.phar -O php-cs-fixer; fi
-  - phpenv global 7.2; composer global require --prefer-dist --no-progress --no-scripts --no-plugins symfony/flex dev-master; phpenv global $TRAVIS_PHP_VERSION
+  - phpenv global 8.0; phpenv global $TRAVIS_PHP_VERSION
 
 install:
   - composer update $COMPOSER_FLAGS --no-interaction
-  - phpenv global 7.2; ./vendor/bin/simple-phpunit install; phpenv global $TRAVIS_PHP_VERSION
+  - phpenv global 8.0; ./vendor/bin/simple-phpunit install; phpenv global $TRAVIS_PHP_VERSION
 
 script:
   - composer validate --strict --no-check-lock
   - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS
-  - if [[ "$CHECK_PHP_SYNTAX" == "true" ]]; then php php-cs-fixer --no-interaction --dry-run --diff -v fix; fi
