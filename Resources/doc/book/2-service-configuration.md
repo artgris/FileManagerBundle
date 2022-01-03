@@ -131,6 +131,7 @@ with
 
 ```yml 
 custom_service:
+      public: true
       class: AppBundle\Service\CustomService
       arguments: ['@security.token_storage']
 ```

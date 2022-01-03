@@ -63,7 +63,7 @@ $ composer require artgris/filemanager-bundle
 
 
 ```yaml
-# app/config/routing.yml
+# app/config/routes.yaml
 artgris_bundle_file_manager:
     resource: "@ArtgrisFileManagerBundle/Controller"
     type:     annotation
@@ -72,7 +72,7 @@ artgris_bundle_file_manager:
 ### Step 3:  Enable the translator service
 
 ```yml
-# app/config/config.yml
+# app/config/packages/translation.yaml
 framework:
     translator: { fallbacks: [ "en" ] }
 ```    
@@ -82,10 +82,10 @@ Creating Your First File Manager
 
 Create a folder **uploads** in **public**.
  
-#### Add following configuration (symfony4) :
+#### Add following configuration:
 
 ```yaml
-# app/config/config.yml
+# app/config/packages/artgris_file_manager.yaml
 artgris_file_manager:
     conf:
         default:
