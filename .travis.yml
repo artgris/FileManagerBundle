@@ -24,7 +24,7 @@ matrix:
 
 before_install:
   - phpenv config-rm xdebug.ini || true
-  - if [[ "$CHECK_PHP_SYNTAX" == "true" ]]; then wget https://cs.symfony.com/download/php-cs-fixer-v2.phar -O php-cs-fixer; fi
+  - if [[ "$CHECK_PHP_SYNTAX" == "true" ]]; then wget https://cs.symfony.com/download/php-cs-fixer-v3.phar -O php-cs-fixer; fi
   - phpenv global 7.2; composer global require --prefer-dist --no-progress --no-scripts --no-plugins symfony/flex dev-master; phpenv global $TRAVIS_PHP_VERSION
 
 install:

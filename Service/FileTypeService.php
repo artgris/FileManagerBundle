@@ -8,40 +8,26 @@ use Symfony\Component\Asset\Packages;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
-class FileTypeService
-{
+class FileTypeService {
     const IMAGE_SIZE = [
         FileManager::VIEW_LIST => '22',
         FileManager::VIEW_THUMBNAIL => '100',
     ];
 
     /**
-     * @var RouterInterface
-     */
-    private $router;
-    /**
-     * @var Environment
-     */
-    private $twig;
-
-    /**
      * FileTypeService constructor.
-     *
-     * @param Packages $packages
      */
-    public function __construct(RouterInterface $router, Environment $twig)
-    {
-        $this->router = $router;
-        $this->twig = $twig;
+    public function __construct(private RouterInterface $router, private Environment $twig) {
     }
 
-    public function preview(FileManager $fileManager, SplFileInfo $file)
-    {
+    public function preview(FileManager $fileManager, SplFileInfo $file) {
         if ($fileManager->getImagePath()) {
-            $filePath = htmlentities($fileManager->getImagePath() . rawurlencode($file->getFilename()));
+            $filePath = htmlentities($fileManager->getImagePath().rawurlencode($file->getFilename()));
         } else {
-            $filePath = $this->router->generate('file_manager_file',
-                array_merge($fileManager->getQueryParameters(), ['fileName' => rawurlencode($file->getFilename())]));
+            $filePath = $this->router->generate(
+                'file_manager_file',
+                array_merge($fileManager->getQueryParameters(), ['fileName' => rawurlencode($file->getFilename())])
+            );
         }
         $extension = $file->getExtension();
         $type = $file->getType();
@@ -51,19 +37,22 @@ class FileTypeService
             return $this->fileIcon($filePath, $extension, $size, true, $fileManager->getConfigurationParameter('twig_extension'), $fileManager->getConfigurationParameter('cachebreaker'));
         }
         if ('dir' === $type) {
-            $href = $this->router->generate('file_manager', array_merge($fileManager->getQueryParameters(),
-                ['route' => $fileManager->getRoute() . '/' . rawurlencode($file->getFilename())]));
+            $href = $this->router->generate(
+                'file_manager', array_merge(
+                $fileManager->getQueryParameters(),
+                ['route' => $fileManager->getRoute().'/'.rawurlencode($file->getFilename())]
+            )
+            );
 
             return [
                 'path' => $filePath,
                 'html' => "<i class='fas fa-folder-open' aria-hidden='true'></i>",
-                'folder' => '<a  href="' . $href . '">' . $file->getFilename() . '</a>',
+                'folder' => '<a  href="'.$href.'">'.$file->getFilename().'</a>',
             ];
         }
     }
 
-    public function accept($type)
-    {
+    public function accept($type): bool|string {
         switch ($type) {
             case 'image':
                 $accept = 'image/*';
@@ -71,8 +60,6 @@ class FileTypeService
             case 'media':
                 $accept = 'video/*';
                 break;
-            case 'file':
-                return false;
             default:
                 return false;
         }
@@ -80,8 +67,7 @@ class FileTypeService
         return $accept;
     }
 
-    public function fileIcon($filePath, $extension = null, $size = 75, $lazy = false, $twigExtension = null, $cachebreaker = null)
-    {
+    public function fileIcon(string $filePath,?string $extension = null, ?int $size = 75, ?bool $lazy = false, ?string $twigExtension = null, ?bool $cachebreaker = null): array {
         $imageTemplate = null;
 
         if (null === $extension) {
@@ -101,8 +87,8 @@ class FileTypeService
                 $fileName = $filePath;
                 if ($cachebreaker) {
                     $query = parse_url($filePath, PHP_URL_QUERY);
-                    $time = 'time=' . time();
-                    $fileName = $query ? $filePath . '&' . $time : $filePath . '?' . $time;
+                    $time = 'time='.time();
+                    $fileName = $query ? $filePath.'&'.$time : $filePath.'?'.$time;
                 }
 
                 if ($twigExtension) {
@@ -115,7 +101,7 @@ class FileTypeService
                     'lazy' => $lazy,
                     'twig_extension' => $twigExtension,
                     'image_template' => $imageTemplate,
-                    'file_path' => $filePath
+                    'file_path' => $filePath,
 
                 ]);
 
@@ -152,8 +138,7 @@ class FileTypeService
         ];
     }
 
-    public function isYoutubeVideo($url)
-    {
+    public function isYoutubeVideo($url): bool|int {
         $rx = '~
               ^(?:https?://)?                            
                (?:www[.])?                               
@@ -161,6 +146,6 @@ class FileTypeService
                ([^&]{11})                                
                 ~x';
 
-        return $has_match = preg_match($rx, $url, $matches);
+        return preg_match($rx, $url, $matches);
     }
 }

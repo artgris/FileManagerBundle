@@ -15,20 +15,13 @@ class OrderExtension extends AbstractExtension
     const ICON = [self::ASC => 'up', self::DESC => 'down'];
 
     /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
      * OrderExtension constructor.
      */
-    public function __construct(RouterInterface $router)
+    public function __construct(private RouterInterface $router)
     {
-        $this->router = $router;
     }
 
-    public function order(Environment $environment, FileManager $fileManager, $type)
-    {
+    public function order(Environment $environment, FileManager $fileManager, $type): string {
         $order = self::ASC === $fileManager->getQueryParameter('order');
         $active = $fileManager->getQueryParameter('orderby') === $type ? 'actived' : null;
         $orderBy = [];
@@ -52,8 +45,7 @@ class OrderExtension extends AbstractExtension
     /**
      * @return array
      */
-    public function getFunctions()
-    {
+    public function getFunctions(): array {
         return [
             'order' => new TwigFunction('order', [$this, 'order'],
                 ['needs_environment' => true, 'is_safe' => ['html']]),

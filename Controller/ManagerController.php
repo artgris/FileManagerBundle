@@ -9,6 +9,7 @@ use Artgris\Bundle\FileManagerBundle\Helpers\UploadHandler;
 use Artgris\Bundle\FileManagerBundle\Service\FilemanagerService;
 use Artgris\Bundle\FileManagerBundle\Service\FileTypeService;
 use Artgris\Bundle\FileManagerBundle\Twig\OrderExtension;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -22,63 +23,38 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @author Arthur Gribet <a.gribet@gmail.com>
  */
-class ManagerController extends AbstractController
-{
-    /**
-     * @var FileManager
-     */
-    protected $fileManager;
-    /**
-     * @var FilemanagerService
-     */
-    private $filemanagerService;
-    /**
-     * @var KernelInterface
-     */
-    private $kernel;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
+class ManagerController extends AbstractController {
+
+    private FileManager $fileManager;
 
     /**
      * ManagerController constructor.
      */
-    public function __construct(FilemanagerService $filemanagerService, KernelInterface $kernel, EventDispatcherInterface $dispatcher, TranslatorInterface $translator)
-    {
-        $this->filemanagerService = $filemanagerService;
-        $this->kernel = $kernel;
-        $this->dispatcher = $dispatcher;
-        $this->translator = $translator;
+    public function __construct(private FilemanagerService $filemanagerService, private KernelInterface $kernel, private EventDispatcherInterface $dispatcher, private TranslatorInterface $translator, private RouterInterface $router, private FormFactoryInterface $formFactory) {
     }
 
     /**
      * @Route("/", name="file_manager")
-     *
-     * @throws \Exception
-     *
-     * @return Response
      */
-    public function indexAction(Request $request, FileTypeService $fileTypeService)
-    {
+    public function indexAction(Request $request, FileTypeService $fileTypeService): JsonResponse|Response {
         $queryParameters = $request->query->all();
-        $isJson = $request->get('json') ? true : false;
+        $isJson = $request->get('json');
         if ($isJson) {
             unset($queryParameters['json']);
         }
@@ -176,7 +152,7 @@ class ManagerController extends AbstractController
         }
         $parameters['treeData'] = json_encode($directoriesArbo);
 
-        $form = $this->get('form.factory')->createNamedBuilder('rename', FormType::class)
+        $form = $this->formFactory->createNamedBuilder('rename', FormType::class)
             ->add('name', TextType::class, [
                 'constraints' => [
                     new NotBlank(),
@@ -226,15 +202,8 @@ class ManagerController extends AbstractController
 
     /**
      * @Route("/rename/{fileName}", name="file_manager_rename")
-     *
-     * @param $fileName
-     *
-     * @throws \Exception
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function renameFileAction(Request $request, $fileName)
-    {
+    public function renameFileAction(Request $request, string $fileName): RedirectResponse {
         $queryParameters = $request->query->all();
         $formRename = $this->createRenameForm();
         /* @var Form $formRename */
@@ -269,13 +238,8 @@ class ManagerController extends AbstractController
 
     /**
      * @Route("/upload/", name="file_manager_upload")
-     *
-     * @throws \Exception
-     *
-     * @return Response
      */
-    public function uploadFileAction(Request $request)
-    {
+    public function uploadFileAction(Request $request): JsonResponse|Response {
         $fileManager = $this->newFileManager($request->query->all());
 
         $options = [
@@ -291,7 +255,7 @@ class ManagerController extends AbstractController
         $this->dispatch(FileManagerEvents::PRE_UPDATE, ['options' => &$options]);
 
         $uploadHandler = new UploadHandler($options);
-        $response = $uploadHandler->response;
+        $response = $uploadHandler->get_response();
 
         foreach ($response['files'] as $file) {
             if (isset($file->error)) {
@@ -310,18 +274,11 @@ class ManagerController extends AbstractController
 
     /**
      * @Route("/file/{fileName}", name="file_manager_file")
-     *
-     * @param $fileName
-     *
-     * @throws \Exception
-     *
-     * @return BinaryFileResponse
      */
-    public function binaryFileResponseAction(Request $request, $fileName)
-    {
+    public function binaryFileResponseAction(Request $request, string $fileName): BinaryFileResponse {
         $fileManager = $this->newFileManager($request->query->all());
 
-        $file = $fileManager->getCurrentPath() . \DIRECTORY_SEPARATOR . urldecode($fileName);
+        $file = $fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.urldecode($fileName);
         $this->dispatch(FileManagerEvents::FILE_ACCESS, ['path' => $file]);
 
         return new BinaryFileResponse($file);
@@ -329,13 +286,8 @@ class ManagerController extends AbstractController
 
     /**
      * @Route("/delete/", name="file_manager_delete")
-     *
-     * @throws \Exception
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(Request $request)
-    {
+    public function deleteAction(Request $request): RedirectResponse {
         $form = $this->createDeleteForm();
         $form->handleRequest($request);
         $queryParameters = $request->query->all();
@@ -375,7 +327,7 @@ class ManagerController extends AbstractController
 
                 $this->dispatch(FileManagerEvents::POST_DELETE_FOLDER);
                 $queryParameters['route'] = \dirname($fileManager->getCurrentRoute());
-                if ($queryParameters['route'] = '/') {
+                if ($queryParameters['route'] == '/') {
                     unset($queryParameters['route']);
                 }
 
@@ -386,12 +338,8 @@ class ManagerController extends AbstractController
         return $this->redirectToRoute('file_manager', $queryParameters);
     }
 
-    /**
-     * @return Form|\Symfony\Component\Form\FormInterface
-     */
-    private function createDeleteForm()
-    {
-        return $this->get('form.factory')->createNamedBuilder('delete_f')
+    private function createDeleteForm(): FormInterface|Form {
+        return $this->formFactory->createNamedBuilder('delete_f')
             ->add('DELETE', SubmitType::class, [
                 'translation_domain' => 'messages',
                 'attr' => [
@@ -402,12 +350,8 @@ class ManagerController extends AbstractController
             ->getForm();
     }
 
-    /**
-     * @return mixed
-     */
-    private function createRenameForm()
-    {
-        return $this->get('form.factory')->createNamedBuilder('rename_f')
+    private function createRenameForm(): FormInterface|Form {
+        return $this->formFactory->createNamedBuilder('rename_f')
             ->add('name', TextType::class, [
                 'constraints' => [
                     new NotBlank(),
@@ -423,15 +367,7 @@ class ManagerController extends AbstractController
             ->getForm();
     }
 
-    /**
-     * @param $path
-     * @param string $parent
-     * @param bool   $baseFolderName
-     *
-     * @return array|null
-     */
-    private function retrieveSubDirectories(FileManager $fileManager, $path, $parent = \DIRECTORY_SEPARATOR, $baseFolderName = false)
-    {
+    private function retrieveSubDirectories(FileManager $fileManager, string $path, ?string $parent = \DIRECTORY_SEPARATOR, ?string $baseFolderName = null): ?array {
         $directories = new Finder();
         $directories->in($path)->ignoreUnreadableDirs()->directories()->depth(0)->sortByType()->filter(function (SplFileInfo $file) {
             return $file->isReadable();
@@ -462,7 +398,8 @@ class ManagerController extends AbstractController
                 'children' => $this->retrieveSubDirectories($fileManager, $directory->getPathname(), $fileName.\DIRECTORY_SEPARATOR),
                 'a_attr' => [
                     'href' => $fileName ? $this->generateUrl('file_manager', $queryParameters) : $this->generateUrl('file_manager', $queryParametersRoute),
-                ], 'state' => [
+                ],
+                'state' => [
                     'selected' => $fileManager->getCurrentRoute() === $fileName,
                     'opened' => true,
                 ],
@@ -474,48 +411,26 @@ class ManagerController extends AbstractController
 
     /**
      * Tree Iterator.
-     *
-     * @param $path
-     * @param $regex
-     *
-     * @return int
      */
-    private function retrieveFilesNumber($path, $regex)
-    {
+    private function retrieveFilesNumber(string $path,string $regex): int {
         $files = new Finder();
         $files->in($path)->files()->depth(0)->name($regex);
         $this->dispatch(FileManagerEvents::POST_FILE_FILTER_CONFIGURATION, ['finder' => $files]);
+
         return iterator_count($files);
     }
 
-    /**
-     * @return mixed
-     */
-    private function getKernelRoute()
-    {
-        return $this->kernel->getProjectDir();
-    }
-
-    /**
-     * @param $queryParameters
-     *
-     * @throws \Exception
-     *
-     * @return FileManager
-     */
-    private function newFileManager($queryParameters)
-    {
+    private function newFileManager(array $queryParameters): FileManager {
         if (!isset($queryParameters['conf'])) {
             throw new \RuntimeException('Please define a conf parameter in your route');
         }
         $webDir = $this->getParameter('artgris_file_manager')['web_dir'];
-        $this->fileManager = new FileManager($queryParameters, $this->filemanagerService->getBasePath($queryParameters), $this->getKernelRoute(), $this->get('router'), $this->dispatcher, $webDir);
+        $this->fileManager = new FileManager($queryParameters, $this->filemanagerService->getBasePath($queryParameters), $this->router, $this->dispatcher, $webDir);
 
         return $this->fileManager;
     }
 
-    protected function dispatch($eventName, array $arguments = [])
-    {
+    protected function dispatch(string $eventName, array $arguments = []) {
         $arguments = array_replace([
             'filemanager' => $this->fileManager,
         ], $arguments);
