@@ -30,7 +30,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -46,7 +45,7 @@ class ManagerController extends AbstractController {
     /**
      * ManagerController constructor.
      */
-    public function __construct(private FilemanagerService $filemanagerService, private KernelInterface $kernel, private EventDispatcherInterface $dispatcher, private TranslatorInterface $translator, private RouterInterface $router, private FormFactoryInterface $formFactory) {
+    public function __construct(private FilemanagerService $filemanagerService, private EventDispatcherInterface $dispatcher, private TranslatorInterface $translator, private RouterInterface $router, private FormFactoryInterface $formFactory) {
     }
 
     /**

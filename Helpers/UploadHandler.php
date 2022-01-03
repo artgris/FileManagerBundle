@@ -169,24 +169,24 @@ class UploadHandler
                     'max_height' => 600
                 ),
                 */
-                'thumbnail' => array(
-                    // Uncomment the following to use a defined directory for the thumbnails
-                    // instead of a subdirectory based on the version identifier.
-                    // Make sure that this directory doesn't allow execution of files if you
-                    // don't pose any restrictions on the type of uploaded files, e.g. by
-                    // copying the .htaccess file from the files directory for Apache:
-                    //'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/thumb/',
-                    //'upload_url' => $this->get_full_url().'/thumb/',
-                    // Uncomment the following to force the max
-                    // dimensions and e.g. create square thumbnails:
-                    // 'auto_orient' => true,
-                    // 'crop' => true,
-                    // 'jpeg_quality' => 70,
-                    // 'no_cache' => true, (there's a caching option, but this remembers thumbnail sizes from a previous action!)
-                    // 'strip' => true, (this strips EXIF tags, such as geolocation)
-                    'max_width' => 80, // either specify width, or set to 0. Then width is automatically adjusted - keeping aspect ratio to a specified max_height.
-                    'max_height' => 80 // either specify height, or set to 0. Then height is automatically adjusted - keeping aspect ratio to a specified max_width.
-                )
+//                'thumbnail' => array(
+//                    // Uncomment the following to use a defined directory for the thumbnails
+//                    // instead of a subdirectory based on the version identifier.
+//                    // Make sure that this directory doesn't allow execution of files if you
+//                    // don't pose any restrictions on the type of uploaded files, e.g. by
+//                    // copying the .htaccess file from the files directory for Apache:
+//                    //'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/thumb/',
+//                    //'upload_url' => $this->get_full_url().'/thumb/',
+//                    // Uncomment the following to force the max
+//                    // dimensions and e.g. create square thumbnails:
+//                    // 'auto_orient' => true,
+//                    // 'crop' => true,
+//                    // 'jpeg_quality' => 70,
+//                    // 'no_cache' => true, (there's a caching option, but this remembers thumbnail sizes from a previous action!)
+//                    // 'strip' => true, (this strips EXIF tags, such as geolocation)
+//                    'max_width' => 80, // either specify width, or set to 0. Then width is automatically adjusted - keeping aspect ratio to a specified max_height.
+//                    'max_height' => 80 // either specify height, or set to 0. Then height is automatically adjusted - keeping aspect ratio to a specified max_width.
+//                )
             ),
             'print_response' => true,
             'override' => false,
