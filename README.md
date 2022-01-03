@@ -95,8 +95,8 @@ artgris_file_manager:
 Browse the `/manager/?conf=default` URL and you'll get access to your 
 file manager
  
-[1]: https://travis-ci.org/artgris/FileManagerBundle.svg?branch=master
-[2]: https://travis-ci.org/artgris/FileManagerBundle
+[1]: https://app.travis-ci.com/artgris/FileManagerBundle.svg?branch=master
+[2]: https://app.travis-ci.com/artgris/FileManagerBundle
 [3]: https://insight.sensiolabs.com/projects/701afcd5-edde-421a-ab6c-0188bfa7e7dc/mini.png
 [5]: https://coveralls.io/repos/artgris/FileManagerBundle/badge.svg?branch=master
 [6]: https://coveralls.io/r/artgris/FileManagerBundle?branch=master
