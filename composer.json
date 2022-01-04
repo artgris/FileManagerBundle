@@ -27,7 +27,8 @@
     "symfony/asset": "^6.0",
     "symfony/mime": "^6.0",
     "symfony/expression-language": "^6.0",
-    "oomphinc/composer-installers-extender": "^2.0"
+    "oomphinc/composer-installers-extender": "^2.0",
+    "blueimp/jquery-file-upload": "*"
   },
   "require-dev": {
     "symfony/phpunit-bridge": "^6.0",
@@ -51,11 +52,28 @@
     },
     "exclude-from-classmap": [
       "/Tests/"
+    ],
+    "classmap": [
+      "vendor/blueimp/jquery-file-upload/server/php/UploadHandler.php"
     ]
   },
   "autoload-dev": {
     "psr-4": {
       "Artgris\\Bundle\\FileManagerBundle\\Tests\\": "/Tests/"
+    }
+  },
+  "repositories": {
+    "flat-ui": {
+      "type": "package",
+      "package": {
+        "name": "blueimp/jquery-file-upload",
+        "version": "v10.32.0",
+        "source": {
+          "url": "https://github.com/blueimp/jQuery-File-Upload",
+          "type": "git",
+          "reference": "master"
+        }
+      }
     }
   }
 }

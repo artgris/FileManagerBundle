@@ -5,7 +5,7 @@ namespace Artgris\Bundle\FileManagerBundle\Controller;
 use Artgris\Bundle\FileManagerBundle\Event\FileManagerEvents;
 use Artgris\Bundle\FileManagerBundle\Helpers\File;
 use Artgris\Bundle\FileManagerBundle\Helpers\FileManager;
-use Artgris\Bundle\FileManagerBundle\Helpers\UploadHandler;
+use Artgris\Bundle\FileManagerBundle\Helpers\FileManagerUploadHandler;
 use Artgris\Bundle\FileManagerBundle\Service\FilemanagerService;
 use Artgris\Bundle\FileManagerBundle\Service\FileTypeService;
 use Artgris\Bundle\FileManagerBundle\Twig\OrderExtension;
@@ -245,14 +245,19 @@ class ManagerController extends AbstractController {
             'upload_url' => $fileManager->getImagePath(),
             'accept_file_types' => $fileManager->getRegex(),
             'print_response' => false,
+            'override' => false,
+            'image_versions' => array(
+                '' => array(
+                    'auto_orient' => true
+                ),
+            ),
         ];
         if (isset($fileManager->getConfiguration()['upload'])) {
-            $options += $fileManager->getConfiguration()['upload'];
+            $options = $fileManager->getConfiguration()['upload'] + $options;
         }
 
         $this->dispatch(FileManagerEvents::PRE_UPDATE, ['options' => &$options]);
-
-        $uploadHandler = new UploadHandler($options);
+        $uploadHandler = new FileManagerUploadHandler($options);
         $response = $uploadHandler->get_response();
 
         foreach ($response['files'] as $file) {
