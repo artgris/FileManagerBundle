@@ -52,6 +52,9 @@
     },
     "exclude-from-classmap": [
       "/Tests/"
+    ],
+    "classmap": [
+      "vendor/blueimp/jquery-file-upload/server/php/UploadHandler.php"
     ]
   },
   "autoload-dev": {
