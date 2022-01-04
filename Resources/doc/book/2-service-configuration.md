@@ -46,7 +46,7 @@ class CustomService implements CustomConfServiceInterface
    public function getConf($extra = []) {
    
      return [
-     'dir' => '%kernel.project_dir%/web/public'
+     'dir' => '%kernel.project_dir%/public'
      ... 
      ];
    
@@ -157,7 +157,7 @@ class CustomService implements CustomConfServiceInterface
       public function getConf($extra = [])
       {
           return [
-              'dir' => '%kernel.project_dir%/web/perso',
+              'dir' => '%kernel.project_dir%/public/perso',
               'upload' => [
                   'image_versions' => [
                       'medium' => [

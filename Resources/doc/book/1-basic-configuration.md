@@ -37,7 +37,7 @@ Example with a Public folder :
 artgris_file_manager:
     conf:
         public:
-            dir: '%kernel.project_dir%/web/uploads'
+            dir: '%kernel.project_dir%/public/uploads'
 ```    
 >Browse the `/manager/?conf=public` URL to get access to this File Manager
 
@@ -265,7 +265,7 @@ artgris_file_manager:
 artgris_file_manager:
     conf:
         public:
-            dir: '%kernel.project_dir%/web/uploads'
+            dir: '%kernel.project_dir%/public/uploads'
             type: 'image'
             upload:
                 max_file_size: 1048576 # (1Mo) size in bytes
@@ -276,7 +276,7 @@ artgris_file_manager:
             upload:
                 image_versions: {'medium': {crop: true, max_width: 200, max_height: 600}, 'thumbnail': {max_width: 80, max_height: 80}, 'miniThumbnail': {max_width: 10, max_height: 10}}
         tiny:
-            dir: '%kernel.project_dir%/web/uploads'
+            dir: '%kernel.project_dir%/public/uploads'
             min_width: 80
             min_height: 80
             upload:
@@ -294,7 +294,7 @@ Overwrite an existing file with the same name (included image_versions):
 artgris_file_manager:
     conf:
         public:
-            dir: '%kernel.project_dir%/web/uploads'
+            dir: '%kernel.project_dir%/public/uploads'
             upload:
                 override: true
 ```

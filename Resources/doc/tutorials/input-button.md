@@ -10,7 +10,7 @@ How to add a button that open the File manager to fill out an input field with t
 artgris_file_manager:
     conf:
         button:
-            dir: "%kernel.project_dir%/web/uploads"
+            dir: "%kernel.project_dir%/public/uploads"
 ```
 
 ### Step 2 - Create input and button
