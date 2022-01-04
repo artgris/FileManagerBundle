@@ -91,7 +91,7 @@ class FileManager {
         return false;
     }
 
-    private function checkSecurity() {
+    private function checkSecurity(): void {
         if (!isset($this->configuration['dir'])) {
             throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, 'Please define a "dir" parameter in your config.yml');
         }
@@ -122,7 +122,7 @@ class FileManager {
         return $this->mergeConfAndQuery('type');
     }
 
-    public function setType($type) {
+    public function setType($type): void {
         $this->type = $type;
     }
 
@@ -138,7 +138,7 @@ class FileManager {
         return $this->queryParameters;
     }
 
-    public function setQueryParameters(array $queryParameters) {
+    public function setQueryParameters(array $queryParameters): void {
         $this->queryParameters = $queryParameters;
     }
 
@@ -146,7 +146,7 @@ class FileManager {
         return $this->router;
     }
 
-    public function setRouter(RouterInterface $router) {
+    public function setRouter(RouterInterface $router): void {
         $this->router = $router;
     }
 
@@ -154,7 +154,7 @@ class FileManager {
         return $this->configuration;
     }
 
-    public function setConfiguration(array $configuration) {
+    public function setConfiguration(array $configuration): void {
         $this->configuration = $configuration;
     }
 
@@ -162,19 +162,19 @@ class FileManager {
         return $this->mergeQueryAndConf('tree', true);
     }
 
-    public function getView() {
+    public function getView() :string {
         return $this->mergeQueryAndConf('view', 'list');
     }
 
-    public function getQueryParameter($parameter) {
+    public function getQueryParameter(string $parameter) {
         return $this->getQueryParameters()[$parameter] ?? null;
     }
 
-    public function getConfigurationParameter($parameter) {
+    public function getConfigurationParameter(string $parameter) {
         return $this->getConfiguration()[$parameter] ?? null;
     }
 
-    private function mergeQueryAndConf($parameter, $default = null) {
+    private function mergeQueryAndConf(string $parameter, $default = null) {
         if (null !== $this->getQueryParameter($parameter)) {
             return $this->getQueryParameter($parameter);
         }
