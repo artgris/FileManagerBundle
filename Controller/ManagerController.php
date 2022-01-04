@@ -253,11 +253,10 @@ class ManagerController extends AbstractController {
             ),
         ];
         if (isset($fileManager->getConfiguration()['upload'])) {
-            $options += $fileManager->getConfiguration()['upload'];
+            $options = $fileManager->getConfiguration()['upload'] + $options;
         }
 
         $this->dispatch(FileManagerEvents::PRE_UPDATE, ['options' => &$options]);
-
         $uploadHandler = new FileManagerUploadHandler($options);
         $response = $uploadHandler->get_response();
 
