@@ -13,8 +13,7 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getConfigTreeBuilder()
-    {
+    public function getConfigTreeBuilder(): TreeBuilder {
         // symfony > 4.2
         $treeBuilder = new TreeBuilder('artgris_file_manager');
         $rootNode = $treeBuilder->getRootNode();

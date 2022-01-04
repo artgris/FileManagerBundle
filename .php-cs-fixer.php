@@ -1,6 +1,6 @@
 <?php
 
-$finder = PhpCsFixer\Finder::create()
+$finder = (new PhpCsFixer\Finder())
     ->in(__DIR__)
     ->ignoreDotFiles(true)
     ->ignoreVCS(true)
@@ -8,7 +8,7 @@ $finder = PhpCsFixer\Finder::create()
     ->files()
     ->name('*.php')
 ;
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config())
     ->setUsingCache(true)
     ->setRiskyAllowed(true)
     ->setFinder($finder)
@@ -16,9 +16,11 @@ return PhpCsFixer\Config::create()
         '@Symfony' => true,
         '@Symfony:risky' => true,
         'array_syntax' => array('syntax' => 'short'),
-        'binary_operator_spaces' => array(
-            'align_double_arrow' => false,
-        ),
+        'binary_operator_spaces' => [
+            'operators' => [
+                '=>' => 'align',
+            ]
+        ],
         'combine_consecutive_unsets' => true,
         'no_useless_else' => true,
         'no_useless_return' => true,

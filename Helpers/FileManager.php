@@ -13,84 +13,49 @@ use Symfony\Component\Routing\RouterInterface;
 /**
  * @author Arthur Gribet <a.gribet@gmail.com>
  */
-class FileManager
-{
+class FileManager {
     const VIEW_THUMBNAIL = 'thumbnail';
     const VIEW_LIST = 'list';
-
-    private $queryParameters;
-    private $kernelRoute;
-    private $router;
-    private $configuration;
-    private $webDir;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
+    private string $type;
 
     /**
      * FileManager constructor.
-     *
-     * @param $queryParameters
-     * @param $configuration
-     * @param $kernelRoute
-     * @param $webDir
-     *
-     * @internal param $basePath
      */
-    public function __construct($queryParameters, $configuration, $kernelRoute, RouterInterface $router, EventDispatcherInterface $dispatcher, $webDir)
-    {
-        $this->queryParameters = $queryParameters;
-        $this->configuration = $configuration;
-        $this->kernelRoute = $kernelRoute;
-        $this->router = $router;
-        $this->dispatcher = $dispatcher;
+    public function __construct(private array $queryParameters, private array $configuration, private RouterInterface $router, private EventDispatcherInterface $dispatcher, private string $webDir) {
         // Check Security
         $this->checkSecurity();
-        $this->webDir = $webDir;
     }
 
-    public function getDirName()
-    {
+    public function getDirName(): string {
         return \dirname($this->getBasePath());
     }
 
-    public function getBaseName()
-    {
+    public function getBaseName(): string {
         return basename($this->getBasePath());
     }
 
-    public function getRegex()
-    {
+    public function getRegex(): string {
         if (isset($this->configuration['regex'])) {
-            return '/' . $this->configuration['regex'] . '/i';
+            return '/'.$this->configuration['regex'].'/i';
         }
 
-        switch ($this->getType()) {
-            case 'media':
-                return '/\.(mp4|ogg|webm)$/i';
-                break;
-            case 'image':
-                return '/\.(gif|png|jpe?g|svg)$/i';
-            case 'file':
-            default:
-                return '/.+$/i';
-        }
+        return match ($this->getType()) {
+            'media' => '/\.(mp4|ogg|webm)$/i',
+            'image' => '/\.(gif|png|jpe?g|svg)$/i',
+            default => '/.+$/i',
+        };
     }
 
-    public function getCurrentRoute()
-    {
+    public function getCurrentRoute(): string {
         return urldecode($this->getRoute());
     }
 
-    public function getCurrentPath()
-    {
-        return realpath($this->getBasePath() . $this->getCurrentRoute());
+    public function getCurrentPath(): bool|string {
+        return realpath($this->getBasePath().$this->getCurrentRoute());
     }
 
     // parent url
-    public function getParent()
-    {
+    public function getParent(): ?string {
         $queryParentParameters = $this->queryParameters;
         $parentRoute = \dirname($this->getCurrentRoute());
 
@@ -105,19 +70,17 @@ class FileManager
         return $this->getRoute() ? $parentRoute : null;
     }
 
-    public function getImagePath()
-    {
+    public function getImagePath(): bool|string {
         $baseUrl = $this->getBaseUrl();
         if ($baseUrl) {
-            return $baseUrl . $this->getCurrentRoute() . '/';
+            return $baseUrl.$this->getCurrentRoute().'/';
         }
 
         return false;
     }
 
-    private function getBaseUrl()
-    {
-        $webPath = '../' . $this->webDir;
+    private function getBaseUrl(): bool|string {
+        $webPath = '../'.$this->webDir;
         $dirl = new \SplFileInfo($this->getConfiguration()['dir']);
         $base = $dirl->getPathname();
         if (0 === mb_strpos($base, $webPath)) {
@@ -127,8 +90,7 @@ class FileManager
         return false;
     }
 
-    private function checkSecurity()
-    {
+    private function checkSecurity() {
         if (!isset($this->configuration['dir'])) {
             throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, 'Please define a "dir" parameter in your config.yml');
         }
@@ -151,120 +113,67 @@ class FileManager
 
     }
 
-    public function getModule()
-    {
-        return isset($this->getQueryParameters()['module']) ? $this->getQueryParameters()['module'] : null;
+    public function getModule(): ?string {
+        return $this->getQueryParameters()['module'] ?? null;
     }
 
-    public function getType()
-    {
+    public function getType(): ?string {
         return $this->mergeConfAndQuery('type');
     }
 
-    /**
-     * @param null $type
-     */
-    public function setType($type)
-    {
+    public function setType($type) {
         $this->type = $type;
     }
 
-    public function getRoute()
-    {
+    public function getRoute(): ?string {
         return isset($this->getQueryParameters()['route']) && '/' !== $this->getQueryParameters()['route'] ? $this->getQueryParameters()['route'] : null;
     }
 
-    /**
-     * @return bool|string
-     */
-    public function getBasePath()
-    {
+    public function getBasePath(): bool|string {
         return realpath($this->getConfiguration()['dir']);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getQueryParameters()
-    {
+    public function getQueryParameters(): array {
         return $this->queryParameters;
     }
 
-    /**
-     * @param mixed $queryParameters
-     */
-    public function setQueryParameters($queryParameters)
-    {
+    public function setQueryParameters(array $queryParameters) {
         $this->queryParameters = $queryParameters;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getKernelRoute()
-    {
-        return $this->kernelRoute;
-    }
-
-    /**
-     * @param mixed $kernelRoute
-     */
-    public function setKernelRoute($kernelRoute)
-    {
-        $this->kernelRoute = $kernelRoute;
-    }
-
-    /**
-     * @return RouterInterface
-     */
-    public function getRouter()
-    {
+    public function getRouter(): RouterInterface {
         return $this->router;
     }
 
-    public function setRouter(RouterInterface $router)
-    {
+    public function setRouter(RouterInterface $router) {
         $this->router = $router;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getConfiguration()
-    {
+    public function getConfiguration(): array {
         return $this->configuration;
     }
 
-    /**
-     * @param mixed $configuration
-     */
-    public function setConfiguration($configuration)
-    {
+    public function setConfiguration(array $configuration) {
         $this->configuration = $configuration;
     }
 
-    public function getTree()
-    {
+    public function getTree(): bool {
         return $this->mergeQueryAndConf('tree', true);
     }
 
-    public function getView()
-    {
+    public function getView() {
         return $this->mergeQueryAndConf('view', 'list');
     }
 
-    public function getQueryParameter($parameter)
-    {
-        return isset($this->getQueryParameters()[$parameter]) ? $this->getQueryParameters()[$parameter] : null;
+    public function getQueryParameter($parameter) {
+        return $this->getQueryParameters()[$parameter] ?? null;
     }
 
-    public function getConfigurationParameter($parameter)
-    {
-        return isset($this->getConfiguration()[$parameter]) ? $this->getConfiguration()[$parameter] : null;
+    public function getConfigurationParameter($parameter) {
+        return $this->getConfiguration()[$parameter] ?? null;
     }
 
-    private function mergeQueryAndConf($parameter, $default = null)
-    {
+    private function mergeQueryAndConf($parameter, $default = null) {
         if (null !== $this->getQueryParameter($parameter)) {
             return $this->getQueryParameter($parameter);
         }
@@ -275,8 +184,7 @@ class FileManager
         return $default;
     }
 
-    private function mergeConfAndQuery($parameter, $default = null)
-    {
+    private function mergeConfAndQuery(string $parameter, $default = null) {
         if (null !== $this->getConfigurationParameter($parameter)) {
             return $this->getConfigurationParameter($parameter);
         }

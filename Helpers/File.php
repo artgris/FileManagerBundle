@@ -8,54 +8,34 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class File
 {
-    /**
-     * @var SplFileInfo
-     */
-    private $file;
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-    /**
-     * @var FileTypeService
-     */
-    private $fileTypeService;
-    /**
-     * @var FileManager
-     */
-    private $fileManager;
     private $preview;
 
     /**
      * File constructor.
-     *
-     * @internal param $module
      */
-    public function __construct(SplFileInfo $file, TranslatorInterface $translator, FileTypeService $fileTypeService, FileManager $fileManager)
+    public function __construct(private SplFileInfo $file,private TranslatorInterface $translator,private FileTypeService $fileTypeService,private FileManager $fileManager)
     {
-        $this->file = $file;
-        $this->translator = $translator;
-        $this->fileTypeService = $fileTypeService;
-        $this->fileManager = $fileManager;
         $this->preview = $this->fileTypeService->preview($this->fileManager, $this->file);
     }
 
-    public function getDimension()
-    {
+    /**
+     * @return array|false|string
+     */
+    public function getDimension(): bool|array|string {
         return preg_match('/(gif|png|jpe?g|svg)$/i', $this->file->getExtension()) ?
             @getimagesize($this->file->getPathname()) : '';
     }
 
-    public function getHTMLDimension()
-    {
+    public function getHTMLDimension(): ?string {
         $dimension = $this->getDimension();
         if ($dimension) {
             return "{$dimension[0]} × {$dimension[1]}";
         }
+
+        return null;
     }
 
-    public function getHTMLSize()
-    {
+    public function getHTMLSize(): ?string {
         if ('file' === $this->getFile()->getType()) {
             $size = $this->file->getSize() / 1000;
             $kb = $this->translator->trans('size.kb');
@@ -63,10 +43,10 @@ class File
 
             return $size > 1000 ? number_format(($size / 1000), 1, '.', '').' '.$mb : number_format($size, 1, '.', '').' '.$kb;
         }
+        return null;
     }
 
-    public function getAttribut()
-    {
+    public function getAttribut(): ?string {
         if ($this->fileManager->getModule()) {
             $attr = '';
             $dimension = $this->getDimension();
@@ -83,41 +63,28 @@ class File
 
             return $attr;
         }
+
+        return null;
     }
 
-    public function isImage()
-    {
+    public function isImage(): bool {
         return \array_key_exists('image', $this->preview);
     }
 
-    /**
-     * @return SplFileInfo
-     */
-    public function getFile()
-    {
+    public function getFile(): SplFileInfo {
         return $this->file;
     }
 
-    /**
-     * @param SplFileInfo $file
-     */
-    public function setFile($file)
+    public function setFile(SplFileInfo $file)
     {
         $this->file = $file;
     }
 
-    /**
-     * @return array
-     */
-    public function getPreview()
-    {
+    public function getPreview(): array {
         return $this->preview;
     }
 
-    /**
-     * @param array $preview
-     */
-    public function setPreview($preview)
+    public function setPreview(array $preview)
     {
         $this->preview = $preview;
     }

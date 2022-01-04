@@ -5,3 +5,4 @@ vendor/*
 build/
 php-cs-fixer
 /.phpunit.result.cache
+.php-cs-fixer.cache

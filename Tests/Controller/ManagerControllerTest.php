@@ -14,7 +14,6 @@ class ManagerControllerTest extends AbstractTestCase
     public function testDefaultConfManager()
     {
         $this->getManagerPage();
-
         $this->assertSame(
             200,
             $this->client->getResponse()->getStatusCode()

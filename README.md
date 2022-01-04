@@ -1,7 +1,7 @@
 FileManagerBundle
 =================
 
-[![Tests][1]][2] [![Code Coverage][5]][6] [![Symfony 2.x, 3.x, 4.x, 5.x][7]][8]
+[![Symfony 2.x, 3.x, 4.x, 5.x, 6.x][7]][8]
 
 FileManager is a simple Multilingual File Manager Bundle for Symfony
 
@@ -63,7 +63,7 @@ $ composer require artgris/filemanager-bundle
 
 
 ```yaml
-# app/config/routing.yml
+# app/config/routes.yaml
 artgris_bundle_file_manager:
     resource: "@ArtgrisFileManagerBundle/Controller"
     type:     annotation
@@ -72,7 +72,7 @@ artgris_bundle_file_manager:
 ### Step 3:  Enable the translator service
 
 ```yml
-# app/config/config.yml
+# app/config/packages/translation.yaml
 framework:
     translator: { fallbacks: [ "en" ] }
 ```    
@@ -82,10 +82,10 @@ Creating Your First File Manager
 
 Create a folder **uploads** in **public**.
  
-#### Add following configuration (symfony4) :
+#### Add following configuration:
 
 ```yaml
-# app/config/config.yml
+# app/config/packages/artgris_file_manager.yaml
 artgris_file_manager:
     conf:
         default:
@@ -95,12 +95,7 @@ artgris_file_manager:
 Browse the `/manager/?conf=default` URL and you'll get access to your 
 file manager
  
-[1]: https://travis-ci.org/artgris/FileManagerBundle.svg?branch=master
-[2]: https://travis-ci.org/artgris/FileManagerBundle
-[3]: https://insight.sensiolabs.com/projects/701afcd5-edde-421a-ab6c-0188bfa7e7dc/mini.png
-[5]: https://coveralls.io/repos/artgris/FileManagerBundle/badge.svg?branch=master
-[6]: https://coveralls.io/r/artgris/FileManagerBundle?branch=master
-[7]: https://img.shields.io/badge/symfony-2.x%2C%203.x%20%2C%204.x%20and%205.x-green.svg
+[7]: https://img.shields.io/badge/symfony-2.x%2C%203.x%20%2C%204.x%20%2C%205.x%20and%206.x-green.svg
 [8]: https://symfony.com/
 
 
