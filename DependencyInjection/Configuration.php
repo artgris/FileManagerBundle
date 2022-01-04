@@ -4,7 +4,6 @@ namespace Artgris\Bundle\FileManagerBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * @author Arthur Gribet <a.gribet@gmail.com>

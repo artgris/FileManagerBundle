@@ -16,7 +16,6 @@ use Symfony\Component\Routing\RouterInterface;
 class FileManager {
     const VIEW_THUMBNAIL = 'thumbnail';
     const VIEW_LIST = 'list';
-    private string $type;
 
     /**
      * FileManager constructor.
@@ -122,10 +121,6 @@ class FileManager {
         return $this->mergeConfAndQuery('type');
     }
 
-    public function setType($type): void {
-        $this->type = $type;
-    }
-
     public function getRoute(): ?string {
         return isset($this->getQueryParameters()['route']) && '/' !== $this->getQueryParameters()['route'] ? $this->getQueryParameters()['route'] : null;
     }
@@ -136,10 +131,6 @@ class FileManager {
 
     public function getQueryParameters(): array {
         return $this->queryParameters;
-    }
-
-    public function setQueryParameters(array $queryParameters): void {
-        $this->queryParameters = $queryParameters;
     }
 
     public function getRouter(): RouterInterface {

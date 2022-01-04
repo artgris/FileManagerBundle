@@ -4,7 +4,6 @@ namespace Artgris\Bundle\FileManagerBundle\Service;
 
 use Artgris\Bundle\FileManagerBundle\Helpers\FileManager;
 use SplFileInfo;
-use Symfony\Component\Asset\Packages;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 

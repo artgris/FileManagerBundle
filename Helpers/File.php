@@ -75,7 +75,7 @@ class File
         return $this->file;
     }
 
-    public function setFile(SplFileInfo $file)
+    public function setFile(SplFileInfo $file) :void
     {
         $this->file = $file;
     }
@@ -84,7 +84,7 @@ class File
         return $this->preview;
     }
 
-    public function setPreview(array $preview)
+    public function setPreview(array $preview) :void
     {
         $this->preview = $preview;
     }
