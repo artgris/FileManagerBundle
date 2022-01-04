@@ -54,7 +54,7 @@
       "/Tests/"
     ],
     "classmap": [
-      "vendor/blueimp/jquery-file-upload/server/php/UploadHandler.php"
+      "/vendor/blueimp/jquery-file-upload/server/php/UploadHandler.php"
     ]
   },
   "autoload-dev": {
