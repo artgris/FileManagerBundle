@@ -43,7 +43,7 @@ Create a folder **uploads** in **public**.
 artgris_file_manager:
     conf:
         default:
-            dir: "../web/uploads"
+            dir: "%kernel.project_dir%/web/uploads"
 ```
 
 Browse the `/manager/?conf=default` URL and you'll get access to your file manager

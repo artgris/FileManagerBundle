@@ -6,7 +6,7 @@ Chapter 3 - Access to the File Manager
 artgris_file_manager:
     conf:
         public:                     # Access URL: /manager/?conf=public
-            dir: "../web/uploads"
+            dir: "%kernel.project_dir%/web/uploads"
             ...
         myprivatefolder: ...        # Access URL: /manager/?conf=myprivatefolder
         onlypdf: ...                # Access URL: /manager/?conf=onlypdf

@@ -4,16 +4,21 @@ namespace Artgris\Bundle\FileManagerBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * @author Arthur Gribet <a.gribet@gmail.com>
  */
 class Configuration implements ConfigurationInterface
 {
+    public function __construct(private string $projectDir) {
+    }
+
     /**
      * {@inheritdoc}
      */
     public function getConfigTreeBuilder(): TreeBuilder {
+
         // symfony > 4.2
         $treeBuilder = new TreeBuilder('artgris_file_manager');
         $rootNode = $treeBuilder->getRootNode();
@@ -21,7 +26,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('web_dir')
-                    ->defaultValue('public')
+                    ->defaultValue($this->projectDir."/public")
                 ->end()
                 ->arrayNode('conf')
                     ->prototype('array')

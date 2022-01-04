@@ -37,11 +37,11 @@ Example with a Public folder :
 artgris_file_manager:
     conf:
         public:
-            dir: '../web/uploads'
+            dir: '%kernel.project_dir%/web/uploads'
 ```    
 >Browse the `/manager/?conf=public` URL to get access to this File Manager
 
->"../web/" or "../public/" (symfony 4) in dir path are required to get 'public' image urls otherwise filemanager thinks it's a private directory.
+> "%kernel.project_dir%/web/" or "%kernel.project_dir%/public/" (symfony 4) in dir path are required to get 'public' image urls otherwise filemanager thinks it's a private directory.
 
 Example with a Private folder :
     
@@ -49,7 +49,7 @@ Example with a Private folder :
 artgris_file_manager:
     conf:
         private:
-            dir: '../private'
+            dir: '%kernel.project_dir%/private'
 ```
 
 >Browse the `/manager/?conf=private` URL to get access to this File Manager
@@ -265,18 +265,18 @@ artgris_file_manager:
 artgris_file_manager:
     conf:
         public:
-            dir: '../web/uploads'
+            dir: '%kernel.project_dir%/web/uploads'
             type: 'image'
             upload:
                 max_file_size: 1048576 # (1Mo) size in bytes
                 max_width: 1024
                 max_height: 768
         private:
-            dir: '../private'
+            dir: '%kernel.project_dir%/private'
             upload:
                 image_versions: {'medium': {crop: true, max_width: 200, max_height: 600}, 'thumbnail': {max_width: 80, max_height: 80}, 'miniThumbnail': {max_width: 10, max_height: 10}}
         tiny:
-            dir: '../web/uploads'
+            dir: '%kernel.project_dir%/web/uploads'
             min_width: 80
             min_height: 80
             upload:
@@ -294,7 +294,7 @@ Overwrite an existing file with the same name (included image_versions):
 artgris_file_manager:
     conf:
         public:
-            dir: '../web/uploads'
+            dir: '%kernel.project_dir%/web/uploads'
             upload:
                 override: true
 ```

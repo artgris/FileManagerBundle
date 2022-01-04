@@ -10,7 +10,7 @@ Tinymce has [`file_browser_callback`](https://www.tinymce.com/docs/configure/fil
 artgris_file_manager:
     conf:
         tiny:
-            dir: "../web/uploads"
+            dir: "%kernel.project_dir%/web/uploads"
 ```
 
 ### Step 2 - Add TinyMCE textarea

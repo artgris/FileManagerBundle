@@ -9,10 +9,10 @@ How to integrate FileManagerBundle into FOSCKEditorBundle
 artgris_file_manager:
     conf:
         files:
-          dir: "../public/uploads"
+          dir: "%kernel.project_dir%/public/uploads"
           type: 'file'
         images:
-          dir: "../public/uploads"
+          dir: "%kernel.project_dir%/public/uploads"
           type: 'image'
 ```
 

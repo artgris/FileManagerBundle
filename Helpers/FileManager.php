@@ -80,9 +80,10 @@ class FileManager {
     }
 
     private function getBaseUrl(): bool|string {
-        $webPath = '../'.$this->webDir;
+        $webPath = $this->webDir;
         $dirl = new \SplFileInfo($this->getConfiguration()['dir']);
         $base = $dirl->getPathname();
+
         if (0 === mb_strpos($base, $webPath)) {
             return mb_substr($base, mb_strlen($webPath));
         }
