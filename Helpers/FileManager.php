@@ -45,8 +45,12 @@ class FileManager {
         };
     }
 
-    public function getCurrentRoute(): string {
-        return urldecode($this->getRoute());
+    public function getCurrentRoute(): ?string {
+        if ($this->getRoute()) {
+            return urldecode($this->getRoute());
+        }
+
+        return null;
     }
 
     public function getCurrentPath(): bool|string {
@@ -56,17 +60,23 @@ class FileManager {
     // parent url
     public function getParent(): ?string {
         $queryParentParameters = $this->queryParameters;
-        $parentRoute = \dirname($this->getCurrentRoute());
 
-        if (\DIRECTORY_SEPARATOR !== $parentRoute) {
-            $queryParentParameters['route'] = \dirname($this->getCurrentRoute());
-        } else {
-            unset($queryParentParameters['route']);
+        if ($this->getCurrentRoute()) {
+
+            $parentRoute = \dirname($this->getCurrentRoute());
+
+            if (\DIRECTORY_SEPARATOR !== $parentRoute) {
+                $queryParentParameters['route'] = \dirname($this->getCurrentRoute());
+            } else {
+                unset($queryParentParameters['route']);
+            }
+
+            $parentRoute = $this->router->generate('file_manager', $queryParentParameters);
+
+            return $this->getRoute() ? $parentRoute : null;
         }
 
-        $parentRoute = $this->router->generate('file_manager', $queryParentParameters);
-
-        return $this->getRoute() ? $parentRoute : null;
+        return null;
     }
 
     public function getImagePath(): bool|string {
@@ -153,7 +163,7 @@ class FileManager {
         return $this->mergeQueryAndConf('tree', true);
     }
 
-    public function getView() :string {
+    public function getView(): string {
         return $this->mergeQueryAndConf('view', 'list');
     }
 
