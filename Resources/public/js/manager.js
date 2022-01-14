@@ -225,8 +225,9 @@ $(function () {
         dropZone: $('#dropzone')
     }).on('fileuploaddone', function (e, data) {
         $.each(data.result.files, function (index, file) {
+            const fileName = $("<strong>").text(file.name).html();
             if (file.url) {
-                displaySuccess('<strong>' + file.name + '</strong> ' + successMessage)
+                displaySuccess(fileName+' ' + successMessage)
                 // Ajax update view
                 $.ajax({
                     dataType: "json",
@@ -251,7 +252,7 @@ $(function () {
                 });
 
             } else if (file.error) {
-                displayError('<strong>' + file.name + '</strong> ' + file.error)
+                displayError(fileName+' ' + file.error)
             }
         });
     }).on('fileuploadfail', function (e, data) {

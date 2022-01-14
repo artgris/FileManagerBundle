@@ -49,7 +49,7 @@
                 </td>
                 <td data-value="{{ file.fileName }}" {{ fileEntity.attribut|raw }}>
                     {% block file_name %}
-                        {{ (fileEntity.preview.folder is defined ? fileEntity.preview.folder : file.fileName)|raw }}
+                        {{ (fileEntity.preview.folder is defined ? fileEntity.preview.folder|raw : file.fileName) }}
                     {% endblock %}
                 </td>
                 <td class="hidden-xs">

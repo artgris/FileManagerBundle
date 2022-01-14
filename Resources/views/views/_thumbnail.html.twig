@@ -20,7 +20,7 @@
             {% endblock %}
             <p {{ fileEntity.attribut|raw }}>
                 {% block file_name %}
-                    {{ (fileEntity.preview.folder is defined ? fileEntity.preview.folder : file.fileName)|raw }}<br>
+                    {{ (fileEntity.preview.folder is defined ? fileEntity.preview.folder|raw : file.fileName) }}<br>
                 {% endblock %}
                 <small>{% block file_date %}{{ fileEntity.file.mTime|date('d/m/Y') }}{% endblock %} {% block file_size %}{{ fileEntity.HTMLSize ? ' - '~fileEntity.HTMLSize|trans|raw }}{% endblock %}</small>
                 <br>
