@@ -242,7 +242,7 @@ class ManagerController extends AbstractController {
 
         $options = [
             'upload_dir' => $fileManager->getCurrentPath().\DIRECTORY_SEPARATOR,
-            'upload_url' => $fileManager->getImagePath(),
+            'upload_url' => implode('/', array_map('rawurlencode', explode('/', $fileManager->getImagePath()))),
             'accept_file_types' => $fileManager->getRegex(),
             'print_response' => false,
             'override' => false,
@@ -269,7 +269,6 @@ class ManagerController extends AbstractController {
                 }
             }
         }
-
         $this->dispatch(FileManagerEvents::POST_UPDATE, ['response' => &$response]);
 
         return new JsonResponse($response);
