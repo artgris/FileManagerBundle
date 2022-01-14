@@ -21,7 +21,7 @@ class FileTypeService {
 
     public function preview(FileManager $fileManager, SplFileInfo $file) {
         if ($fileManager->getImagePath()) {
-            $filePath = htmlentities($fileManager->getImagePath().rawurlencode($file->getFilename()));
+            $filePath = $fileManager->getImagePath().$file->getFilename();
         } else {
             $filePath = $this->router->generate(
                 'file_manager_file',
