@@ -453,8 +453,11 @@ class ManagerController extends AbstractController
             $queryParametersRoute = $queryParameters;
             unset($queryParametersRoute['route']);
 
-            $filesNumber = $this->retrieveFilesNumber($directory->getPathname(), $fileManager->getRegex());
-            $fileSpan = $filesNumber > 0 ? " <span class='label label-default'>{$filesNumber}</span>" : '';
+            $fileSpan = '';
+            if (true === $fileManager->getConfiguration()['show_file_count']) {
+                $filesNumber = $this->retrieveFilesNumber($directory->getPathname(), $fileManager->getRegex());
+                $fileSpan = $filesNumber > 0 ? " <span class='label label-default'>{$filesNumber}</span>" : '';
+            }
 
             $directoriesList[] = [
                 'text' => $directory->getFilename().$fileSpan,
