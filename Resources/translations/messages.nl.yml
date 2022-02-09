@@ -19,7 +19,7 @@ folder:
     unauthorized: Map bestaat niet meer of u bent niet bevoegd om deze pagina te openen.
 button:
   cancel: ANULEREN
-  refresh: Verfrissen
+  refresh: Verversen
   parent: Parent
   save: OPSLAAN
   add:
