@@ -31,7 +31,6 @@ jobs:
               env:
                   SYMFONY_REQUIRE: 5.4
               run: |
-                  composer global require --no-progress --no-scripts --no-plugins symfony/flex
                   composer update --no-interaction --prefer-dist --optimize-autoloader --prefer-stable
                   vendor/bin/simple-phpunit install
             - name: 'Run tests'
