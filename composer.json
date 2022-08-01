@@ -46,6 +46,7 @@
       "*": "dist"
     },
     "allow-plugins": {
+      "composer/installers": true,
       "symfony/flex": true,
       "symfony/runtime": true,
       "composer/package-versions-deprecated": true
