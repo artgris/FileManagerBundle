@@ -49,7 +49,8 @@
       "composer/installers": true,
       "symfony/flex": true,
       "symfony/runtime": true,
-      "composer/package-versions-deprecated": true
+      "composer/package-versions-deprecated": true,
+      "oomphinc/composer-installers-extender": true
     }
   },
   "autoload": {
