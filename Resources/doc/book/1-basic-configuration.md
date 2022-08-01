@@ -173,6 +173,12 @@ Adding a cachebreaker ?time=RANDOM_NUMBER or & &time=RANDOM_NUMBER at the end of
 
 Having a large number of files in a (sub-)directory can have a huge impact on performance, setting this to false will improve the performance at the cost of the display of files per directory
 
+## `root_name` to set the root folder name
+
+| Option            |   Type   | Required  | Default value |
+|:------------------|:--------:|:--------:|:-------------:|
+| `root_name` | `string` |  False   |     null      |
+
 ## `upload` A non-exhaustive  configuration of the File Upload widget [blueimp/jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload)
 > [Exhaustive options](https://github.com/blueimp/jQuery-File-Upload/blob/master/server/php/UploadHandler.php) can only be defined with [The service configuration](2-service-configuration.md)
 

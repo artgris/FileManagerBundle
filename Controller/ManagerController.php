@@ -384,7 +384,8 @@ class ManagerController extends AbstractController {
 
         foreach ($directories as $directory) {
             /** @var SplFileInfo $directory */
-            $fileName = $baseFolderName ? '' : $parent.$directory->getFilename();
+            $directoryFileName = $directory->getFilename();
+            $fileName = $baseFolderName ? '' : $parent.$directoryFileName;
 
             $queryParameters = $fileManager->getQueryParameters();
             $queryParameters['route'] = $fileName;
@@ -397,8 +398,12 @@ class ManagerController extends AbstractController {
                 $fileSpan = $filesNumber > 0 ? " <span class='label label-default'>{$filesNumber}</span>" : '';
             }
 
+            if ($fileName === '' && isset($fileManager->getConfiguration()['root_name'])) {
+                $directoryFileName = $fileManager->getConfiguration()['root_name'];
+            }
+
             $directoriesList[] = [
-                'text' => $directory->getFilename().$fileSpan,
+                'text' => $directoryFileName.$fileSpan,
                 'icon' => 'far fa-folder-open',
                 'children' => $this->retrieveSubDirectories($fileManager, $directory->getPathname(), $fileName.\DIRECTORY_SEPARATOR),
                 'a_attr' => [
