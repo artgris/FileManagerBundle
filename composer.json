@@ -43,6 +43,9 @@
     "preferred-install": {
       "symfony/doctrine-bridge": "source",
       "*": "dist"
+    },
+    "allow-plugins": {
+      "symfony/flex": true
     }
   },
   "autoload": {
