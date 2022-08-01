@@ -34,7 +34,7 @@ class Configuration implements ConfigurationInterface
                             ->enumNode('type')->values(['file', 'image', 'media'])->end()
                             ->booleanNode('tree')->end()
                             ->booleanNode('show_file_count')->defaultValue(true)->end()
-                            ->textNode('root_name')->defaultValue(null)->end()
+                            ->scalarNode('root_name')->defaultValue(null)->end()
                             ->scalarNode('twig_extension')->end()
                             ->booleanNode('cachebreaker')->defaultValue(true)->end()
                             ->enumNode('view')->values(['thumbnail', 'list'])->defaultValue('list')->end()
