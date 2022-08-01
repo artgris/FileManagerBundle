@@ -32,8 +32,7 @@ jobs:
                   ini-values: date.timezone=UTC
 
             - name: 'Install project dependencies'
-              run: |
-                  composer global require --no-progress --no-scripts --no-plugins symfony/flex
+              run:
                   composer update --no-interaction --prefer-dist --optimize-autoloader --prefer-stable
                   vendor/bin/simple-phpunit install
             - name: 'Run tests'
