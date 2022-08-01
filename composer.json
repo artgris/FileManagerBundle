@@ -27,7 +27,8 @@
     "symfony/asset": "^6.0",
     "symfony/mime": "^6.0",
     "symfony/expression-language": "^6.0",
-    "oomphinc/composer-installers-extender": "^2.0"
+    "oomphinc/composer-installers-extender": "^2.0",
+    "symfony/flex": "^2"
   },
   "require-dev": {
     "symfony/phpunit-bridge": "^6.0",
