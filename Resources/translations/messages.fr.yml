@@ -23,8 +23,8 @@ button:
   parent: Parent
   save: ENREGISTRER
   add:
-    files: Nouveau fichiers ...
-    folder: Nouveau dossier...
+    files: Nouveaux fichiers
+    folder: Nouveau dossier
   delete:
     current: Supprimer le dossier courant
     selected: Supprimer les fichiers sélectionnés
@@ -47,10 +47,10 @@ table:
   name: Nom
   date: Date
   size: Taille
-  dimension: Dimension
+  dimension: Dimensions
   actions: Actions
 confirm:
-  delete:  Êtes-vous sûr de vouloir supprimer ?
+  delete: Êtes-vous sûr de vouloir supprimer ?
 size:
   mb: Mo
   kb: ko
