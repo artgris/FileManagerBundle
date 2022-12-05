@@ -17,7 +17,7 @@ class FileTypeExtension extends AbstractExtension {
         return $this->fileTypeService->accept($type);
     }
 
-    public function fileIcon(string $filePath, ?string $extension = null, ?int $size = 75): array {
+    public function fileIcon(?string $filePath, ?string $extension = null, ?int $size = 75): array {
         return $this->fileTypeService->fileIcon($filePath, $extension, $size);
     }
 

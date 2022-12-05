@@ -66,7 +66,7 @@ class FileTypeService {
         return $accept;
     }
 
-    public function fileIcon(string $filePath,?string $extension = null, ?int $size = 75, ?bool $lazy = false, ?string $twigExtension = null, ?bool $cachebreaker = null): array {
+    public function fileIcon(?string $filePath,?string $extension = null, ?int $size = 75, ?bool $lazy = false, ?string $twigExtension = null, ?bool $cachebreaker = null): array {
         $imageTemplate = null;
 
         if (null === $extension) {
