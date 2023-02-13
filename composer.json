@@ -17,18 +17,19 @@
   ],
   "require": {
     "php": ">=8.0.2",
-    "sensio/framework-extra-bundle": "^6.1",
+    "doctrine/annotations": "^1.14",
+    "oomphinc/composer-installers-extender": "^2.0",
+    "symfony/asset": "^6.0",
+    "symfony/event-dispatcher": "^6.0",
+    "symfony/expression-language": "^6.0",
+    "symfony/framework-bundle": "^6.0",
+    "symfony/flex": "^2",
+    "symfony/form": "^6.0",
+    "symfony/mime": "^6.0",
     "symfony/translation": "^6.0",
     "symfony/twig-bridge": "^6.0",
     "symfony/twig-bundle": "^6.0",
-    "symfony/form": "^6.0",
-    "symfony/event-dispatcher": "^6.0",
-    "symfony/validator": "^6.0",
-    "symfony/asset": "^6.0",
-    "symfony/mime": "^6.0",
-    "symfony/expression-language": "^6.0",
-    "oomphinc/composer-installers-extender": "^2.0",
-    "symfony/flex": "^2"
+    "symfony/validator": "^6.0"
   },
   "require-dev": {
     "symfony/phpunit-bridge": "^6.0",

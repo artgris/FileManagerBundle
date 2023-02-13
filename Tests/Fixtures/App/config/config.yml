@@ -26,8 +26,3 @@ framework:
 services:
     logger:
         class: Psr\Log\NullLogger
-
-
-sensio_framework_extra:
-    router:
-        annotations: false
