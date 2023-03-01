@@ -20,8 +20,8 @@ Here is a list of URL parameters:
 | `conf`   | `String` |  **True** |                          |               | name of the conf |
 | `type`   | `String` |  False    | `file`, `image`, `media` | `file`        | type (used by tinymce) | yml > url
 | `module` | `String` |  False    | `tiny`, `ckeditor`                  |  `null`       | module (used by tinymce) | 
-| `tree` in url   | `Interger` |  False    | `0`, `1` | `1`       | Display Folder Tree (1:Yes, 2:No) | url > yml
-| `tree` in yml   | `Booleen` |  False    | `false`, `true` | `true`       | Display Folder Tree (1:Yes, 2:No) | url > yml
+| `tree` in url   | `Integer` |  False    | `0`, `1` | `1`       | Display Folder Tree (1:Yes, 2:No) | url > yml
+| `tree` in yml   | `Boolean` |  False    | `false`, `true` | `true`       | Display Folder Tree (1:Yes, 2:No) | url > yml
 | `view` | `String` |  False    | `thumbnail`, `list`     |  `list`       | Display Mode Type | url > yml
 | `orderby` | `String` |  False    | `name`, `date`, `size`, `dimension`     |         | Sort files |
 | `order` | `String` |  False    | `asc`, `desc`     |         | Order by asc or desc | 
