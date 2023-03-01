@@ -204,13 +204,13 @@ artgris_file_manager:
 
 | Option           | Type       | Required  | Default value                  | Description                      | Possible values          |
 | :-------------  |:----------:|:---------:|:------------------------------:|:--------------------------------|:--------------------------------|
-| `min_file_size`  | `Interger` |  False    |      1                         | Min allowed file size (bytes)    ||
-| `max_file_size`  | `Interger` |  False    |     null                       | Max allowed file size (bytes)    ||
-| `max_width`      | `Interger` |  False    |     null                       | Max allowed file width (px)      ||
-| `max_height`     | `Interger` |  False    |     null                       | Max allowed file height (px)     ||
-| `min_width`      | `Interger` |  False    |      1                         | Min allowed file width (px)      ||
-| `min_height`     | `Interger` |  False    |      1                         | Min allowed file height (px)     ||
-| `image_library`  | `Interger` |  False    |      1                         | Image library                    |<ul><li>Set to 0 to use the GD library to scale and orient images</li><li>Set to 1 to use imagick (if installed, falls back to GD)</li><li>Set to 2 to use the ImageMagick convert binary directly</li></ul>|
+| `min_file_size`  | `Integer` |  False    |      1                         | Min allowed file size (bytes)    ||
+| `max_file_size`  | `Integer` |  False    |     null                       | Max allowed file size (bytes)    ||
+| `max_width`      | `Integer` |  False    |     null                       | Max allowed file width (px)      ||
+| `max_height`     | `Integer` |  False    |     null                       | Max allowed file height (px)     ||
+| `min_width`      | `Integer` |  False    |      1                         | Min allowed file width (px)      ||
+| `min_height`     | `Integer` |  False    |      1                         | Min allowed file height (px)     ||
+| `image_library`  | `Integer` |  False    |      1                         | Image library                    |<ul><li>Set to 0 to use the GD library to scale and orient images</li><li>Set to 1 to use imagick (if installed, falls back to GD)</li><li>Set to 2 to use the ImageMagick convert binary directly</li></ul>|
 | `image_versions` | `Array`    |  False    | {'' : {'auto_orient' : true}}  | Array of image versions you need ||
 
 
@@ -222,10 +222,10 @@ if you need thumbmail, or another format for the original image you have followi
 
 | Option           | Type       | Required  | Default value                  | Description                                         |
 | :-------------  |:----------:|:---------:|:------------------------------:|:---------------------------------------------------|
-| `auto_orient`    | `Booleen`  |  False    |     true                       | Automatically rotate images based on EXIF meta data |
-| `crop`           | `Booleen`  |  False    |     false                      | If you need to crop image                           |
-| `max_width`      | `Interger` |  False    |     null                       | Max width after resize/crop (px)                    |
-| `max_height`     | `Interger` |  False    |     null                       | Max height after resize/crop (px)                   |
+| `auto_orient`    | `Boolean`  |  False    |     true                       | Automatically rotate images based on EXIF meta data |
+| `crop`           | `Boolean`  |  False    |     false                      | If you need to crop image                           |
+| `max_width`      | `Integer` |  False    |     null                       | Max width after resize/crop (px)                    |
+| `max_height`     | `Integer` |  False    |     null                       | Max height after resize/crop (px)                   |
 
 >The key determines whether you save only the version of the image or whether you save the original and the version of the image in a subfolder (subfolder name = key name)
                                                 
