@@ -10,6 +10,9 @@ final class FileManagerEvents {
     public const PRE_UPDATE = 'file_manager.pre_update';
     /** @Event("Symfony\Component\EventDispatcher\GenericEvent") */
     public const POST_UPDATE = 'file_manager.post_update';
+    
+    /** @Event("Symfony\Component\EventDispatcher\GenericEvent") */
+    public const RENAME_FILE = 'file_manager.post_rename_file';
 
     /** @Event("Symfony\Component\EventDispatcher\GenericEvent") */
     public const PRE_DELETE_FILE = 'file_manager.pre_delete_file';
