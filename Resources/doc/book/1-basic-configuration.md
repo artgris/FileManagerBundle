@@ -57,7 +57,7 @@ artgris_file_manager:
 ## `tree` Display Folder Tree
 | Option | Type     | Required | Default value |
 | :---  |:--------:|:--------:|:--------:|
-| `tree`  | `Booleen` |  False   | true |
+| `tree`  | `Boolean` |  False   | true |
 
 Example with `tree` = false
 
@@ -141,7 +141,7 @@ artgris_file_manager:
 
 | Option | Type     | Required  | Default value |
 | :---  |:--------:|:--------:|:-------------:|
-| `twig_extension`  | `string` |  False   |  |
+| `twig_extension`  | `String` |  False   |  |
 
 '$IMAGE$' in string will be replace by image path.
 
@@ -161,7 +161,7 @@ artgris_file_manager:
 
 | Option | Type     | Required  | Default value |
 | :---  |:--------:|:--------:|:-------------:|
-| `cachebreaker`  | `bool` |  False   | True |
+| `cachebreaker`  | `Boolean` |  False   | True |
 
 Adding a cachebreaker ?time=RANDOM_NUMBER or & &time=RANDOM_NUMBER at the end of the images (preview) url. It's removed if you have used "twig_extension" option.
 
@@ -169,7 +169,7 @@ Adding a cachebreaker ?time=RANDOM_NUMBER or & &time=RANDOM_NUMBER at the end of
 
 | Option            | Type     | Required  | Default value |
 |:------------------|:--------:|:--------:|:-------------:|
-| `show_file_count` | `bool` |  False   | True |
+| `show_file_count` | `Boolean` |  False   | True |
 
 Having a large number of files in a (sub-)directory can have a huge impact on performance, setting this to false will improve the performance at the cost of the display of files per directory
 
@@ -177,7 +177,7 @@ Having a large number of files in a (sub-)directory can have a huge impact on pe
 
 | Option            |   Type   | Required  | Default value |
 |:------------------|:--------:|:--------:|:-------------:|
-| `root_name` | `string` |  False   |     null      |
+| `root_name` | `String` |  False   |     null      |
 
 ## `upload` A non-exhaustive  configuration of the File Upload widget [blueimp/jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload)
 > [Exhaustive options](https://github.com/blueimp/jQuery-File-Upload/blob/master/server/php/UploadHandler.php) can only be defined with [The service configuration](2-service-configuration.md)
