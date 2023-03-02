@@ -220,7 +220,7 @@ class ManagerController extends AbstractController {
                 } else {
                     $fs = new Filesystem();
                     try {
-                        $this->dispatch(FileManagerEvents::RENAME_FILE, ['fileManager'=> $fileManager,'oldFile'=> $oldfilePath,'newFile'=> $newfilePath]);
+                        $this->dispatch(FileManagerEvents::RENAME_FILE, ['oldFile'=> $oldfilePath,'newFile'=> $newfilePath]);
                         $fs->rename($oldfilePath, $newfilePath);
                         $this->addFlash('success', $this->translator->trans('file.renamed.success'));
                         //File has been renamed successfully
