@@ -213,15 +213,15 @@ class ManagerController extends AbstractController {
             $newfileName = $data['name'].$extension;
             if ($newfileName !== $fileName && isset($data['name'])) {
                 $fileManager = $this->newFileManager($queryParameters);
-                $NewfilePath = $fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$newfileName;
-                $OldfilePath = realpath($fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$fileName);
-                if (0 !== mb_strpos($NewfilePath, $fileManager->getCurrentPath())) {
+                $newfilePath = $fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$newfileName;
+                $oldfilePath = realpath($fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$fileName);
+                if (0 !== mb_strpos($newfilePath, $fileManager->getCurrentPath())) {
                     $this->addFlash('danger', $this->translator->trans('file.renamed.unauthorized'));
                 } else {
                     $fs = new Filesystem();
                     try {
-                        $this->dispatch(FileManagerEvents::RENAME_FILE, ['fileManager'=> $fileManager,'oldFile'=> $OldfilePath,'newFile'=> $NewfilePath]);
-                        $fs->rename($OldfilePath, $NewfilePath);
+                        $this->dispatch(FileManagerEvents::RENAME_FILE, ['fileManager'=> $fileManager,'oldFile'=> $oldfilePath,'newFile'=> $newfilePath]);
+                        $fs->rename($oldfilePath, $newfilePath);
                         $this->addFlash('success', $this->translator->trans('file.renamed.success'));
                         //File has been renamed successfully
                     } catch (IOException $exception) {
