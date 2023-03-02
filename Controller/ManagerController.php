@@ -318,9 +318,6 @@ class ManagerController extends AbstractController {
                         } catch (Exception $exception) {
                             $this->addFlash('danger', $exception->getMessage() );
                         }
-                       
-                         $this->dispatch(FileManagerEvents::POST_DELETE_FILE);
-                       
                     }
                 }
                 if ($is_delete) {
