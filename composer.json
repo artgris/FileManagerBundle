@@ -17,6 +17,7 @@
   ],
   "require": {
     "php": ">=8.0.2",
+    "doctrine/annotations": "^1.14|^2.0",
     "oomphinc/composer-installers-extender": "^2.0",
     "symfony/asset": "^6.0",
     "symfony/event-dispatcher": "^6.0",
