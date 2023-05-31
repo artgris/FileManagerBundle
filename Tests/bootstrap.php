@@ -1,17 +1,17 @@
 <?php
 
-use Doctrine\Common\Annotations\AnnotationRegistry;
+use Symfony\Component\Dotenv\Dotenv;
 
 $file = __DIR__.'/../vendor/autoload.php';
 if (!file_exists($file)) {
     throw new RuntimeException('Install dependencies using Composer to run the test suite.');
 }
-$autoload = require $file;
+require $file;
 
-AnnotationRegistry::registerLoader(function ($class) use ($autoload) {
-    $autoload->loadClass($class);
-
-    return class_exists($class, false);
-});
+if (file_exists(dirname(__DIR__).'/config/bootstrap.php')) {
+    require dirname(__DIR__).'/config/bootstrap.php';
+} elseif (method_exists(Dotenv::class, 'bootEnv')) {
+    (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
+}
 
 include __DIR__.'/Fixtures/App/AppKernel.php';

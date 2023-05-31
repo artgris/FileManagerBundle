@@ -29,7 +29,7 @@ jobs:
 
             - name: 'Install project dependencies'
               env:
-                  SYMFONY_REQUIRE: 5.4
+                  SYMFONY_REQUIRE: 6.2
               run: |
                   composer update --no-interaction --prefer-dist --optimize-autoloader --prefer-stable
                   vendor/bin/simple-phpunit install
