@@ -48,9 +48,7 @@ class ManagerController extends AbstractController {
     public function __construct(private FilemanagerService $filemanagerService, private EventDispatcherInterface $dispatcher, private TranslatorInterface $translator, private RouterInterface $router, private FormFactoryInterface $formFactory) {
     }
 
-    /**
-     * @Route("/", name="file_manager")
-     */
+    #[Route('/', name: 'file_manager')]
     public function indexAction(Request $request, FileTypeService $fileTypeService): JsonResponse|Response {
         $queryParameters = $request->query->all();
         $isJson = $request->get('json');
@@ -199,9 +197,7 @@ class ManagerController extends AbstractController {
         return $this->render('@ArtgrisFileManager/manager.html.twig', $parameters);
     }
 
-    /**
-     * @Route("/rename/{fileName}", name="file_manager_rename")
-     */
+    #[Route("/rename/{fileName}", name: 'file_manager_rename')]
     public function renameFileAction(Request $request, string $fileName): RedirectResponse {
         $queryParameters = $request->query->all();
         $formRename = $this->createRenameForm();
@@ -238,9 +234,7 @@ class ManagerController extends AbstractController {
         return $this->redirectToRoute('file_manager', $queryParameters);
     }
 
-    /**
-     * @Route("/upload/", name="file_manager_upload")
-     */
+    #[Route("/upload/", name: 'file_manager_upload')]
     public function uploadFileAction(Request $request): JsonResponse|Response {
         $fileManager = $this->newFileManager($request->query->all());
 
@@ -278,9 +272,7 @@ class ManagerController extends AbstractController {
         return new JsonResponse($response);
     }
 
-    /**
-     * @Route("/file/{fileName}", name="file_manager_file")
-     */
+    #[Route("/file/{fileName}", name: 'file_manager_file')]
     public function binaryFileResponseAction(Request $request, string $fileName): BinaryFileResponse {
         $fileManager = $this->newFileManager($request->query->all());
 
@@ -290,9 +282,7 @@ class ManagerController extends AbstractController {
         return new BinaryFileResponse($file);
     }
 
-    /**
-     * @Route("/delete/", name="file_manager_delete")
-     */
+    #[Route("/delete/", name: 'file_manager_delete')]
     public function deleteAction(Request $request): RedirectResponse {
         $form = $this->createDeleteForm();
         $form->handleRequest($request);
