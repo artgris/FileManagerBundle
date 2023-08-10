@@ -15,7 +15,7 @@ class ArtgrisFileManagerExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         
         $configuration = new Configuration($container->getParameter('kernel.project_dir'));
