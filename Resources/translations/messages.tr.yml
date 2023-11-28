@@ -1,0 +1,61 @@
+file:
+  add:
+    success: başarıyla yüklendi
+  renamed:
+    success: Dosya başarıyla yeniden adlandırıldı.
+    danger: Dosya adı mevcut veya bu işlem için yetkiniz yok
+    unauthorized: Dosya mevcut değil veya bu işlem için yetkiniz yok
+    nochanged: Herhangi birşey değiştirilmedi
+  deleted:
+    success: Dosyalar başarıyla silindi
+    danger: Dosyalar mevcut değil veya bu işlem için yetkiniz yok
+    unauthorized: Dosyalar mevcut değil veya bu işlem için yetkiniz yok
+folder:
+  add:
+    danger: "Klasör oluşturulurken Hata Oluştu: %message%"
+    success: Klasör başarıyla oluşturuldu
+  deleted:
+    success: Klasör başarıyla silindi
+    unauthorized: Klasör mevcut değil veya bu işlem için yetkiniz yok
+button:
+  cancel: İPTAL
+  refresh: Yenile
+  parent: Parent
+  save: KAYDET
+  add:
+    files: Dosya Yükle...
+    folder: Yeni Klasör...
+  delete:
+    current: Mevcut Klasörü Sil
+    selected: Seçili Dosyaları Sil
+    action: SİL
+  rename:
+    action: YENİDEN ADLANDIR
+  tree: Dizinler
+title:
+  add:
+    folder: Yeni Klasör
+  rename:
+    file: Yeniden adlandır
+  delete: Sil
+  download: İndir
+  preview:
+    file: Aç
+input:
+  default: İsimsiz Klasör
+table:
+  name: Ad
+  date: Tarih
+  size: Boyut
+  dimension: Ebatlar
+  actions: İşlemler
+confirm:
+  delete:  Silmek için onay veriyor musunuz?
+size:
+  mb: MB
+  kb: KB
+select-all: Hepsini Seç
+upload:
+  exception_move_uploaded_file: Yetkiniz yok
+search:
+  placeholder: Arama
