@@ -313,6 +313,38 @@ artgris_file_manager:
                 override: true
 ```
 
+#### File Name Sanitizer / Slugger
+Change File Name with Slugger on upload file ( uses [Symfony AsciiSlugger Interface](https://symfony.com/doc/current/components/string.html) )
+> It is recommended to override 'true'
+
+**Be Sure installed Symfony/String**
+> composer require symfony/string
+
+```yml 
+artgris_file_manager:
+    conf:
+        public:
+            dir: '%kernel.project_dir%/public/uploads'
+            upload:
+              override: true
+              #                image_versions: {'thumbnail': {crop: true, max_width: 10, max_height: 10}}
+              filename_sanitizer:
+                  slugger: true
+                  transformer: 'none' # none, uppercase, lowercase, camel, snake, cameltitle, title, titleall, folded
+                  prepend: '' # File name rename to : image.jpg -> 2024_image.jpg
+                  append: '' # # File name rename to : image.jpg -> image_2025.jpg
+```
 -------------------------------------------------------------------------------
+
+
+| Option        |   Type    |   Value   | Example                                              |
+|:--------------|:---------:|:---------:|:-----------------------------------------------------|
+| `slugger`     | `Boolean` |           | Fav logo śćąóź∆.jpg **rename to** Fav-logo-scaoz.jpg |
+| `transformer` | `String`  | lowercase | **fav-logo-scaoz.jpg**                               |
+| `prepend`     | `String`  |   2024-   | **2024-fav-logo-scaoz.jpg**                          |
+| `append`      | `String`  |   -2025   | **2025-fav-logo-scaoz.jpg**                          |
+
+>If prepend and append parameters will be blank, it wont add any strings.
+
 
 [Chapter 2 - Service Configuration](2-service-configuration.md) &rarr;
