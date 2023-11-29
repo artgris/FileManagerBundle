@@ -16,7 +16,7 @@ FileManager is a simple Multilingual File Manager Bundle for Symfony
 *  Upload, delete (multiple), rename, download and sort files
 *  Create, rename and delete folders
 *  Manage **Public** and **Private** folders
-*  **Multilingual** (English, French, Catalan, German, Spanish, Dutch, Portuguese, Romanian, Russian)
+*  **Multilingual** (English, French, Catalan, German, Spanish, Dutch, Portuguese, Romanian, Russian, Turkish)
 *  **Fully responsive design** (bootstrap)
 *  Multilple view modes (list, thumbnail, with tree or not)
 *  Easy integration with [**Tinymce**](https://www.tinymce.com/)

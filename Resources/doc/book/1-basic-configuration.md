@@ -57,7 +57,7 @@ artgris_file_manager:
 ## `tree` Display Folder Tree
 | Option | Type     | Required | Default value |
 | :---  |:--------:|:--------:|:--------:|
-| `tree`  | `Booleen` |  False   | true |
+| `tree`  | `Boolean` |  False   | true |
 
 Example with `tree` = false
 
@@ -141,7 +141,7 @@ artgris_file_manager:
 
 | Option | Type     | Required  | Default value |
 | :---  |:--------:|:--------:|:-------------:|
-| `twig_extension`  | `string` |  False   |  |
+| `twig_extension`  | `String` |  False   |  |
 
 '$IMAGE$' in string will be replace by image path.
 
@@ -161,7 +161,7 @@ artgris_file_manager:
 
 | Option | Type     | Required  | Default value |
 | :---  |:--------:|:--------:|:-------------:|
-| `cachebreaker`  | `bool` |  False   | True |
+| `cachebreaker`  | `Boolean` |  False   | True |
 
 Adding a cachebreaker ?time=RANDOM_NUMBER or & &time=RANDOM_NUMBER at the end of the images (preview) url. It's removed if you have used "twig_extension" option.
 
@@ -169,7 +169,7 @@ Adding a cachebreaker ?time=RANDOM_NUMBER or & &time=RANDOM_NUMBER at the end of
 
 | Option            | Type     | Required  | Default value |
 |:------------------|:--------:|:--------:|:-------------:|
-| `show_file_count` | `bool` |  False   | True |
+| `show_file_count` | `Boolean` |  False   | True |
 
 Having a large number of files in a (sub-)directory can have a huge impact on performance, setting this to false will improve the performance at the cost of the display of files per directory
 
@@ -177,7 +177,7 @@ Having a large number of files in a (sub-)directory can have a huge impact on pe
 
 | Option            |   Type   | Required  | Default value |
 |:------------------|:--------:|:--------:|:-------------:|
-| `root_name` | `string` |  False   |     null      |
+| `root_name` | `String` |  False   |     null      |
 
 ## `upload` A non-exhaustive  configuration of the File Upload widget [blueimp/jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload)
 > [Exhaustive options](https://github.com/blueimp/jQuery-File-Upload/blob/master/server/php/UploadHandler.php) can only be defined with [The service configuration](2-service-configuration.md)
@@ -204,13 +204,13 @@ artgris_file_manager:
 
 | Option           | Type       | Required  | Default value                  | Description                      | Possible values          |
 | :-------------  |:----------:|:---------:|:------------------------------:|:--------------------------------|:--------------------------------|
-| `min_file_size`  | `Interger` |  False    |      1                         | Min allowed file size (bytes)    ||
-| `max_file_size`  | `Interger` |  False    |     null                       | Max allowed file size (bytes)    ||
-| `max_width`      | `Interger` |  False    |     null                       | Max allowed file width (px)      ||
-| `max_height`     | `Interger` |  False    |     null                       | Max allowed file height (px)     ||
-| `min_width`      | `Interger` |  False    |      1                         | Min allowed file width (px)      ||
-| `min_height`     | `Interger` |  False    |      1                         | Min allowed file height (px)     ||
-| `image_library`  | `Interger` |  False    |      1                         | Image library                    |<ul><li>Set to 0 to use the GD library to scale and orient images</li><li>Set to 1 to use imagick (if installed, falls back to GD)</li><li>Set to 2 to use the ImageMagick convert binary directly</li></ul>|
+| `min_file_size`  | `Integer` |  False    |      1                         | Min allowed file size (bytes)    ||
+| `max_file_size`  | `Integer` |  False    |     null                       | Max allowed file size (bytes)    ||
+| `max_width`      | `Integer` |  False    |     null                       | Max allowed file width (px)      ||
+| `max_height`     | `Integer` |  False    |     null                       | Max allowed file height (px)     ||
+| `min_width`      | `Integer` |  False    |      1                         | Min allowed file width (px)      ||
+| `min_height`     | `Integer` |  False    |      1                         | Min allowed file height (px)     ||
+| `image_library`  | `Integer` |  False    |      1                         | Image library                    |<ul><li>Set to 0 to use the GD library to scale and orient images</li><li>Set to 1 to use imagick (if installed, falls back to GD)</li><li>Set to 2 to use the ImageMagick convert binary directly</li></ul>|
 | `image_versions` | `Array`    |  False    | {'' : {'auto_orient' : true}}  | Array of image versions you need ||
 
 
@@ -222,10 +222,10 @@ if you need thumbmail, or another format for the original image you have followi
 
 | Option           | Type       | Required  | Default value                  | Description                                         |
 | :-------------  |:----------:|:---------:|:------------------------------:|:---------------------------------------------------|
-| `auto_orient`    | `Booleen`  |  False    |     true                       | Automatically rotate images based on EXIF meta data |
-| `crop`           | `Booleen`  |  False    |     false                      | If you need to crop image                           |
-| `max_width`      | `Interger` |  False    |     null                       | Max width after resize/crop (px)                    |
-| `max_height`     | `Interger` |  False    |     null                       | Max height after resize/crop (px)                   |
+| `auto_orient`    | `Boolean`  |  False    |     true                       | Automatically rotate images based on EXIF meta data |
+| `crop`           | `Boolean`  |  False    |     false                      | If you need to crop image                           |
+| `max_width`      | `Integer` |  False    |     null                       | Max width after resize/crop (px)                    |
+| `max_height`     | `Integer` |  False    |     null                       | Max height after resize/crop (px)                   |
 
 >The key determines whether you save only the version of the image or whether you save the original and the version of the image in a subfolder (subfolder name = key name)
                                                 
