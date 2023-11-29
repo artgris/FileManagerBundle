@@ -80,6 +80,7 @@ TinyMCE v5
             var windowManagerCSS = '<style type="text/css">' +
                 '.tox-dialog {max-width: 100%!important; width:97.5%!important; overflow: hidden; height:95%!important; border-radius:0.25em;}' +
                 '.tox-dialog__body { padding: 0!important; }' +
+                '.tox .tox-form__group{height:100%;}' +
                 '.tox-dialog__body-content > div { height: 100%; overflow:hidden}' +
                 '</style > ';
 
