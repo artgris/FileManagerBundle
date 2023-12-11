@@ -66,7 +66,7 @@ $ composer require artgris/filemanager-bundle
 # app/config/routes.yaml
 artgris_bundle_file_manager:
     resource: "@ArtgrisFileManagerBundle/Controller"
-    type:     annotation
+    type:     attribute
     prefix:   /manager
 ```
 ### Step 3:  Enable the translator service
