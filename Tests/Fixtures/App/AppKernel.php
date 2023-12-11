@@ -14,7 +14,6 @@ class AppKernel extends Kernel
         return [
             new Artgris\Bundle\FileManagerBundle\ArtgrisFileManagerBundle(),
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
         ];
     }
