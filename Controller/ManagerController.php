@@ -327,7 +327,7 @@ class ManagerController extends AbstractController {
                 }
 
                 $this->dispatch(FileManagerEvents::POST_DELETE_FOLDER);
-                $queryParameters['route'] = \dirname($fileManager->getCurrentRoute());
+                $queryParameters['route'] = \dirname($fileManager->getRoute());
                 if ($queryParameters['route'] == '/') {
                     unset($queryParameters['route']);
                 }
@@ -409,7 +409,7 @@ class ManagerController extends AbstractController {
                     'href' => $fileName ? $this->generateUrl('file_manager', $queryParameters) : $this->generateUrl('file_manager', $queryParametersRoute),
                 ],
                 'state' => [
-                    'selected' => $fileManager->getCurrentRoute() === $fileName,
+                    'selected' => $fileManager->getRoute() === $fileName,
                     'opened' => true,
                 ],
             ];

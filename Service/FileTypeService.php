@@ -25,7 +25,7 @@ class FileTypeService {
         } else {
             $filePath = $this->router->generate(
                 'file_manager_file',
-                array_merge($fileManager->getQueryParameters(), ['fileName' => rawurlencode($file->getFilename())])
+                array_merge($fileManager->getQueryParameters(), ['fileName' => $file->getFilename()])
             );
         }
         $extension = $file->getExtension();
@@ -39,7 +39,7 @@ class FileTypeService {
             $href = $this->router->generate(
                 'file_manager', array_merge(
                 $fileManager->getQueryParameters(),
-                ['route' => $fileManager->getRoute().'/'.rawurlencode($file->getFilename())]
+                ['route' => $fileManager->getRoute().'/'.$file->getFilename()]
             )
             );
 
@@ -67,6 +67,7 @@ class FileTypeService {
     }
 
     public function fileIcon(string $filePath,?string $extension = null, ?int $size = 75, ?bool $lazy = false, ?string $twigExtension = null, ?bool $cachebreaker = null): array {
+        
         $imageTemplate = null;
 
         if (null === $extension) {

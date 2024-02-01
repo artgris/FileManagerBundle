@@ -45,28 +45,27 @@ class FileManager {
         };
     }
 
-    public function getCurrentRoute(): ?string {
-        if ($this->getRoute()) {
-            return urldecode($this->getRoute());
-        }
-
-        return null;
-    }
+//    public function getCurrentRoute(): ?string {
+//        if ($this->getRoute()) {
+//            return urldecode($this->getRoute());
+//        }
+//
+//        return null;
+//    }
 
     public function getCurrentPath(): bool|string {
-        return realpath($this->getBasePath().$this->getCurrentRoute());
+        return realpath($this->getBasePath().$this->getRoute());
     }
 
     // parent url
     public function getParent(): ?string {
         $queryParentParameters = $this->queryParameters;
 
-        if ($this->getCurrentRoute()) {
+        if ($this->getRoute()) {
 
-            $parentRoute = \dirname($this->getCurrentRoute());
-
+            $parentRoute = \dirname($this->getRoute());
             if (\DIRECTORY_SEPARATOR !== $parentRoute) {
-                $queryParentParameters['route'] = \dirname($this->getCurrentRoute());
+                $queryParentParameters['route'] = \dirname($this->getRoute());
             } else {
                 unset($queryParentParameters['route']);
             }
@@ -82,7 +81,7 @@ class FileManager {
     public function getImagePath(): bool|string {
         $baseUrl = $this->getBaseUrl();
         if ($baseUrl) {
-            return $baseUrl.$this->getCurrentRoute().'/';
+            return $baseUrl.$this->getRoute().'/';
         }
 
         return false;
