@@ -45,14 +45,6 @@ class FileManager {
         };
     }
 
-//    public function getCurrentRoute(): ?string {
-//        if ($this->getRoute()) {
-//            return urldecode($this->getRoute());
-//        }
-//
-//        return null;
-//    }
-
     public function getCurrentPath(): bool|string {
         return realpath($this->getBasePath().$this->getRoute());
     }
