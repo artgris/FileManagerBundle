@@ -22,7 +22,7 @@ class FileTypeService {
     public function preview(FileManager $fileManager, SplFileInfo $file) {
 
         if ($fileManager->getImagePath()) {
-            $filePath = $fileManager->getImagePath().$file->getFilename();
+            $filePath = $fileManager->getImagePath().rawurlencode($file->getFilename());
         } else {
             $filePath = $this->router->generate(
                 'file_manager_file',

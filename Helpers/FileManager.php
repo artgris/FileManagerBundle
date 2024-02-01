@@ -151,7 +151,7 @@ class FileManager
 
     public function getRoutePath(): ?string
     {
-        return implode('/', array_map('urlencode', explode('/', $this->getRoute())));
+        return implode('/', array_map('rawurlencode', explode('/', $this->getRoute())));
     }
 
     public function getBasePath(): bool|string
