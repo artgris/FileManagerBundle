@@ -1,0 +1,61 @@
+file:
+  add:
+    success: został pomyślnie wgrany
+  renamed:
+    success: Nazwa pliku została pomyślnie zmieniona
+    danger: Plik już istnieje lub nie jesteś uprawniony do zmiany nazwy tego pliku
+    unauthorized: Pliki już nie istnieją lub nie jesteś uprawniony do dostępu do tej strony
+    nochanged: Nie wykryto zmian
+  deleted:
+    success: Pliki zostały pomyślnie usunięte
+    danger: Pliki już nie istnieją lub nie masz uprawnień dostępu do tej strony.
+    unauthorized: Pliki już nie istnieją lub nie masz uprawnień dostępu do tej strony.
+folder:
+  add:
+    danger: "Wystąpił błąd podczas tworzenia folderu: %message%"
+    success: Folder został utworzony
+  deleted:
+    success: Folder został pomyślnie usunięty
+    unauthorized: Folder już nie istnieje lub nie masz uprawnień dostępu do tej strony.
+button:
+  cancel: Anuluj
+  refresh: Odśwież
+  parent: Rodzic
+  save: ZAPISZ
+  add:
+    files: Dodaj pliki...
+    folder: Nowy folder...
+  delete:
+    current: Usuń bieżący folder
+    selected: Usuń zaznaczone pliki
+    action: USUŃ
+  rename:
+    action: ZMIEŃ NAZWĘ
+  tree: Drzewo
+title:
+  add:
+    folder: Nowy folder
+  rename:
+    file: Zmień nazwę
+  delete: Usuń
+  download: Pobierz
+  preview:
+    file: Otwórz
+input:
+    default: Folder bez nazwy
+table:
+  name: Nazwa
+  date: Data
+  size: Rozmiar
+  dimension: Wymiary
+  actions: Akcje
+confirm:
+  delete:  Czy na pewno chcesz usunąć?
+size:
+  mb: MB
+  kb: kB
+select-all: Zaznacz wszystkie
+upload:
+  exception_move_uploaded_file: Brak uprawnień
+search:
+  placeholder: Szukaj
