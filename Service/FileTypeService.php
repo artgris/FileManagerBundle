@@ -20,12 +20,13 @@ class FileTypeService {
     }
 
     public function preview(FileManager $fileManager, SplFileInfo $file) {
+
         if ($fileManager->getImagePath()) {
-            $filePath = $fileManager->getImagePath().$file->getFilename();
+            $filePath = $fileManager->getImagePath().rawurlencode($file->getFilename());
         } else {
             $filePath = $this->router->generate(
                 'file_manager_file',
-                array_merge($fileManager->getQueryParameters(), ['fileName' => rawurlencode($file->getFilename())])
+                array_merge($fileManager->getQueryParameters(), ['fileName' => $file->getFilename()])
             );
         }
         $extension = $file->getExtension();
@@ -36,10 +37,11 @@ class FileTypeService {
             return $this->fileIcon($filePath, $extension, $size, true, $fileManager->getConfigurationParameter('twig_extension'), $fileManager->getConfigurationParameter('cachebreaker'));
         }
         if ('dir' === $type) {
+
             $href = $this->router->generate(
                 'file_manager', array_merge(
                 $fileManager->getQueryParameters(),
-                ['route' => $fileManager->getRoute().'/'.rawurlencode($file->getFilename())]
+                ['route' => $fileManager->getRoute().'/'.$file->getFilename()]
             )
             );
 
@@ -67,6 +69,7 @@ class FileTypeService {
     }
 
     public function fileIcon(string $filePath,?string $extension = null, ?int $size = 75, ?bool $lazy = false, ?string $twigExtension = null, ?bool $cachebreaker = null): array {
+
         $imageTemplate = null;
 
         if (null === $extension) {
