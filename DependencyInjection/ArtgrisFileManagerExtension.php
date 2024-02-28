@@ -12,13 +12,17 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 class ArtgrisFileManagerExtension extends Extension
 {
+    public function getConfiguration(array $config, ContainerBuilder $container): Configuration
+    {
+        return new Configuration($container->getParameter('kernel.project_dir'));
+    }
+
     /**
      * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
-        
-        $configuration = new Configuration($container->getParameter('kernel.project_dir'));
+        $configuration = $this->getConfiguration($configs, $container);
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('artgris_file_manager', $config);
