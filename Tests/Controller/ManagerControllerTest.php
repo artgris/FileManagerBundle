@@ -48,7 +48,7 @@ class ManagerControllerTest extends AbstractTestCase
         $jsList = [
             '/bundles/artgrisfilemanager/libs/jquery/dist/jquery.min.js',
             '/bundles/artgrisfilemanager/libs/bootstrap/dist/js/bootstrap.min.js',
-            '/bundles/artgrisfilemanager/libs/jstree/dist/jstree.min.js',
+            '/bundles/artgrisfilemanager/libs/jstree/dist/jstree.js',
             '/bundles/artgrisfilemanager/libs/blueimp-file-upload/js/vendor/jquery.ui.widget.js',
             '/bundles/artgrisfilemanager/libs/blueimp-file-upload/js/jquery.iframe-transport.js',
             '/bundles/artgrisfilemanager/libs/blueimp-file-upload/js/jquery.fileupload.js',
