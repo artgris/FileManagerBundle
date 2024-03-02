@@ -1,0 +1,61 @@
+file:
+  add:
+    success: è stato caricato correttamente
+  renamed:
+    success: Il file è stato rinominato correttamente
+    danger: Il file esiste già o non sei autorizzato a rinominarlo
+    unauthorized: I file non esistono più o non sei autorizzato ad accedere a questa pagina
+    nochanged: Nessuna modifica rilevata
+  deleted:
+    success: I file sono stati eliminati correttamente
+    danger: I file non esistono più o non sei autorizzato ad accedere a questa pagina
+    unauthorized: I file non esistono più o non sei autorizzato ad accedere a questa pagina
+folder:
+  add:
+    danger: "Si è verificato un errore durante la creazione della cartella: %message%"
+    success: La cartella è stata creata correttamente
+  deleted:
+    success: La cartella è stata eliminata correttamente
+    unauthorized: La cartella non esiste più o non sei autorizzato ad accedere a questa pagina
+button:
+  cancel: ANNULLA
+  refresh: Aggiorna
+  parent: Genitore
+  save: SALVA
+  add:
+    files: Aggiungi file...
+    folder: Nuova cartella...
+  delete:
+    current: Elimina cartella corrente
+    selected: Elimina file selezionati
+    action: ELIMINA
+  rename:
+    action: RINOMINA
+  tree: Albero
+title:
+  add:
+    folder: Nuova cartella
+  rename:
+    file: Rinomina
+  delete: Elimina
+  download: Scarica
+  preview:
+    file: Apri
+input:
+    default: Cartella senza titolo
+table:
+  name: Nome
+  date: Data
+  size: Dimensione
+  dimension: Dimensione
+  actions: Azioni
+confirm:
+  delete: Sei sicuro di voler eliminare?
+size:
+  mb: MB
+  kb: kB
+select-all: Seleziona tutto
+upload:
+  exception_move_uploaded_file: Permesso negato
+search:
+  placeholder: Cerca
