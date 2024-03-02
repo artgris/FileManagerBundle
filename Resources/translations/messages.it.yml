@@ -46,7 +46,7 @@ input:
 table:
   name: Nome
   date: Data
-  size: Dimensione
+  size: Peso
   dimension: Dimensione
   actions: Azioni
 confirm:
