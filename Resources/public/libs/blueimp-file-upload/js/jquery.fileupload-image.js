@@ -121,7 +121,7 @@
         options: {
             // The regular expression for the types of images to load:
             // matched against the file type:
-            loadImageFileTypes: /^image\/(gif|jpeg|png|svg\+xml)$/,
+            loadImageFileTypes: /^image\/(gif|jpeg|png|webp|svg\+xml)$/,
             // The maximum file size of images to load:
             loadImageMaxFileSize: 10000000, // 10MB
             // The maximum width of resized images:

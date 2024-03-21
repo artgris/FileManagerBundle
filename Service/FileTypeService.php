@@ -84,7 +84,7 @@ class FileTypeService {
             case preg_match('/(mp3|wav)$/i', $extension):
                 $fa = 'far fa-file-audio';
                 break;
-            case preg_match('/(gif|png|jpe?g|svg)$/i', $extension):
+            case preg_match('/(gif|png|jpe?g|svg|webp)$/i', $extension):
 
                 $fileName = $filePath;
                 if ($cachebreaker) {
