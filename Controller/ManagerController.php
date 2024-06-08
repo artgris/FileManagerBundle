@@ -25,10 +25,12 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -275,8 +277,16 @@ class ManagerController extends AbstractController {
     #[Route("/file/{fileName}", name: 'file_manager_file')]
     public function binaryFileResponseAction(Request $request, string $fileName): BinaryFileResponse {
         $fileManager = $this->newFileManager($request->query->all());
+        $configuredDirectory = $fileManager->getConfiguration()['dir'];
 
         $file = $fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.urldecode($fileName);
+        $realFilePath = realpath($file);
+        if (false === $realFilePath) {
+            throw new FileNotFoundException($file);
+        }
+        if (!str_starts_with($realFilePath, realpath($configuredDirectory))) {
+            throw new BadRequestHttpException('Accessing outside configured directory is not allowed.');
+        }
         $this->dispatch(FileManagerEvents::FILE_ACCESS, ['path' => $file]);
 
         return new BinaryFileResponse($file);
