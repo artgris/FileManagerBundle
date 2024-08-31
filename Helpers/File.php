@@ -22,7 +22,7 @@ class File
      * @return array|false|string
      */
     public function getDimension(): bool|array|string {
-        return preg_match('/(gif|png|jpe?g|svg)$/i', $this->file->getExtension()) ?
+        return preg_match('/(gif|png|jpe?g|svg|webp)$/i', $this->file->getExtension()) ?
             @getimagesize($this->file->getPathname()) : '';
     }
 

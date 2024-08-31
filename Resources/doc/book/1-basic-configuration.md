@@ -98,7 +98,7 @@ artgris_file_manager:
  
 `media`:  `/\.(mp4|ogg|webm)$/i` Accept basic HTML video media types (.mp4, .ogg and .webm)
 
-`image:`: `/\.(gif|png|jpe?g|svg)$/i` Accept basic HTML image types (.gif, .png, .jpg, .jpeg and .svg)
+`image:`: `/\.(gif|png|jpe?g|svg|webp)$/i` Accept basic HTML image types (.gif, .png, .jpg, .jpeg, .svg and webp)
 
 `file`: `/.+$/i` Accept all files with an extension (.pdf, .html, ...)
 
