@@ -74,7 +74,8 @@ class FileManager
             if (\DIRECTORY_SEPARATOR !== $parentRoute) {
                 $queryParentParameters['route'] = \dirname($this->getRoute());
             } else {
-                unset($queryParentParameters['route']);
+//                unset($queryParentParameters['route']);
+                $queryParentParameters['route'] = '/';
             }
 
             $parentRoute = $this->router->generate('file_manager', $queryParentParameters);

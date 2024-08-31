@@ -35,6 +35,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Exception;
 
 /**
@@ -51,12 +52,20 @@ class ManagerController extends AbstractController {
     }
 
     #[Route('/', name: 'file_manager')]
-    public function indexAction(Request $request, FileTypeService $fileTypeService): JsonResponse|Response {
+    public function indexAction(Request $request, FileTypeService $fileTypeService, SessionInterface $session): JsonResponse|Response {
         $queryParameters = $request->query->all();
         $isJson = $request->get('json');
         if ($isJson) {
             unset($queryParameters['json']);
         }
+
+        // Remember Last Path - 31.08.2024
+        if(isset($this->getParameter('artgris_file_manager')['conf'][$queryParameters['conf']]['remember_last_path'])
+            && $this->getParameter('artgris_file_manager')['conf'][$queryParameters['conf']]['remember_last_path']
+        ){
+            $queryParameters = $this->rememberLastPath($queryParameters, $session);
+        }
+
         $fileManager = $this->newFileManager($queryParameters);
 
         // Folder search
@@ -457,5 +466,37 @@ class ManagerController extends AbstractController {
         $subject = $arguments['filemanager'];
         $event = new GenericEvent($subject, $arguments);
         $this->dispatcher->dispatch($event, $eventName);
+    }
+
+    private function rememberLastPath(array $queryParameters, $session): array
+    {
+        // GET Last Path
+        if ($session->has('file_manager_last_path') && empty($queryParameters['route'])) {
+
+            $fileSystem = new Filesystem();
+            $last_path = $this->getParameter('artgris_file_manager')['conf'][$queryParameters['conf']]['dir'].$session->get('file_manager_last_path');
+            $exist = $fileSystem->exists($last_path);
+
+            if (false === $exist) {
+                $queryParameters['route'] = '/'; // if directory not exist return home path and clear session
+                if ($session->has('file_manager_last_path')) {
+                    $session->remove('file_manager_last_path');
+                }
+            } else {
+                $queryParameters['route'] = $session->get('file_manager_last_path');
+            }
+        }
+
+        // SET Last Path
+        if(isset($queryParameters['route'])){
+            if ($session->has('file_manager_last_path')) {
+                $session->remove('file_manager_last_path');
+            }
+            $session->set('file_manager_last_path', $queryParameters['route']);
+        } else {
+            $queryParameters['route'] = '/';
+        }
+
+        return $queryParameters;
     }
 }

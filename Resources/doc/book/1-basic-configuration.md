@@ -54,6 +54,23 @@ artgris_file_manager:
 
 >Browse the `/manager/?conf=private` URL to get access to this File Manager
 
+## `remember_last_path` Last worked directory
+
+| Option |   Type    | Required | Default value |
+| :---  |:---------:|:--------:|:-------------:|
+| `remember_last_path`  | `Boolean` |  False   |     true      |
+
+> Allows opening folders to the last working directory without clicking on them repeatedly
+> 
+Example:
+ ```yml  
+artgris_file_manager:
+    conf:
+        default:
+          remember_last_path: true
+```
+
+
 ## `tree` Display Folder Tree
 | Option | Type     | Required | Default value |
 | :---  |:--------:|:--------:|:--------:|

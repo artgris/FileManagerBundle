@@ -32,6 +32,7 @@ class Configuration implements ConfigurationInterface
                         ->children()
                             ->scalarNode('dir')->end()
                             ->enumNode('type')->values(['file', 'image', 'media'])->end()
+                            ->booleanNode('remember_last_path')->defaultValue(true)->end()
                             ->booleanNode('tree')->end()
                             ->booleanNode('show_file_count')->defaultValue(true)->end()
                             ->scalarNode('root_name')->defaultValue(null)->end()
