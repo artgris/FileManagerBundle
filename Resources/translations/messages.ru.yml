@@ -17,6 +17,10 @@ folder:
   deleted:
     success: Папка успешно удалена
     unauthorized: Папка больше не существует или у вас недостаточно прав для доступа к этой странице
+  rename:
+    success: Folder has been renamed successfully
+    unauthorized: Folder no longer exist or you are not authorized to access this page
+    danger: Folder could not renamed
 button:
   cancel: ОТМЕНА
   refresh: Обновить

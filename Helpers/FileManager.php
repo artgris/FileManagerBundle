@@ -7,6 +7,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -75,6 +76,7 @@ class FileManager
                 $queryParentParameters['route'] = \dirname($this->getRoute());
             } else {
                 unset($queryParentParameters['route']);
+//                $queryParentParameters['route'] = '/';
             }
 
             $parentRoute = $this->router->generate('file_manager', $queryParentParameters);

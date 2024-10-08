@@ -17,6 +17,10 @@ folder:
   deleted:
     success: "La carpeta s'ha eliminat correctament"
     unauthorized: "La carpeta ja no existeix o no està autoritzat per accedir a aquesta pàgina"
+  rename:
+    success: Folder has been renamed successfully
+    unauthorized: Folder no longer exist or you are not authorized to access this page
+    danger: Folder could not renamed
 button:
   cancel: "CANCEL·LAR"
   refresh: "Actualitzar"

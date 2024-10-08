@@ -35,29 +35,42 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Exception;
 
 /**
  * @author Arthur Gribet <a.gribet@gmail.com>
  */
-class ManagerController extends AbstractController {
+class ManagerController extends AbstractController
+{
 
     private FileManager $fileManager;
 
     /**
      * ManagerController constructor.
      */
-    public function __construct(private FilemanagerService $filemanagerService, private EventDispatcherInterface $dispatcher, private TranslatorInterface $translator, private RouterInterface $router, private FormFactoryInterface $formFactory) {
+    public function __construct(private FilemanagerService $filemanagerService, private EventDispatcherInterface $dispatcher, private TranslatorInterface $translator, private RouterInterface $router, private FormFactoryInterface $formFactory)
+    {
     }
 
     #[Route('/', name: 'file_manager')]
-    public function indexAction(Request $request, FileTypeService $fileTypeService): JsonResponse|Response {
+    public function indexAction(Request $request, FileTypeService $fileTypeService, SessionInterface $session): JsonResponse|Response
+    {
         $queryParameters = $request->query->all();
         $isJson = $request->get('json');
         if ($isJson) {
             unset($queryParameters['json']);
         }
+
+        // Remember Last Path - 31.08.2024
+        if (isset($this->getParameter('artgris_file_manager')['conf'][$queryParameters['conf']]['remember_last_path'])
+            && $this->getParameter('artgris_file_manager')['conf'][$queryParameters['conf']]['remember_last_path']
+        ) {
+            $queryParameters = $this->rememberLastPath($queryParameters, $session);
+        }
+
         $fileManager = $this->newFileManager($queryParameters);
+
 
         // Folder search
         $directoriesArbo = $this->retrieveSubDirectories($fileManager, $fileManager->getDirName(), \DIRECTORY_SEPARATOR, $fileManager->getBaseName());
@@ -159,6 +172,7 @@ class ManagerController extends AbstractController {
                 'label' => false,
                 'data' => $this->translator->trans('input.default'),
             ])
+            ->add('defined_parent_path', HiddenType::class, [])
             ->add('send', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary',
@@ -171,11 +185,20 @@ class ManagerController extends AbstractController {
         $form->handleRequest($request);
         /** @var Form $formRename */
         $formRename = $this->createRenameForm();
+        $formRenameFolder = $this->createRenameFolderForm();
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
+
             $fs = new Filesystem();
-            $directory = $directorytmp = $fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$data['name'];
+
+            if ($data['defined_parent_path']) {
+                $directory = $directorytmp = $fileManager->getConfiguration()['dir'] . $data['defined_parent_path'] . \DIRECTORY_SEPARATOR . $data['name'];
+            } else {
+                $directory = $directorytmp = $fileManager->getCurrentPath() . \DIRECTORY_SEPARATOR . $data['name'];
+            }
+
             $i = 1;
 
             while ($fs->exists($directorytmp)) {
@@ -195,37 +218,39 @@ class ManagerController extends AbstractController {
         }
         $parameters['form'] = $form->createView();
         $parameters['formRename'] = $formRename->createView();
+        $parameters['formRenameFolder'] = $formRenameFolder->createView();
 
         return $this->render('@ArtgrisFileManager/manager.html.twig', $parameters);
     }
 
     #[Route("/rename/{fileName}", name: 'file_manager_rename')]
-    public function renameFileAction(Request $request, string $fileName): RedirectResponse {
+    public function renameFileAction(Request $request, string $fileName): RedirectResponse
+    {
         $queryParameters = $request->query->all();
         $formRename = $this->createRenameForm();
         /* @var Form $formRename */
         $formRename->handleRequest($request);
         if ($formRename->isSubmitted() && $formRename->isValid()) {
             $data = $formRename->getData();
-            $extension = $data['extension'] ? '.'.$data['extension'] : '';
-            $newfileName = $data['name'].$extension;
+            $extension = $data['extension'] ? '.' . $data['extension'] : '';
+            $newfileName = $data['name'] . $extension;
             if ($newfileName !== $fileName && isset($data['name'])) {
                 $fileManager = $this->newFileManager($queryParameters);
-                $newfilePath = $fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$newfileName;
-                $oldfilePath = realpath($fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$fileName);
+                $newfilePath = $fileManager->getCurrentPath() . \DIRECTORY_SEPARATOR . $newfileName;
+                $oldfilePath = realpath($fileManager->getCurrentPath() . \DIRECTORY_SEPARATOR . $fileName);
                 if (0 !== mb_strpos($newfilePath, $fileManager->getCurrentPath())) {
                     $this->addFlash('danger', $this->translator->trans('file.renamed.unauthorized'));
                 } else {
                     $fs = new Filesystem();
                     try {
-                        $this->dispatch(FileManagerEvents::RENAME_FILE, ['oldFile'=> $oldfilePath,'newFile'=> $newfilePath]);
+                        $this->dispatch(FileManagerEvents::RENAME_FILE, ['oldFile' => $oldfilePath, 'newFile' => $newfilePath]);
                         $fs->rename($oldfilePath, $newfilePath);
                         $this->addFlash('success', $this->translator->trans('file.renamed.success'));
                         //File has been renamed successfully
                     } catch (IOException $exception) {
                         $this->addFlash('danger', $this->translator->trans('file.renamed.danger'));
                     } catch (Exception $exception) {
-                        $this->addFlash('danger', $exception->getMessage() );
+                        $this->addFlash('danger', $exception->getMessage());
                     }
                 }
             } else {
@@ -236,12 +261,49 @@ class ManagerController extends AbstractController {
         return $this->redirectToRoute('file_manager', $queryParameters);
     }
 
+    #[Route("/renamefolder/", name: 'file_manager_rename_folder')]
+    public function renameFolderAction(Request $request): RedirectResponse
+    {
+        $queryParameters = $request->query->all();
+        $formRenameFolder = $this->createRenameFolderForm();
+        /* @var Form $formRenameFolder */
+        $formRenameFolder->handleRequest($request);
+        if ($formRenameFolder->isSubmitted() && $formRenameFolder->isValid()) {
+            $data = $formRenameFolder->getData();
+            $fs = new Filesystem();
+            $fileManager = $this->newFileManager($queryParameters);
+            $dirname = $fileManager->getConfiguration()['dir'];
+
+            if (!$data['oldpath'] || '\\' === $data['oldpath'] || !$fs->exists($dirname . $data['oldpath'])) {
+                $this->addFlash('danger', 'folder.rename.unauthorized');
+            } else {
+                try {
+                    $this->dispatch(FileManagerEvents::RENAME_FOLDER, ['oldFolderName' => $data['oldname'], 'newFolderName' => $data['name']]);
+                    $newFolderPath = $dirname . substr($data['oldpath'], 0, strrpos($data['oldpath'], '\\')) . \DIRECTORY_SEPARATOR . $data['name'];
+                    $fs->rename($dirname . $data['oldpath'], $newFolderPath);
+                    $this->addFlash('success', $this->translator->trans('folder.rename.success'));
+                } catch (IOException $exception) {
+                    $this->addFlash('danger', $this->translator->trans('folder.rename.danger', ['%message%' => $data['name']]));
+                } catch (Exception $exception) {
+                    $this->addFlash('danger', $exception->getMessage());
+                }
+            }
+        }
+
+        if(!$fs->exists($fileManager->getConfiguration()['dir']. $fileManager->getRoute())){
+            unset($queryParameters['route']);
+        }
+
+        return $this->redirectToRoute('file_manager', $queryParameters);
+    }
+
     #[Route("/upload/", name: 'file_manager_upload')]
-    public function uploadFileAction(Request $request): JsonResponse|Response {
+    public function uploadFileAction(Request $request): JsonResponse|Response
+    {
         $fileManager = $this->newFileManager($request->query->all());
 
         $options = [
-            'upload_dir' => $fileManager->getCurrentPath().\DIRECTORY_SEPARATOR,
+            'upload_dir' => $fileManager->getCurrentPath() . \DIRECTORY_SEPARATOR,
             'upload_url' => implode('/', array_map('rawurlencode', explode('/', $fileManager->getImagePath()))),
             'accept_file_types' => $fileManager->getRegex(),
             'print_response' => false,
@@ -275,11 +337,12 @@ class ManagerController extends AbstractController {
     }
 
     #[Route("/file/{fileName}", name: 'file_manager_file')]
-    public function binaryFileResponseAction(Request $request, string $fileName): BinaryFileResponse {
+    public function binaryFileResponseAction(Request $request, string $fileName): BinaryFileResponse
+    {
         $fileManager = $this->newFileManager($request->query->all());
         $configuredDirectory = $fileManager->getConfiguration()['dir'];
 
-        $file = $fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.urldecode($fileName);
+        $file = $fileManager->getCurrentPath() . \DIRECTORY_SEPARATOR . urldecode($fileName);
         $realFilePath = realpath($file);
         if (false === $realFilePath) {
             throw new FileNotFoundException($file);
@@ -293,7 +356,8 @@ class ManagerController extends AbstractController {
     }
 
     #[Route("/delete/", name: 'file_manager_delete')]
-    public function deleteAction(Request $request): RedirectResponse {
+    public function deleteAction(Request $request): RedirectResponse
+    {
         $form = $this->createDeleteForm();
         $form->handleRequest($request);
         $queryParameters = $request->query->all();
@@ -304,11 +368,11 @@ class ManagerController extends AbstractController {
             if (isset($queryParameters['delete'])) {
                 $is_delete = false;
                 foreach ($queryParameters['delete'] as $fileName) {
-                    $filePath = realpath($fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$fileName);
+                    $filePath = realpath($fileManager->getCurrentPath() . \DIRECTORY_SEPARATOR . $fileName);
                     if (0 !== mb_strpos($filePath, $fileManager->getCurrentPath())) {
                         $this->addFlash('danger', 'file.deleted.danger');
                     } else {
-                         try {
+                        try {
                             $this->dispatch(FileManagerEvents::PRE_DELETE_FILE);
                             $fs->remove($filePath);
                             $is_delete = true;
@@ -316,7 +380,7 @@ class ManagerController extends AbstractController {
                         } catch (IOException $exception) {
                             $this->addFlash('danger', 'file.deleted.unauthorized');
                         } catch (Exception $exception) {
-                            $this->addFlash('danger', $exception->getMessage() );
+                            $this->addFlash('danger', $exception->getMessage());
                         }
                     }
                 }
@@ -325,20 +389,29 @@ class ManagerController extends AbstractController {
                 }
                 unset($queryParameters['delete']);
             } else {
-                
                 try {
                     $this->dispatch(FileManagerEvents::PRE_DELETE_FOLDER);
-                    $fs->remove($fileManager->getCurrentPath());
-                    $this->addFlash('success', 'folder.deleted.success');
+                    if ( $form->getData()['defined_parent_path'] == '\\' ) {
+                        throw new \Exception('folder.deleted.unauthorized');
+                    } else {
+                        if ($form->getData()['defined_parent_path']) { // Tree Contextmenu Folder delete action
+                            if ($fs->exists($fileManager->getConfiguration()['dir'] . $form->getData()['defined_parent_path'])) {
+                                $fs->remove($fileManager->getConfiguration()['dir'] . $form->getData()['defined_parent_path']);
+                            } else {
+                                throw new \Exception('folder.deleted.unauthorized');
+                            }
+                        }
+                        $this->addFlash('success', 'folder.deleted.success');
+                    }
                 } catch (IOException $exception) {
                     $this->addFlash('danger', 'folder.deleted.unauthorized');
                 } catch (Exception $exception) {
-                    $this->addFlash('danger', $exception->getMessage() );
+                    $this->addFlash('danger', $exception->getMessage());
                 }
 
                 $this->dispatch(FileManagerEvents::POST_DELETE_FOLDER);
                 $queryParameters['route'] = \dirname($fileManager->getRoute());
-                if ($queryParameters['route'] == '/') {
+                if ($queryParameters['route'] == '/' || !$fs->exists($fileManager->getConfiguration()['dir'] . $queryParameters['route'])) {
                     unset($queryParameters['route']);
                 }
 
@@ -349,8 +422,10 @@ class ManagerController extends AbstractController {
         return $this->redirectToRoute('file_manager', $queryParameters);
     }
 
-    private function createDeleteForm(): FormInterface|Form {
+    private function createDeleteForm(): FormInterface|Form
+    {
         return $this->formFactory->createNamedBuilder('delete_f')
+            ->add('defined_parent_path', HiddenType::class, [])
             ->add('DELETE', SubmitType::class, [
                 'translation_domain' => 'messages',
                 'attr' => [
@@ -361,7 +436,8 @@ class ManagerController extends AbstractController {
             ->getForm();
     }
 
-    private function createRenameForm(): FormInterface|Form {
+    private function createRenameForm(): FormInterface|Form
+    {
         return $this->formFactory->createNamedBuilder('rename_f')
             ->add('name', TextType::class, [
                 'constraints' => [
@@ -378,7 +454,28 @@ class ManagerController extends AbstractController {
             ->getForm();
     }
 
-    private function retrieveSubDirectories(FileManager $fileManager, string $path, ?string $parent = \DIRECTORY_SEPARATOR, ?string $baseFolderName = null): ?array {
+    private function createRenameFolderForm(): FormInterface|Form
+    {
+        return $this->formFactory->createNamedBuilder('rename_folder')
+            ->add('name', TextType::class, [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+                'label' => false,
+            ])
+            ->add('oldpath', HiddenType::class)
+            ->add('oldname', HiddenType::class)
+            ->add('send', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-primary',
+                ],
+                'label' => 'button.rename.action',
+            ])
+            ->getForm();
+    }
+
+    private function retrieveSubDirectories(FileManager $fileManager, string $path, ?string $parent = \DIRECTORY_SEPARATOR, ?string $baseFolderName = null): ?array
+    {
         $directories = new Finder();
         $directories->in($path)->ignoreUnreadableDirs()->directories()->depth(0)->sortByType()->filter(function (SplFileInfo $file) {
             return $file->isReadable();
@@ -394,7 +491,7 @@ class ManagerController extends AbstractController {
         foreach ($directories as $directory) {
             /** @var SplFileInfo $directory */
             $directoryFileName = $directory->getFilename();
-            $fileName = $baseFolderName ? '' : $parent.$directoryFileName;
+            $fileName = $baseFolderName ? '' : $parent . $directoryFileName;
 
             $queryParameters = $fileManager->getQueryParameters();
             $queryParameters['route'] = $fileName;
@@ -409,18 +506,35 @@ class ManagerController extends AbstractController {
 
             if ($fileName === '' && isset($fileManager->getConfiguration()['root_name'])) {
                 $directoryFileName = $fileManager->getConfiguration()['root_name'];
+
+            }
+
+                $queryParametersRoute['route'] ?? $queryParametersRoute['route'] = '\\';
+//            $queryParametersRoute['route'] = '\\';
+
+            $selected_directory = false;
+            if ($fileName === '' && $fileManager->getRoute() === null) {
+                $selected_directory = true;
+            } else {
+                if ($fileManager->getRoute() === $fileName) {
+                    $selected_directory = true;
+                } else {
+                    $selected_directory = false;
+                }
             }
 
             $directoriesList[] = [
-                'text' => $directoryFileName.$fileSpan,
-                'icon' => 'far fa-folder-open',
-                'children' => $this->retrieveSubDirectories($fileManager, $directory->getPathname(), $fileName.\DIRECTORY_SEPARATOR),
+                'text' => $directoryFileName . $fileSpan,
+//                'icon' => 'far fa-folder-open',
+                'children' => $this->retrieveSubDirectories($fileManager, $directory->getPathname(), $fileName . \DIRECTORY_SEPARATOR),
                 'a_attr' => [
                     'href' => $fileName ? $this->generateUrl('file_manager', $queryParameters) : $this->generateUrl('file_manager', $queryParametersRoute),
                 ],
                 'state' => [
-                    'selected' => $fileManager->getRoute() === $fileName,
+//                    'selected' => $fileManager->getRoute() === $fileName,
+                    'selected' => $selected_directory,
                     'opened' => true,
+                    'test' => $fileManager->getRoute(),
                 ],
             ];
         }
@@ -431,7 +545,8 @@ class ManagerController extends AbstractController {
     /**
      * Tree Iterator.
      */
-    private function retrieveFilesNumber(string $path,string $regex): int {
+    private function retrieveFilesNumber(string $path, string $regex): int
+    {
         $files = new Finder();
         $files->in($path)->files()->depth(0)->name($regex);
         $this->dispatch(FileManagerEvents::POST_FILE_FILTER_CONFIGURATION, ['finder' => $files]);
@@ -439,7 +554,8 @@ class ManagerController extends AbstractController {
         return iterator_count($files);
     }
 
-    private function newFileManager(array $queryParameters): FileManager {
+    private function newFileManager(array $queryParameters): FileManager
+    {
         if (!isset($queryParameters['conf'])) {
             throw new \RuntimeException('Please define a conf parameter in your route');
         }
@@ -449,7 +565,8 @@ class ManagerController extends AbstractController {
         return $this->fileManager;
     }
 
-    protected function dispatch(string $eventName, array $arguments = []) {
+    protected function dispatch(string $eventName, array $arguments = [])
+    {
         $arguments = array_replace([
             'filemanager' => $this->fileManager,
         ], $arguments);
@@ -457,5 +574,35 @@ class ManagerController extends AbstractController {
         $subject = $arguments['filemanager'];
         $event = new GenericEvent($subject, $arguments);
         $this->dispatcher->dispatch($event, $eventName);
+    }
+
+    private function rememberLastPath(array $queryParameters, $session): array
+    {
+        // GET Last Path -> iEntegre
+        if ($session->has('file_manager_last_path') && empty($queryParameters['route'])) {
+
+            $fileSystem = new Filesystem();
+            $last_path = $this->getParameter('artgris_file_manager')['conf'][$queryParameters['conf']]['dir'] . $session->get('file_manager_last_path');
+            $exist = $fileSystem->exists($last_path);
+
+            if (false === $exist) {
+                unset($queryParameters['route']); // if directory not exit return home and clear session
+                if ($session->has('file_manager_last_path')) {
+                    $session->remove('file_manager_last_path');
+                }
+            } else {
+                $queryParameters['route'] = $session->get('file_manager_last_path');
+            }
+        }
+
+        // SET Last Path -> iEntegre
+        if (isset($queryParameters['route'])) {
+            if ($session->has('file_manager_last_path')) {
+                $session->remove('file_manager_last_path');
+            }
+            $session->set('file_manager_last_path', $queryParameters['route']);
+        }
+
+        return $queryParameters;
     }
 }

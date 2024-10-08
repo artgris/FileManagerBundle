@@ -1,45 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false"
-         backupStaticAttributes="false"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false"
-         bootstrap="Tests/bootstrap.php"
->
-
-    <testsuites>
-        <testsuite name="File Manager Bundle test suite">
-            <directory suffix="Test.php">Tests</directory>
-        </testsuite>
-    </testsuites>
-
-    <php>
-        <server name="KERNEL_DIR" value="./Tests/Fixtures/App"/>
-        <server name="KERNEL_CLASS" value="AppKernel"/>
-        <ini name="error_reporting" value="E_ALL"/>
-        <ini name="display_errors" value="1"/>
-        <ini name="display_startup_errors" value="1"/>
-        <ini name="memory_limit" value="-1"/>
-        <ini name="zend.enable_gc" value="1"/>
-
-        <!-- ###+ symfony/framework-bundle ### -->
-        <env name="APP_ENV" value="dev"/>
-        <env name="APP_SECRET" value="357429e9e5a459780a823191a4c349ec"/>
-        <!-- ###- symfony/framework-bundle ### -->
-    </php>
-
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./Controller</directory>
-            <directory suffix=".php">./Resources</directory>
-            <exclude>
-                <directory>./build</directory>
-                <directory>./Tests</directory>
-                <directory>./vendor</directory>
-            </exclude>
-        </whitelist>
-    </filter>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" backupStaticAttributes="false" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" processIsolation="false" stopOnFailure="false" bootstrap="Tests/bootstrap.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">./Controller</directory>
+      <directory suffix=".php">./Resources</directory>
+    </include>
+    <exclude>
+      <directory>./build</directory>
+      <directory>./Tests</directory>
+      <directory>./vendor</directory>
+    </exclude>
+  </coverage>
+  <testsuites>
+    <testsuite name="File Manager Bundle test suite">
+      <directory suffix="Test.php">Tests</directory>
+    </testsuite>
+  </testsuites>
+  <php>
+    <server name="KERNEL_DIR" value="./Tests/Fixtures/App"/>
+    <server name="KERNEL_CLASS" value="AppKernel"/>
+    <ini name="error_reporting" value="E_ALL"/>
+    <ini name="display_errors" value="1"/>
+    <ini name="display_startup_errors" value="1"/>
+    <ini name="memory_limit" value="-1"/>
+    <ini name="zend.enable_gc" value="1"/>
+    <!-- ###+ symfony/framework-bundle ### -->
+    <env name="APP_ENV" value="dev"/>
+    <env name="APP_SECRET" value="357429e9e5a459780a823191a4c349ec"/>
+    <!-- ###- symfony/framework-bundle ### -->
+  </php>
 </phpunit>

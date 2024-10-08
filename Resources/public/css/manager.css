@@ -8,7 +8,12 @@ body {
 
 .thead-default th {
     color: #464a4c;
-    background-color: #eceeef;
+    background-color: #f7f8f9;
+    border-bottom: 0 !important;
+    font-size: 12px !important;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .bar {
@@ -23,7 +28,7 @@ body {
 }
 
 .top-bar {
-    padding: 10px 0;
+    padding: 7px 0;
     margin: 3px 0;
 }
 
@@ -52,14 +57,23 @@ body {
 }
 
 .label {
-    font-size: 70% !important;
+    /*font-size: 70% !important;*/
     line-height: 24px !important;
-    vertical-align: middle;
+    /*vertical-align: middle;*/
 }
 
 .jstree {
     background-color: #f9f9f9;
-    padding: 10px 5px;
+    padding: 5px 5px;
+    font-size: 12px;
+    height: 470px;
+    padding-bottom: 25px;
+    overflow: hidden;
+}
+
+.jstree:hover{
+    overflow-y: scroll;
+    scrollbar-width: thin;
 }
 
 .thumbnail {
@@ -146,5 +160,99 @@ button i {
         display: none;
     }
 
+}
+
+.jstree-default .jstree-striped{
+    background: none;
+}
+
+.list-blk, .thumbnail-blk{
+    font-size: 13px !important;
+    overflow-y:scroll;
+    scrollbar-width: thin;
+    height:500px;
+}
+
+div.select-all{
+    background-color: #f7f8f9;
+    position: sticky !important;
+    z-index: 1 !important;
+    top: 10px !important;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    padding-top: 3px;
+}
+
+.filemanager-sort-icon{
+    padding-left: 5px;
+}
+
+.jstree-default .jstree-search {
+    font-style: italic;
+    color: #CD5C5C;
+    font-weight: normal;
+}
+
+
+
+/* Context Menu Theme */
+
+.vakata-context,
+.vakata-context ul {
+    padding:.5rem 0;
+    min-width:150px;
+    font-size:1.3rem;
+    background: #ffffff;
+    box-shadow:0px 0px 50px 0px rgba(82, 63, 105, 0.15);
+    border:0;
+    border-radius:.475rem;
+}
+
+.vakata-context li,
+.vakata-context ul li {
+    padding:0;
+    border:0
+}
+.vakata-context li a,
+.vakata-context ul li a {
+    padding:0 1.2rem;
+    border:0
+}
+.vakata-context li a i,
+.vakata-context ul li a i {
+    display:none
+}
+
+.vakata-context li a ins,
+.vakata-context li a span,
+.vakata-context ul li a ins,
+.vakata-context ul li a span {
+    display:none;
+    border:0!important
+}
+.vakata-context .vakata-context-hover>a,
+.vakata-context li a:hover,
+.vakata-context ul .vakata-context-hover>a,
+.vakata-context ul li a:hover {
+    margin:0;
+    background-color:#F9F9F9;
+    color:#1B84FF;
+    box-shadow:none
+}
+.vakata-context .vakata-context-hover>a .ins,
+.vakata-context .vakata-context-hover>a .span,
+.vakata-context li a:hover .ins,
+.vakata-context li a:hover .span,
+.vakata-context ul .vakata-context-hover>a .ins,
+.vakata-context ul .vakata-context-hover>a .span,
+.vakata-context ul li a:hover .ins,
+.vakata-context ul li a:hover .span {
+    border:0!important
+}
+.vakata-context .vakata-context-separator a,
+.vakata-context-rtl .vakata-context-separator a {
+    margin:0;
+    border:0;
+    height:2px;
+    background-color:#F1F1F4;
 }
 

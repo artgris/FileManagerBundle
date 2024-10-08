@@ -92,7 +92,7 @@ TinyMCE v5
                     type: 'panel',
                     items: [{
                         type: 'htmlpanel',
-                        html: windowManagerCSS + '<iframe src="' + cmsURL + '"  frameborder="0" style="width:100%; height:100%"></iframe>'
+                        html: windowManagerCSS + '<iframe src="' + cmsURL + '"  frameborder="0" style="width:100%; height:100%" scrolling="no"></iframe>'
                     }]
                 },
                 buttons: [],

@@ -17,10 +17,14 @@ folder:
   deleted:
     success: Klasör başarıyla silindi
     unauthorized: Klasör mevcut değil veya bu işlem için yetkiniz yok
+  rename:
+    success: Klasör başarıyla yeniden adlandırıldı
+    unauthorized: Klasör mevcut değil veya bu işlem için yetkiniz yok
+    danger: Klasör yeniden adlandırılamadı
 button:
   cancel: İPTAL
   refresh: Yenile
-  parent: Parent
+  parent: Üst Dizin
   save: KAYDET
   add:
     files: Dosya Yükle...

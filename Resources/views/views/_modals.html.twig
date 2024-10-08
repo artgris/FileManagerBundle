@@ -45,6 +45,30 @@
         </div>
     </div>
 {% endblock %}
+{% block rename_folder_modal %}
+    <div class="modal fade" id="js-confirm-folder-rename" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {{ form_start(formRenameFolder, {'action': path('file_manager_rename_folder', fileManager.queryParameters)}) }}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{{ 'title.rename.file'|trans }}</h4>
+                </div>
+                <div class="modal-body">
+                    {{ form_widget(formRenameFolder.name) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left"
+                            data-dismiss="modal">{{ 'button.cancel'|trans }}
+                    </button>
+                    {{ form_row(formRenameFolder.send) }}
+                </div>
+                {{ form_end(formRenameFolder) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
 {% block add_modal %}
     <div class="modal fade" id="addFolder" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -57,6 +81,7 @@
                 </div>
                 <div class="modal-body">
                     {{ form_row(form.name) }}
+                    {{ form_row(form.defined_parent_path) }}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left"

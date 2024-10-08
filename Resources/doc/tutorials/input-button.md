@@ -49,7 +49,7 @@ artgris_file_manager:
                 </div>
                 <div class="modal-body">
                     <iframe id="myframe" src="{{ path('file_manager', {module:1, conf:'button'}) }}" width="100%" height="500"
-                            frameborder="0"></iframe>
+                            frameborder="0" scrolling="no"></iframe>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

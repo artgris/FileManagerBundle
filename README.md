@@ -5,7 +5,10 @@ FileManagerBundle
 
 FileManager is a simple Multilingual File Manager Bundle for Symfony
 
-<img src="https://raw.githubusercontent.com/artgris/FileManagerBundle/master/Resources/doc/images/filemanager-promo.png" alt="Symfony Filemanager created with FileManagerBundle" align="center" />
+**Main Window**
+![filemanager](https://github.com/user-attachments/assets/b1be19f7-d66f-44f3-958c-e6c5063b7dc4)
+**Tree Context Menu**
+![tree_context_menu](https://github.com/user-attachments/assets/794352ab-512e-4ef8-a148-f5bbde85e06d)
 
 * [Documentation](#documentation)
 * [Installation](#installation)
@@ -13,8 +16,8 @@ FileManager is a simple Multilingual File Manager Bundle for Symfony
 
 
 **Features**
-*  Upload, delete (multiple), rename, download and sort files
-*  Create, rename and delete folders
+*  Upload, delete (_multiple_), rename, download and sort files
+*  Create, rename, Filter (_search_) and delete folders (_on tree contextmenu_)
 *  Manage **Public** and **Private** folders
 *  File Names **Sanitizer** / **Slugger** ([Look Documentation](Resources/doc/book/1-basic-configuration.md))
 *  **Multilingual** (English, French, Catalan, German, Spanish, Dutch, Portuguese, Romanian, Russian, Turkish)

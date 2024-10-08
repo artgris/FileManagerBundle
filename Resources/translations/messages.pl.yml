@@ -17,6 +17,10 @@ folder:
   deleted:
     success: Folder został pomyślnie usunięty
     unauthorized: Folder już nie istnieje lub nie masz uprawnień dostępu do tej strony.
+  rename:
+    success: Folder has been renamed successfully
+    unauthorized: Folder no longer exist or you are not authorized to access this page
+    danger: Folder could not renamed
 button:
   cancel: Anuluj
   refresh: Odśwież

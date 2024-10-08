@@ -1,4 +1,5 @@
 <a class="{{ not islist ? ('btn btn-sm btn-default'~(active ? ' active'))  }}" href="{{ href }}">
+    {#    <span class="{{ active }} {{ islist ? 'pull-right'}} fas fa-sort{{ icon }}"></span>#}
     {{ ('table.'~type)|trans }}
-    <span class="{{ active }} {{ islist ? 'pull-right'}} fas fa-sort{{ icon }}"></span>
+    <span class="{{ active }} filemanager-sort-icon fas fa-sort{{ icon }}"></span>
 </a>
