@@ -53,7 +53,7 @@ class ManagerController extends AbstractController {
     #[Route('/', name: 'file_manager')]
     public function indexAction(Request $request, FileTypeService $fileTypeService): JsonResponse|Response {
         $queryParameters = $request->query->all();
-        $isJson = $request->get('json');
+        $isJson = $request->query->get('json');
         if ($isJson) {
             unset($queryParameters['json']);
         }
