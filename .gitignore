@@ -20,3 +20,9 @@ php-cs-fixer
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen

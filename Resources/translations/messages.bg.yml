@@ -1,0 +1,61 @@
+file:
+  add:
+    success: Файлът беше качен успешно
+  renamed:
+    success: Файлът беше преименуван успешно
+    danger: Файлът вече съществува или нямате права да го преименувате
+    unauthorized: Файловете вече не съществуват или нямате права за достъп до тази страница
+    nochanged: Няма открити промени
+  deleted:
+    success: Файловете бяха изтрити успешно
+    danger: Файловете вече не съществуват или нямате права за достъп до тази страница
+    unauthorized: Файловете вече не съществуват или нямате права за достъп до тази страница
+folder:
+  add:
+    danger: "Възникна грешка при създаването на директорията: %message%"
+    success: Папката беше създадена успешно
+  deleted:
+    success: Папката беше изтрита успешно
+    unauthorized: Папката вече не съществува или нямате права за достъп до тази страница
+button:
+  cancel: ОТКАЗ
+  refresh: Обновяване
+  parent: Нагоре
+  save: ЗАПАЗИ
+  add:
+    files: Добавяне на файлове...
+    folder: Нова папка...
+  delete:
+    current: Изтриване на текущата папка
+    selected: Изтриване на избраните файлове
+    action: ИЗТРИВАНЕ
+  rename:
+    action: ПРЕИМЕНУВАНЕ
+  tree: Дърво
+title:
+  add:
+    folder: Нова папка
+  rename:
+    file: Преименуване
+  delete: Изтриване
+  download: Изтегляне
+  preview:
+    file: Отвори
+input:
+  default: Неназована папка
+table:
+  name: Име
+  date: Дата
+  size: Размер
+  dimension: Размери
+  actions: Действия
+confirm:
+  delete:  Сигурни ли сте, че искате да изтриете?
+size:
+  mb: MB
+  kb: kB
+select-all: Избери всички
+upload:
+  exception_move_uploaded_file: Достъпът е отказан
+search:
+  placeholder: Търсене
