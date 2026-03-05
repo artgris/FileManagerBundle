@@ -44,7 +44,7 @@
                 </td>
                 <td>
                     {% block file_preview %}
-                        {{ fileEntity.preview ? fileEntity.preview.html|raw }}
+                        {{ fileEntity.preview.html is defined ? fileEntity.preview.html|raw }}
                     {% endblock %}
                 </td>
                 <td data-value="{{ file.fileName }}" {{ fileEntity.attribut|raw }}>
