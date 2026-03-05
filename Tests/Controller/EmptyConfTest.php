@@ -16,7 +16,7 @@ class EmptyConfTest extends AbstractTestCase
     {
         $this->getManagerPage();
         $this->assertStringContainsString(
-            'Please define a &quot;dir&quot; or a &quot;service&quot; parameter in your config.yml',
+            'Please define a "dir" or a "service" parameter in your config.yml',
             $this->client->getResponse()->getContent()
         );
         $this->assertSame(
