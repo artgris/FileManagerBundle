@@ -31,7 +31,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -53,7 +53,7 @@ class ManagerController extends AbstractController {
     #[Route('/', name: 'file_manager')]
     public function indexAction(Request $request, FileTypeService $fileTypeService): JsonResponse|Response {
         $queryParameters = $request->query->all();
-        $isJson = $request->get('json');
+        $isJson = $request->query->get('json');
         if ($isJson) {
             unset($queryParameters['json']);
         }
