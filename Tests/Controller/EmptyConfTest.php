@@ -15,14 +15,17 @@ class EmptyConfTest extends AbstractTestCase
     public function testUndefinedConfManager()
     {
         $this->getManagerPage();
+
         $content = html_entity_decode(
             $this->client->getResponse()->getContent(),
             ENT_QUOTES | ENT_HTML5
         );
+
         $this->assertStringContainsString(
-            $content,
-            $this->client->getResponse()->getContent()
+            'Please define a "dir" or a "service" parameter in your config.yml',
+            $content
         );
+
         $this->assertSame(
             Response::HTTP_INTERNAL_SERVER_ERROR,
             $this->client->getResponse()->getStatusCode()
