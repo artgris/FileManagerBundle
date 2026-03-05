@@ -1,0 +1,62 @@
+file:
+  add:
+    success: sikeresen feltöltve
+  renamed:
+    success: A fájl sikeresen átnevezve
+    danger: A fájl már létezik vagy nincs jogosultságod átnevezni ezt a fájlt
+    unauthorized: A fájlok már nem léteznek vagy nincs jogosultságod ehhez az oldalhoz
+    nochanged: Nem észleltünk változást
+  deleted:
+    success: A kiválasztott fájlok sikeresen törölve
+    danger: A fájlok már nem léteznek vagy nincs jogosultságod ehhez az oldalhoz
+    unauthorized: A fájlok már nem léteznek vagy nincs jogosultságod ehhez az oldalhoz
+folder:
+  add:
+    danger: "Hiba történt a mappa létrehozása során: %message%"
+    success: A mappa sikeresen létrehozva
+  deleted:
+    success: A mappa sikeresen törölve
+    unauthorized: A mappa már nem létezik vagy nincs jogosultságod ehhez az oldalhoz
+button:
+  cancel: MÉGSEM
+  refresh: Frissít
+  parent: Szülő
+  save: MENTÉS
+  add:
+    files: Fájl hozzáadása...
+    folder: Új mappa...
+  delete:
+    current: Jelenlegi mappa törlése
+    selected: Kiválasztott fájlok törlése
+    action: TÖRLÉS
+  rename:
+    action: ÁTNEVEZ
+  tree: Fa
+title:
+  add:
+    folder: Új mappa
+  rename:
+    file: Átnevez
+  delete: Töröl
+  download: Letölt
+  preview:
+    file: Megnyit
+input:
+    default: Névtelen mappa
+table:
+  name: Név
+  date: Dátum
+  size: Méret
+  dimension: Méretek
+  actions: Műveletek
+confirm:
+  delete:  Biztos, hogy törlöd?
+size:
+  mb: MB
+  kb: kB
+select-all: Összes kijelölése
+upload:
+  exception_move_uploaded_file: Hozzáférés megtagadva
+search:
+  placeholder: Keresés
+'File is too big': 'Túl nagy a fájl mérete'
