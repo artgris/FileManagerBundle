@@ -15,7 +15,7 @@
             {% endblock %}
             {% block file_preview %}
                 <div class="thumbnail-img">
-                    {{ fileEntity.preview ? fileEntity.preview.html|raw }}
+                    {{ fileEntity.preview.html is defined ? fileEntity.preview.html|raw }}
                 </div>
             {% endblock %}
             <p {{ fileEntity.attribut|raw }}>

@@ -19,7 +19,7 @@ class FileTypeService {
     public function __construct(private RouterInterface $router, private Environment $twig) {
     }
 
-    public function preview(FileManager $fileManager, SplFileInfo $file) {
+    public function preview(FileManager $fileManager, SplFileInfo $file): array {
 
         if ($fileManager->getImagePath()) {
             $filePath = $fileManager->getImagePath().rawurlencode($file->getFilename());
@@ -37,7 +37,6 @@ class FileTypeService {
             return $this->fileIcon($filePath, $extension, $size, true, $fileManager->getConfigurationParameter('twig_extension'), $fileManager->getConfigurationParameter('cachebreaker'));
         }
         if ('dir' === $type) {
-
             $href = $this->router->generate(
                 'file_manager', array_merge(
                 $fileManager->getQueryParameters(),
@@ -51,6 +50,22 @@ class FileTypeService {
                 'folder' => '<a  href="'.$href.'">'.$file->getFilename().'</a>',
             ];
         }
+        if ('link' === $type) {
+            $href = $this->router->generate(
+                'file_manager', array_merge(
+                    $fileManager->getQueryParameters(),
+                    ['route' => $fileManager->getRoute().'/'.$file->getFilename()],
+                ),
+            );
+
+            return [
+                'path' => $filePath,
+                'html' => "<i class='fas fa-link' aria-hidden='true'></i>",
+                'folder' => '<a href="'.$href.'">'.$file->getFilename().'&nbsp;&rarr;&nbsp;'.$file->getLinkTarget().'</a>',
+            ];
+        }
+
+        return [];
     }
 
     public function accept($type): bool|string {
