@@ -10,9 +10,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    public function __construct(private string $projectDir) {
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -25,7 +22,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('web_dir')
-                    ->defaultValue($this->projectDir."/public")
+                    ->defaultValue('%kernel.project_dir%/public')
                 ->end()
                 ->arrayNode('conf')
                     ->prototype('array')
