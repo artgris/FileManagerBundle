@@ -12,11 +12,6 @@ use Symfony\Component\DependencyInjection\Extension\Extension;
  */
 class ArtgrisFileManagerExtension extends Extension
 {
-    public function getConfiguration(array $config, ContainerBuilder $container): Configuration
-    {
-        return new Configuration($container->getParameter('kernel.project_dir'));
-    }
-
     /**
      * {@inheritdoc}
      */
