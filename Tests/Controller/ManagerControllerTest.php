@@ -104,4 +104,30 @@ class ManagerControllerTest extends AbstractTestCase
             $this->assertSame($file, $crawler->filter('.list-blk tbody tr')->eq($i)->attr('class'));
         }
     }
+
+    public function testJsonWithoutTreeSkipsTreeData()
+    {
+        $this->getBackendPage(['conf' => 'default', 'tree' => 0, 'json' => 1]);
+        $data = json_decode($this->client->getResponse()->getContent(), true);
+
+        $this->assertNull($data['treeData']);
+        // SubDir and text.txt
+        $this->assertSame(2, $data['badge']);
+    }
+
+    public function testJsonWithTreeHasTreeData()
+    {
+        $this->getBackendPage(['conf' => 'default', 'json' => 1]);
+        $data = json_decode($this->client->getResponse()->getContent(), true);
+
+        $this->assertNotEmpty($data['treeData']);
+        // tree mode lists files only
+        $this->assertSame(1, $data['badge']);
+    }
+
+    public function testOrderByDimension()
+    {
+        $this->getBackendPage(['conf' => 'default', 'orderby' => 'dimension']);
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+    }
 }

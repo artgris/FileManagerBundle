@@ -2,13 +2,14 @@
 
 namespace Artgris\Bundle\FileManagerBundle\Service;
 
+use Artgris\Bundle\FileManagerBundle\Helpers\File;
 use Artgris\Bundle\FileManagerBundle\Helpers\FileManager;
 use SplFileInfo;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
 class FileTypeService {
-    const IMAGE_SIZE = [
+    public const IMAGE_SIZE = [
         FileManager::VIEW_LIST => '22',
         FileManager::VIEW_THUMBNAIL => '100',
     ];
@@ -72,19 +73,17 @@ class FileTypeService {
 
         $imageTemplate = null;
 
-        if (null === $extension) {
-            $filePathTmp = strtok($filePath, '?');
-            $extension = pathinfo($filePathTmp, PATHINFO_EXTENSION);
-        }
+        // Strip the query string before reading the extension, then match it case-insensitively
+        $extension = strtolower($extension ?? (new SplFileInfo(explode('?', $filePath)[0]))->getExtension());
         switch (true) {
             case $this->isYoutubeVideo($filePath):
-            case preg_match('/(mp4|ogg|webm|avi|wmv|mov)$/i', $extension):
+            case \in_array($extension, ['mp4', 'ogg', 'webm', 'avi', 'wmv', 'mov'], true):
                 $fa = 'far fa-file-video';
                 break;
-            case preg_match('/(mp3|wav)$/i', $extension):
+            case \in_array($extension, ['mp3', 'wav'], true):
                 $fa = 'far fa-file-audio';
                 break;
-            case preg_match('/(gif|png|jpe?g|svg|webp)$/i', $extension):
+            case \in_array($extension, File::IMAGE_EXTENSIONS, true):
 
                 $fileName = $filePath;
                 if ($cachebreaker) {
@@ -112,19 +111,19 @@ class FileTypeService {
                     'html' => $html,
                     'image' => true,
                 ];
-            case preg_match('/(pdf)$/i', $extension):
+            case 'pdf' === $extension:
                 $fa = 'far fa-file-pdf';
                 break;
-            case preg_match('/(docx?)$/i', $extension):
+            case \in_array($extension, ['doc', 'docx'], true):
                 $fa = 'far fa-file-word';
                 break;
-            case preg_match('/(xlsx?|csv)$/i', $extension):
+            case \in_array($extension, ['xls', 'xlsx', 'csv'], true):
                 $fa = 'far fa-file-excel';
                 break;
-            case preg_match('/(pptx?)$/i', $extension):
+            case \in_array($extension, ['ppt', 'pptx'], true):
                 $fa = 'far fa-file-powerpoint';
                 break;
-            case preg_match('/(zip|rar|gz)$/i', $extension):
+            case \in_array($extension, ['zip', 'rar', 'gz', 'tgz'], true):
                 $fa = 'far fa-file-archive';
                 break;
             case filter_var($filePath, FILTER_VALIDATE_URL):

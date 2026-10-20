@@ -45,7 +45,7 @@ class FileManager
 
         return match ($this->getType()) {
             'media' => '/\.(mp4|ogg|webm)$/i',
-            'image' => '/\.(gif|png|jpe?g|svg|webp)$/i',
+            'image' => '/\.('.implode('|', File::IMAGE_EXTENSIONS).')$/i',
             default => '/.+$/i',
         };
     }

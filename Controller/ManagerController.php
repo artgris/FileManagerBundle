@@ -59,8 +59,10 @@ class ManagerController extends AbstractController {
         }
         $fileManager = $this->newFileManager($queryParameters);
 
-        // Folder search
-        $directoriesArbo = $this->retrieveSubDirectories($fileManager, $fileManager->getDirName(), \DIRECTORY_SEPARATOR, $fileManager->getBaseName());
+        // Folder search, walks the whole directory tree, so only when the tree is displayed
+        $directoriesArbo = $fileManager->getTree()
+            ? $this->retrieveSubDirectories($fileManager, $fileManager->getDirName(), \DIRECTORY_SEPARATOR, $fileManager->getBaseName())
+            : null;
 
         // File search
         $finderFiles = new Finder();
@@ -116,7 +118,7 @@ class ManagerController extends AbstractController {
         }
 
         if ('dimension' === $orderBy) {
-            usort($fileArray, function (File $a, File $b) {
+            usort($fileArray, static function (File $a, File $b) {
                 $aDimension = $a->getDimension();
                 $bDimension = $b->getDimension();
                 if ($aDimension && !$bDimension) {
@@ -147,7 +149,7 @@ class ManagerController extends AbstractController {
         if ($isJson) {
             $fileList = $this->renderView('@ArtgrisFileManager/views/_manager_view.html.twig', $parameters);
 
-            return new JsonResponse(['data' => $fileList, 'badge' => $finderFiles->count(), 'treeData' => $directoriesArbo]);
+            return new JsonResponse(['data' => $fileList, 'badge' => \count($fileArray), 'treeData' => $directoriesArbo]);
         }
         $parameters['treeData'] = json_encode($directoriesArbo);
 
@@ -213,7 +215,7 @@ class ManagerController extends AbstractController {
                 $fileManager = $this->newFileManager($queryParameters);
                 $newfilePath = $fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$newfileName;
                 $oldfilePath = realpath($fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$fileName);
-                if (0 !== mb_strpos($newfilePath, $fileManager->getCurrentPath())) {
+                if (!str_starts_with($newfilePath, $fileManager->getCurrentPath())) {
                     $this->addFlash('danger', $this->translator->trans('file.renamed.unauthorized'));
                 } else {
                     $fs = new Filesystem();
@@ -305,7 +307,7 @@ class ManagerController extends AbstractController {
                 $is_delete = false;
                 foreach ($queryParameters['delete'] as $fileName) {
                     $filePath = realpath($fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$fileName);
-                    if (0 !== mb_strpos($filePath, $fileManager->getCurrentPath())) {
+                    if (!str_starts_with($filePath, $fileManager->getCurrentPath())) {
                         $this->addFlash('danger', 'file.deleted.danger');
                     } else {
                          try {
@@ -338,7 +340,7 @@ class ManagerController extends AbstractController {
 
                 $this->dispatch(FileManagerEvents::POST_DELETE_FOLDER);
                 $queryParameters['route'] = \dirname($fileManager->getRoute());
-                if ($queryParameters['route'] == '/') {
+                if ($queryParameters['route'] === '/') {
                     unset($queryParameters['route']);
                 }
 
@@ -449,7 +451,7 @@ class ManagerController extends AbstractController {
         return $this->fileManager;
     }
 
-    protected function dispatch(string $eventName, array $arguments = []) {
+    protected function dispatch(string $eventName, array $arguments = []): void {
         $arguments = array_replace([
             'filemanager' => $this->fileManager,
         ], $arguments);
