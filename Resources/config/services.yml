@@ -7,6 +7,9 @@ services:
     Artgris\Bundle\FileManagerBundle\Controller\:
         resource: '../../Controller/*'
 
+    Artgris\Bundle\FileManagerBundle\Command\:
+        resource: '../../Command/*'
+
     Artgris\Bundle\FileManagerBundle\Twig\FileTypeExtension:
         tags:
             - { name: twig.extension }

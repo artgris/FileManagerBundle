@@ -65,6 +65,7 @@ class ManagerController extends AbstractController {
         // File search
         $finderFiles = new Finder();
         $finderFiles->in($fileManager->getCurrentPath())->depth(0);
+        $this->excludeImageVersionDirectories($fileManager, $finderFiles);
         $regex = $fileManager->getRegex();
 
         $orderBy = $fileManager->getQueryParameter('orderby');
@@ -220,6 +221,13 @@ class ManagerController extends AbstractController {
                     try {
                         $this->dispatch(FileManagerEvents::RENAME_FILE, ['oldFile'=> $oldfilePath,'newFile'=> $newfilePath]);
                         $fs->rename($oldfilePath, $newfilePath);
+                        // Generated image versions (e.g. thumbnail/<name>) follow the original
+                        foreach ($fileManager->getImageVersionNames() as $version) {
+                            $versionDirectory = $fileManager->getCurrentPath().\DIRECTORY_SEPARATOR.$version.\DIRECTORY_SEPARATOR;
+                            if (file_exists($versionDirectory.basename($oldfilePath))) {
+                                $fs->rename($versionDirectory.basename($oldfilePath), $versionDirectory.$newfileName);
+                            }
+                        }
                         $this->addFlash('success', $this->translator->trans('file.renamed.success'));
                         //File has been renamed successfully
                     } catch (IOException $exception) {
@@ -311,6 +319,10 @@ class ManagerController extends AbstractController {
                          try {
                             $this->dispatch(FileManagerEvents::PRE_DELETE_FILE);
                             $fs->remove($filePath);
+                            // Generated image versions (e.g. thumbnail/<name>) go together with the original
+                            foreach ($fileManager->getImageVersionNames() as $version) {
+                                $fs->remove(\dirname($filePath).\DIRECTORY_SEPARATOR.$version.\DIRECTORY_SEPARATOR.basename($filePath));
+                            }
                             $is_delete = true;
                             $this->dispatch(FileManagerEvents::POST_DELETE_FILE);
                         } catch (IOException $exception) {
@@ -388,6 +400,8 @@ class ManagerController extends AbstractController {
 
         if ($baseFolderName) {
             $directories->name($baseFolderName);
+        } else {
+            $this->excludeImageVersionDirectories($fileManager, $directories);
         }
         $directoriesList = null;
 
@@ -426,6 +440,18 @@ class ManagerController extends AbstractController {
         }
 
         return $directoriesList;
+    }
+
+    /**
+     * Image version directories (e.g. thumbnail/) belong to the originals, so they are not listed.
+     */
+    private function excludeImageVersionDirectories(FileManager $fileManager, Finder $finder): void {
+        $versionNames = $fileManager->getImageVersionNames();
+        if ($versionNames) {
+            $finder->filter(function (SplFileInfo $file) use ($versionNames) {
+                return !($file->isDir() && \in_array($file->getFilename(), $versionNames, true));
+            });
+        }
     }
 
     /**

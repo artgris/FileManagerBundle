@@ -8,6 +8,33 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class FileManagerUploadHandler extends UploadHandler {
 
+    /**
+     * Creates one image version (upload.image_versions) of a file already stored in upload_dir,
+     * without an upload request (used by the artgris:filemanager:thumbnails command).
+     */
+    public function createVersion(string $fileName, string $version): bool {
+        return (bool) $this->create_scaled_image($fileName, $version, $this->options['image_versions'][$version]);
+    }
+
+    protected function get_full_url(): string {
+        // On the console there is no HTTP host to build the URL from, and the URL is not needed there
+        if (!isset($_SERVER['HTTP_HOST']) && !isset($_SERVER['SERVER_NAME'])) {
+            return '';
+        }
+
+        return parent::get_full_url();
+    }
+
+    protected function get_server_var($id) {
+        // A missing key (e.g. HTTP_REFERER on the console) gave null, which string functions no longer accept
+        return $_SERVER[$id] ?? '';
+    }
+
+    protected function basename($filepath, $suffix = '') {
+        // The parent passes its default null suffix to basename(), deprecated since PHP 8.1
+        return parent::basename($filepath, $suffix);
+    }
+
     protected function get_unique_filename($file_path, $name, $size, $type, $error,
                                            $index, $content_range) {
 

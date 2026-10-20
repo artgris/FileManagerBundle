@@ -1,0 +1,30 @@
+imports:
+    - { resource: config.yml }
+
+# One environment for all the thumbnail tests: every new environment adds deprecations of the framework to the CI budget
+artgris_file_manager:
+    web_dir: "%kernel.project_dir%/Tests/Fixtures/web"
+    conf:
+        # Outside of web_dir: previews use the file_manager_file route
+        default:
+            dir: "%kernel.project_dir%/Tests/Fixtures/thumbnails"
+            thumbnail_version: thumbnail
+            upload:
+                image_versions:
+                    '': { auto_orient: true }
+                    thumbnail: { max_width: 2, max_height: 2 }
+        # Under web_dir: previews use direct URLs
+        public:
+            dir: "%kernel.project_dir%/Tests/Fixtures/web/thumbnails"
+            thumbnail_version: thumbnail
+            upload:
+                image_versions:
+                    '': { auto_orient: true }
+                    thumbnail: { max_width: 2, max_height: 2 }
+        # Same directory and image versions without thumbnail_version: the previous behavior is kept
+        no_thumbnail:
+            dir: "%kernel.project_dir%/Tests/Fixtures/thumbnails"
+            upload:
+                image_versions:
+                    '': { auto_orient: true }
+                    thumbnail: { max_width: 2, max_height: 2 }

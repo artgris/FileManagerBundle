@@ -37,6 +37,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('root_name')->defaultValue(null)->end()
                             ->scalarNode('twig_extension')->end()
                             ->booleanNode('cachebreaker')->defaultValue(true)->end()
+                            ->scalarNode('thumbnail_version')->defaultNull()->end()
                             ->enumNode('view')->values(['thumbnail', 'list'])->defaultValue('list')->end()
                             ->scalarNode('regex')->end()
                             ->scalarNode('service')->end()

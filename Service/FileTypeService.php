@@ -8,7 +8,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
 class FileTypeService {
-    const IMAGE_SIZE = [
+    public const IMAGE_SIZE = [
         FileManager::VIEW_LIST => '22',
         FileManager::VIEW_THUMBNAIL => '100',
     ];
@@ -34,7 +34,11 @@ class FileTypeService {
         if ('file' === $type) {
             $size = $this::IMAGE_SIZE[$fileManager->getView()];
 
-            return $this->fileIcon($filePath, $extension, $size, true, $fileManager->getConfigurationParameter('twig_extension'), $fileManager->getConfigurationParameter('cachebreaker'));
+            $preview = $this->fileIcon($this->thumbnailPath($fileManager, $file) ?? $filePath, $extension, $size, true, $fileManager->getConfigurationParameter('twig_extension'), $fileManager->getConfigurationParameter('cachebreaker'));
+            // Only the list preview uses the thumbnail; the modal, editors and download keep the original
+            $preview['path'] = $filePath;
+
+            return $preview;
         }
         if ('dir' === $type) {
 
@@ -51,6 +55,25 @@ class FileTypeService {
                 'folder' => '<a  href="'.$href.'">'.$file->getFilename().'</a>',
             ];
         }
+    }
+
+    /**
+     * URL of the thumbnail_version image of the file, when it has been generated.
+     */
+    private function thumbnailPath(FileManager $fileManager, SplFileInfo $file): ?string {
+        $version = $fileManager->getConfigurationParameter('thumbnail_version');
+        if (null === $version || !is_file($file->getPath().\DIRECTORY_SEPARATOR.$version.\DIRECTORY_SEPARATOR.$file->getFilename())) {
+            return null;
+        }
+
+        if ($fileManager->getImagePath()) {
+            return $fileManager->getImagePath().rawurlencode($version).'/'.rawurlencode($file->getFilename());
+        }
+
+        return $this->router->generate('file_manager_file', array_merge($fileManager->getQueryParameters(), [
+            'fileName' => $file->getFilename(),
+            'route' => $fileManager->getRoute().'/'.$version,
+        ]));
     }
 
     public function accept($type): bool|string {

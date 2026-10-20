@@ -179,6 +179,56 @@ Having a large number of files in a (sub-)directory can have a huge impact on pe
 |:------------------|:--------:|:--------:|:-------------:|
 | `root_name` | `String` |  False   |     null      |
 
+## `thumbnail_version` to preview images from a smaller image version
+
+| Option              |   Type   | Required | Default value |
+|:--------------------|:--------:|:--------:|:-------------:|
+| `thumbnail_version` | `String` |  False   |     null      |
+
+By default the list shows each image preview from the original file, so a folder of large photos downloads all of them in full size.
+Set `thumbnail_version` to the name of one of the [`upload.image_versions`](#image_versions-image-version) to load the previews from that version instead:
+
+```yml
+artgris_file_manager:
+    conf:
+        public:
+            dir: '%kernel.project_dir%/public/uploads'
+            thumbnail_version: thumbnail
+            upload:
+                image_versions:
+                    '': { auto_orient: true }
+                    thumbnail: { max_width: 200, max_height: 200 }
+```
+
+Each version is stored in a subfolder named after the version, next to the original (the layout of the upload widget), so every folder with images gets its own `thumbnail/`:
+
+```
+uploads/
+├── photo.jpg
+├── thumbnail/photo.jpg
+└── 2024/
+    ├── scan.png
+    └── thumbnail/scan.png
+```
+
+In a public folder the versions are reachable by URL like the originals (here `/uploads/2024/thumbnail/scan.png`).
+
+When `thumbnail_version` is set:
+
+* the preview uses `<version>/<file name>` when that file exists, and the original otherwise. The preview modal, the download link and the path sent to TinyMCE/CKEditor still use the original;
+* the version folders (every non-empty key of `upload.image_versions`, here `thumbnail/`) are not listed;
+* deleting or renaming a file also deletes or renames its versions.
+
+New uploads create the versions. For images that already exist, run:
+
+```bash
+php bin/console artgris:filemanager:thumbnails public          # creates the missing versions
+php bin/console artgris:filemanager:thumbnails public --force  # recreates all versions
+```
+
+The command uses `image_library` from `upload` (GD, Imagick or ImageMagick), like the upload does.
+Run it as the user of the web server (e.g. `sudo -u www-data php bin/console ...`): the version folders it creates belong to the user running it, and the upload must be able to write into them later.
+
 ## `upload` A non-exhaustive  configuration of the File Upload widget [blueimp/jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload)
 > [Exhaustive options](https://github.com/blueimp/jQuery-File-Upload/blob/master/server/php/UploadHandler.php) can only be defined with [The service configuration](2-service-configuration.md)
 

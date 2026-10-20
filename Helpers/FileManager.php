@@ -199,6 +199,19 @@ class FileManager
         return $this->getQueryParameters()[$parameter] ?? null;
     }
 
+    /**
+     * Names of the image version directories (non-empty keys of upload.image_versions).
+     * They are managed together with the originals only when thumbnail_version is set.
+     */
+    public function getImageVersionNames(): array
+    {
+        if (null === $this->getConfigurationParameter('thumbnail_version')) {
+            return [];
+        }
+
+        return array_values(array_filter(array_keys($this->getConfiguration()['upload']['image_versions'] ?? []), 'strlen'));
+    }
+
     public function getConfigurationParameter(string $parameter)
     {
         return $this->getConfiguration()[$parameter] ?? null;
