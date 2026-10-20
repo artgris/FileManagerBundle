@@ -34,7 +34,10 @@ class FileTypeService {
         if ('file' === $type) {
             $size = $this::IMAGE_SIZE[$fileManager->getView()];
 
-            return $this->fileIcon($filePath, $extension, $size, true, $fileManager->getConfigurationParameter('twig_extension'), $fileManager->getConfigurationParameter('cachebreaker'));
+            // The modification time keeps the URL stable until the file changes, so the browser can cache it
+            $cachebreaker = $fileManager->getConfigurationParameter('cachebreaker') ? $file->getMTime() : null;
+
+            return $this->fileIcon($filePath, $extension, $size, true, $fileManager->getConfigurationParameter('twig_extension'), $cachebreaker);
         }
         if ('dir' === $type) {
 
@@ -68,7 +71,7 @@ class FileTypeService {
         return $accept;
     }
 
-    public function fileIcon(string $filePath,?string $extension = null, ?int $size = 75, ?bool $lazy = false, ?string $twigExtension = null, ?bool $cachebreaker = null): array {
+    public function fileIcon(string $filePath,?string $extension = null, ?int $size = 75, ?bool $lazy = false, ?string $twigExtension = null, bool|int|null $cachebreaker = null): array {
 
         $imageTemplate = null;
 
@@ -89,7 +92,8 @@ class FileTypeService {
                 $fileName = $filePath;
                 if ($cachebreaker) {
                     $query = parse_url($filePath, PHP_URL_QUERY);
-                    $time = 'time='.time();
+                    // An int is used as the version (file modification time), true falls back to the current time
+                    $time = 'time='.(\is_int($cachebreaker) ? $cachebreaker : time());
                     $fileName = $query ? $filePath.'&'.$time : $filePath.'?'.$time;
                 }
 

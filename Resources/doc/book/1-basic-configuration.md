@@ -163,7 +163,7 @@ artgris_file_manager:
 | :---  |:--------:|:--------:|:-------------:|
 | `cachebreaker`  | `Boolean` |  False   | True |
 
-Adding a cachebreaker ?time=RANDOM_NUMBER or & &time=RANDOM_NUMBER at the end of the images (preview) url. It's removed if you have used "twig_extension" option.
+Adding a cachebreaker ?time=FILE_MODIFICATION_TIME or &time=FILE_MODIFICATION_TIME at the end of the images (preview) url. The url changes only when the file changes, so the browser can cache previews between page loads. It's removed if you have used "twig_extension" option.
 
 ## `show_file_count` to show the number of files per directory in the file browser tree
 

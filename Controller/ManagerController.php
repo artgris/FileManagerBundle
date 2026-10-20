@@ -289,7 +289,11 @@ class ManagerController extends AbstractController {
         }
         $this->dispatch(FileManagerEvents::FILE_ACCESS, ['path' => $file]);
 
-        return new BinaryFileResponse($file);
+        $response = new BinaryFileResponse($file);
+        // Last-Modified is set by default; answer revalidation requests with 304 instead of resending the file
+        $response->isNotModified($request);
+
+        return $response;
     }
 
     #[Route("/delete/", name: 'file_manager_delete')]
