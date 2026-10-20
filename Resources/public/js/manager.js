@@ -218,7 +218,34 @@ $(function () {
         displayAlert('success', msg)
     }
 
+    // Ajax update view
+    function reloadList() {
+        $.ajax({
+            dataType: "json",
+            url: url,
+            type: 'GET'
+        }).done(function (data) {
+            // update file list
+            $('#form-multiple-delete').html(data.data);
+
+            lazy();
+
+            if (tree === true) {
+                $('#tree').data('jstree', false).empty();
+                initTree(data.treeData);
+            }
+
+            $('#select-all').prop('checked', false);
+            $('#js-delete-multiple-modal').addClass('disabled');
+
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            displayError('<strong>Ajax call error :</strong> ' + jqXHR.status + ' ' + errorThrown)
+        });
+    }
+
     // file upload
+    // The list is reloaded once, when the whole upload queue is finished, not after every file
+    var reloadNeeded = false;
     $('#fileupload').fileupload({
         dataType: 'json',
         processQueue: false,
@@ -228,29 +255,7 @@ $(function () {
             const fileName = $("<strong>").text(file.name).html();
             if (file.url) {
                 displaySuccess(fileName+' ' + successMessage)
-                // Ajax update view
-                $.ajax({
-                    dataType: "json",
-                    url: url,
-                    type: 'GET'
-                }).done(function (data) {
-                    // update file list
-                    $('#form-multiple-delete').html(data.data);
-
-                    lazy();
-
-                    if (tree === true) {
-                        $('#tree').data('jstree', false).empty();
-                        initTree(data.treeData);
-                    }
-
-                    $('#select-all').prop('checked', false);
-                    $('#js-delete-multiple-modal').addClass('disabled');
-
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                    displayError('<strong>Ajax call error :</strong> ' + jqXHR.status + ' ' + errorThrown)
-                });
-
+                reloadNeeded = true;
             } else if (file.error) {
                 displayError(fileName+' ' + file.error)
             }
@@ -279,6 +284,11 @@ $(function () {
             .addClass("notransition")
             .attr('aria-valuenow', 0)
             .css('width', 0 + '%');
+
+        if (reloadNeeded) {
+            reloadNeeded = false;
+            reloadList();
+        }
     });
 
     function lazy() {
